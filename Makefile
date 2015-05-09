@@ -8,8 +8,8 @@ EXECUTABLE=mgsolve
 COMMON=
 
 all: mgsolve
-	
-mgsolve: 
+
+mgsolve: mgsolve.cpp 
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
 test:
 	./mgsolve 3 2
