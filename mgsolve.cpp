@@ -155,13 +155,13 @@ int main(int argc, char** argv)
 	if (argc < 3)
 	{
 		std::cout << "Invalid number of argument";
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 
-	std::cout << "1";
+	std::cout << argv[1] << " " << argv[2];
 	clock_t tim;
-	int level = atoi(argv[0]);
-	int vcycle = atoi(argv[1]);
+	int level = atoi(argv[1]);
+	int vcycle = atoi(argv[2]);
 	size_t gdim = pow(2,level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
