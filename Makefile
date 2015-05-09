@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS= -O3 -Wall -Winline -Wshadow -std=c++11 -fpermissive
-#CFLAGS= -fpermissive
+#CFLAGS= -O3 -Wall -Winline -Wshadow -std=c++11 -fpermissive
+CFLAGS= -fpermissive
 LDFLAGS=
 SOURCES=mgsolve.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
