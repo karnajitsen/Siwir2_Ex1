@@ -5,7 +5,7 @@
 class Grid
 {
 
-	double * __restrict data = NULL;
+	double * __restrict data;
 	size_t sizeX, sizeY, ld, totLength;
 	double hx, hy;
 	
