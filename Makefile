@@ -9,9 +9,9 @@ COMMON=
 
 all: mgsolve
 
-mgsolve: mgsolve.cpp
-	rm -rf mgsolve.exe
+mgsolve:
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
+	
 test:
 	./mgsolve 3 2
 
