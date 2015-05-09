@@ -55,7 +55,7 @@ public:
 
 	inline Grid* operator-=(const Grid* rhs)
 	{
-
+		return this;
 	}
 		
 	inline size_t getXsize() const

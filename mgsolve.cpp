@@ -31,11 +31,11 @@ inline double gxy(const double x, const double y)
 Grid** initialize( const double hsize, const int level)
 {
 	Grid** arrGrid = NULL;
-	int j = level;
+	int je = level;
 	
 	for (int i = 0; i < level; i++)
 	{
-		int gdim = pow(2, j--) + 1;
+		int gdim = pow(2, je--) + 1;
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize);
 		Grid grd(gdim, gdim, hsize, hsize);
 		for (int j = 0; j < gdim; j++)
@@ -101,7 +101,7 @@ inline Grid* rbgs(Grid* grd, const double * fvec, const int iter)
 	{
 		for (int j = 1; j < dimX; j++)
 		{
-			for (int k = j & 1 + 1; k < dimX; k+=2)
+			for (int k = (j & 1) + 1; k < dimX; k+=2)
 			{
 				(*grd)(j, k) = 0.25*((*grd)(j + 1, k) + (*grd)(j - 1, k) + (*grd)(j, k + 1) + (*grd)(j, k - 1));
 			}
