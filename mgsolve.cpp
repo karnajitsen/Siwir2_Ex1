@@ -160,8 +160,8 @@ int main(int argc, char** argv)
 
 	std::cout << "1";
 	clock_t tim;
-	int level = atoi(argv[1]);
-	int vcycle = atoi(argv[2]);
+	int level = atoi(argv[0]);
+	int vcycle = atoi(argv[1]);
 	size_t gdim = pow(2,level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
