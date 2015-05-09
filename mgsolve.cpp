@@ -211,5 +211,5 @@ int main(int argc, char** argv)
 	tim = clock() - tim;
 
 	std::cout << "Time spend for two V - cycles= " << tim;
-	
+	return 0;
 }
