@@ -9,7 +9,7 @@ COMMON=
 
 all: mgsolve
 
-mgsolve: mgsolve.cpp
+mgsolve: mgsolve.cpp mgsolve
 	rm -rf mgsolve
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
 test:
