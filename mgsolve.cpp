@@ -163,7 +163,7 @@ int main(int argc, char** argv)
 	size_t gdim = pow(2,level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
-	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1), vsize = 0.0, norm = 0.0;
+	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1);
 	size_t totdim = vdim*vdim;
 	Grid ** grids = initialize(hsize,level);
 	double * fvec = NULL, *rvec = NULL;
