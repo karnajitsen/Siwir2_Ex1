@@ -7,7 +7,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=mgsolve
 COMMON=
 
-all: mgsolve
+all: clean mgsolve
 
 mgsolve:
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
