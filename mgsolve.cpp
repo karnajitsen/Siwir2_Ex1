@@ -1,6 +1,6 @@
 #include<iostream>
 #include "Grid.h"
-#include "Stencil.h"
+//#include "Stencil.h"
 #include "stdio.h"
 #include <ctime>
 
@@ -95,7 +95,7 @@ inline void interpolate(const Grid * grd, Grid * tmpgrd)
 inline Grid* rbgs(Grid* grd, const double * fvec, const int iter)
 {
 	int dimX = (*grd).getXsize();
-	double temp = 0.0;
+	//double temp = 0.0;
 
 	for (int i = 0; i < iter; i++)
 	{
@@ -127,7 +127,7 @@ inline void calNorm(Grid* grd, const double * fvec, double* norm)
 	
 	for (int j = 1; j < dimX; j++)
 	{
-		for (int k = j & 1 + 1; k < dimX; k += 2)
+		for (int k = (j & 1) + 1; k < dimX; k += 2)
 		{
 			r = 0.25*((*grd)(j + 1, k) + (*grd)(j - 1, k) + (*grd)(j, k + 1) + (*grd)(j, k - 1));
 			*norm += r*r;
