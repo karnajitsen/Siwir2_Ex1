@@ -28,7 +28,7 @@ inline double gxy(const double x, const double y)
 	return sin(M_PI * x) * sinh(M_PI * y);
 }
 
-inline Grid** initialize( const double hsize, const int level)
+Grid** initialize( const double hsize, const int level)
 {
 	Grid** arrGrid = NULL;
 	int j = level;
