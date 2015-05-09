@@ -92,7 +92,7 @@ inline void interpolate(const Grid * grd, Grid * tmpgrd)
 	}
 }
 
-inline Grid* rbgs(Grid* grd, const double * fvec, const int iter)
+inline void rbgs(Grid* grd, const double * fvec, const int iter)
 {
 	int dimX = (*grd).getXsize();
 	//double temp = 0.0;
