@@ -151,6 +151,7 @@ inline void calNorm(Grid* grd, const double * fvec, double* norm)
 int main(int argc, char** argv)
 {
   
+	std::cout << "1";
 	if (argc < 3)
 	{
 		std::cout << "Invalid number of argument";
