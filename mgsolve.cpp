@@ -157,6 +157,7 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	std::cout << "1";
 	clock_t tim;
 	int level = atoi(argv[1]);
 	int vcycle = atoi(argv[2]);
@@ -170,7 +171,7 @@ int main(int argc, char** argv)
 	fvec = new double[totdim]();
 
 	tim = clock();
-	
+	std::cout << "2";
 	for (int i = 0; i < vcycle; i++)
 	{		
 		rbgs(grids[0],fvec,V1);
