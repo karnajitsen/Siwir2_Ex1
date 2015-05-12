@@ -71,8 +71,8 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 {
 	size_t len = (*srcgrd).getXsize() - 1;
-	size_t hx = (*srcgrd).getHx() / 2.0;
-	size_t nlen = len * 2 - 1;
+	//size_t hx = (*srcgrd).getHx() / 2.0;
+	//size_t nlen = len * 2 - 1;
 	//Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
 	for (size_t j = 0; j < len; j++)
 	{
@@ -121,7 +121,7 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 }
 
-void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+	void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 	size_t dimX = (*xgrd).getXsize() - 1;
 	double hX = (*xgrd).getHx() ;
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	//size_t totdim = vdim*vdim;
+	size_t totdim = vdim*vdim;
 
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
