@@ -10,14 +10,15 @@
 class Grid
 {
 
-	__declspec(align(128)) double * __restrict data = NULL;
+	//__declspec(align(128)) 
+	double * __restrict data = NULL;
 	size_t sizeX, sizeY, ld, totLength;
 	double hx, hy;
 	
 public:
-	explicit Grid()
+	explicit Grid
 	{
-		data = new double[0]();
+		data = (double*)_aligned_malloc(0, ALLIGNMENT);
 		sizeX = 0;
 		sizeY = 0;
 	}
@@ -30,7 +31,7 @@ public:
 		hy = _hy;
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
-		data = new double[ld*y]();
+		data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 
 		for (int j = 0.0; j < sizeX; j++)
 		{
