@@ -10,7 +10,7 @@
 
 //#define M_PI 3.14
 #include <cmath>
-
+#include <stdlib.h>
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
@@ -25,7 +25,8 @@ Grid** initialize(double hsize, const int level)
 {
 	int je = level;
 	int gdim = pow(2, je) + 1;
-	Grid** arrGrid = (Grid**)_aligned_malloc(level*sizeof(Grid*), 1024);
+	Grid** arrGrid = NULL;
+	posix_memalign(arrGrid, ALLIGNMENT, level*sizeof(Grid*));
 	for (int i = 0; i < level; i++)
 	{
 		//std::cout << &arrGrid[i] << "\n";
