@@ -35,7 +35,7 @@ Grid** initialize(double hsize, const size_t level)
 
 }
 
-inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
+void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*grd).getXsize() - 1, m = 0;
 	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
@@ -157,7 +157,7 @@ int main(int argc, char** argv)
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	size_t totdim = vdim*vdim;
+	//size_t totdim = vdim*vdim;
 
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
 		for (jl = 1; jl < level - 1; jl++)
 		{
 			vdim = vdim - 2;
-			totdim = vdim*vdim;
+			//totdim = vdim*vdim;
 			rbgs(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[0], xGrids[jl + 1]);
 		}
