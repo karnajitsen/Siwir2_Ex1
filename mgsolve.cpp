@@ -26,7 +26,7 @@ Grid** initialize(double hsize, const int level)
 	int je = level;
 	int gdim = pow(2, je) + 1;
 	Grid** arrGrid = NULL;
-	posix_memalign(arrGrid, ALLIGNMENT, level*sizeof(Grid*));
+	posix_memalign((void **)arrGrid, ALLIGNMENT, level*sizeof(Grid*));
 	for (int i = 0; i < level; i++)
 	{
 		//std::cout << &arrGrid[i] << "\n";
@@ -42,9 +42,9 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	int xlen = (*grd).getXsize() - 1, m = 0;
 	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
-	for (int i = 1; i < xlen; i++)
+	for (size_t i = 1; i < xlen; i++)
 	{
-		for (int j = 1; j < xlen; j++, m++)
+		for (size_t j = 1; j < xlen; j++, m++)
 		{	
 			//std::cout << "j= " << j << " " <<"888888\n ";
 			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*((*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
@@ -55,9 +55,9 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 	
 	int rlen = (*rgrid).getXsize() - 1;
 	//std::cout << "j= " << (*rgrid).getXsize() << " " << "666666\n ";
-	for (int i = 1; i < rlen; i++)
+	for (size_t i = 1; i < rlen; i++)
 	{
-		for (int j = 1; j < rlen; j++)
+		for (size_t j = 1; j < rlen; j++)
 		{
 			//std::cout << "j= " << j << " " << "999999\n ";
 			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
@@ -74,12 +74,12 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 	int hx = (*srcgrd).getHx() / 2.0;
 	int nlen = len * 2 - 1;
 	Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
-	for (int j = 0; j < len; j++)
+	for (size_t j = 0; j < len; j++)
 	{
-		int k = 2 * j;
-		for (int i = 0; i < len; i++)
+		size_t k = 2 * j;
+		for (size_t i = 0; i < len; i++)
 		{
-			int l = 2 * i;
+			size_t l = 2 * i;
 			(*tgtgrd)(k, l) += (*srcgrd)(i, j);
 			(*tgtgrd)(k + 1, l) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
 			(*tgtgrd)(k, l + 1) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
@@ -92,15 +92,15 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 
 inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 {
-	int dimX = (*xgrd).getXsize();
+	size_t dimX = (*xgrd).getXsize();
 	//double temp = 0.0;
 	//std::cout << dimX << "#####";
 
-	for (int i = 0; i < iter; i++)
+	for (size_t i = 0; i < iter; i++)
 	{
-		for (int j = 1; j < dimX-1; j++)
+		for (size_t j = 1; j < dimX - 1; j++)
 		{
-			for (int k = ((j + 1) & 0x1) + 1; k < dimX-1; k += 2)
+			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
 				//std::cout << "k= " << k << " " <<"888888\n ";
 				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
@@ -108,9 +108,9 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 
 		}
 
-		for (int j = 1; j < dimX-1; j++)
+		for (size_t j = 1; j < dimX - 1; j++)
 		{
-			for (int k = (j & 0x1)+1; k < dimX-1; k += 2)
+			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
 				//std::cout << "k= " << k << " " << "999999\n ";
 				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
@@ -123,15 +123,15 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 
 inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
-	int dimX = (*xgrd).getXsize()-1;
+	size_t dimX = (*xgrd).getXsize() - 1;
 	double hX = (*xgrd).getHx() ;
 	double r = 0.0;
 
 	*norm = 0.0;
 
-	for (int j = 1; j < dimX; j++)
+	for (size_t j = 1; j < dimX; j++)
 	{
-		for (int k = 1; k < dimX; k++)
+		for (size_t k = 1; k < dimX; k++)
 		{
 			r = hX*(*fgrd)(j, k) - 4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) 
 				+ (*xgrd)(j, k - 1);
@@ -170,13 +170,13 @@ int main(int argc, char** argv)
 	tim = clock();
 
 	
-	for (int i = 0; i < vcycle; i++)
+	for (size_t i = 0; i < vcycle; i++)
 	{
 		rbgs(xGrids[0], fGrids[0], V1);
 		//std::cout << "3";
 				
 		restriction(xGrids[0], fGrids[0],xGrids[1]);
-		int j = 0;
+		size_t j = 0;
 		//rstrToCoarse(rvec, totdim);
 		for (j = 1; j < level-1; j++)
 		{
@@ -187,7 +187,7 @@ int main(int argc, char** argv)
 			//rstrToCoarse(rvec, totdim);
 		}
 		
-		for (int j = level-1; j > 0; j--)
+		for (size_t j = level - 1; j > 0; j--)
 		{	
 			
 			rbgs(xGrids[j], fGrids[j], V2);

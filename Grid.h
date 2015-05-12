@@ -32,7 +32,7 @@ public:
 		hy = _hy;
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
-		posix_memalign(&data, ALLIGNMENT, ld*y*sizeof(double));
+		posix_memalign((void **)&data, ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 
 		for (int j = 0.0; j < sizeX; j++)
