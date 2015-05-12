@@ -8,7 +8,7 @@
 #include <malloc.h>
 
 
-#define M_PI 3.14
+//#define M_PI 3.14
 #include <cmath>
 
 #define XDOMLOW 0.0

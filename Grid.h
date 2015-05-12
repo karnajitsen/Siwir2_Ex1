@@ -16,7 +16,7 @@ class Grid
 	double hx, hy;
 	
 public:
-	explicit Grid
+	explicit Grid()
 	{
 		data = (double*)_aligned_malloc(0, ALLIGNMENT);
 		sizeX = 0;
