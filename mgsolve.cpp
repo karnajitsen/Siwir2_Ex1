@@ -2,12 +2,9 @@
 #include "Grid.h"
 #include <stdlib.h>
 //#include "Stencil.h"
-#include "stdio.h"
 #include <ctime>
-#include <memory>
-#include <malloc.h>
-
-
+//#include <memory>
+//#include <malloc.h>
 //#define M_PI 3.14
 #include <cmath>
 #include <stdlib.h>
@@ -153,7 +150,6 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	//std::cout << argv[1] << " " << argv[2];
 	clock_t tim;
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
@@ -177,23 +173,20 @@ int main(int argc, char** argv)
 				
 		restriction(xGrids[0], fGrids[0],xGrids[1]);
 		size_t jl = 0;
-		//rstrToCoarse(rvec, totdim);
-		for (jl = 1; jl < level-1; jl++)
+		
+		for (jl = 1; jl < level - 1; jl++)
 		{
 			vdim = vdim - 2;
 			totdim = vdim*vdim;
-			rbgs(xGrids[jl], fGrids[jl], V1); 
-			restriction(xGrids[jl], fGrids[0], xGrids[jl+1]);
-			//rstrToCoarse(rvec, totdim);
+			rbgs(xGrids[jl], fGrids[jl], V1);
+			restriction(xGrids[jl], fGrids[0], xGrids[jl + 1]);
 		}
 		
 		for (size_t j = level - 1; j > 0; j--)
 		{	
 			
 			rbgs(xGrids[j], fGrids[j], V2);
-			//std::cout << "66" << "\n";
-			interpolate(xGrids[j], xGrids[j-1]);
-			
+			interpolate(xGrids[j], xGrids[j-1]);			
 		}
 		//std::cout << "55" << "\n";
 		oldnorm = newnorm;
