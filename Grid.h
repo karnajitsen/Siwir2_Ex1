@@ -6,7 +6,7 @@
 //#include <memory>
 //#include <malloc.h>
 #define LD 16
-#define ALLIGNMENT 1024
+#define ALLIGNMENT 32
 //#define M_PI 3.14
 class Grid
 {
