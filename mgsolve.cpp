@@ -121,7 +121,7 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 }
 
-	void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 	size_t dimX = (*xgrd).getXsize() - 1;
 	double hX = (*xgrd).getHx() ;
