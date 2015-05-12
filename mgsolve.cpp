@@ -23,11 +23,11 @@ using namespace std;
 
 Grid** initialize(double hsize, const int level)
 {
-	int je = level;
-	int gdim = pow(2, je) + 1;
+	size_t je = level;
+	size_t gdim = pow(2, je) + 1;
 	Grid** arrGrid = NULL;
 	posix_memalign((void **)arrGrid, ALLIGNMENT, level*sizeof(Grid*));
-	for (int i = 0; i < level; i++)
+	for (size_t i = 0; i < level; i++)
 	{
 		//std::cout << &arrGrid[i] << "\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize);
@@ -40,7 +40,7 @@ Grid** initialize(double hsize, const int level)
 
 inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
-	int xlen = (*grd).getXsize() - 1, m = 0;
+	size_t xlen = (*grd).getXsize() - 1, m = 0;
 	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
 	for (size_t i = 1; i < xlen; i++)
 	{
@@ -53,7 +53,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 	
-	int rlen = (*rgrid).getXsize() - 1;
+	size_t rlen = (*rgrid).getXsize() - 1;
 	//std::cout << "j= " << (*rgrid).getXsize() << " " << "666666\n ";
 	for (size_t i = 1; i < rlen; i++)
 	{
@@ -70,9 +70,9 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 
 inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 {
-	int len = (*srcgrd).getXsize()-1;
-	int hx = (*srcgrd).getHx() / 2.0;
-	int nlen = len * 2 - 1;
+	size_t len = (*srcgrd).getXsize() - 1;
+	size_t hx = (*srcgrd).getHx() / 2.0;
+	size_t nlen = len * 2 - 1;
 	Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
 	for (size_t j = 0; j < len; j++)
 	{
@@ -155,8 +155,8 @@ int main(int argc, char** argv)
 
 	//std::cout << argv[1] << " " << argv[2];
 	clock_t tim;
-	int level = atoi(argv[1]);
-	int vcycle = atoi(argv[2]);
+	size_t level = atoi(argv[1]);
+	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
