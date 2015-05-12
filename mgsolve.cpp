@@ -21,7 +21,7 @@
 
 using namespace std;
 
-Grid** initialize(double hsize, const int level)
+Grid** initialize(double hsize, const size_t level)
 {
 	size_t je = level;
 	size_t gdim = pow(2, je) + 1;
@@ -73,7 +73,7 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 	size_t len = (*srcgrd).getXsize() - 1;
 	size_t hx = (*srcgrd).getHx() / 2.0;
 	size_t nlen = len * 2 - 1;
-	Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
+	//Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
 	for (size_t j = 0; j < len; j++)
 	{
 		size_t k = 2 * j;
@@ -90,7 +90,7 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 	}
 }
 
-inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
+inline void rbgs(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
 	//double temp = 0.0;
@@ -121,7 +121,7 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 
 }
 
-inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 	size_t dimX = (*xgrd).getXsize() - 1;
 	double hX = (*xgrd).getHx() ;
@@ -161,7 +161,7 @@ int main(int argc, char** argv)
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	size_t totdim = vdim*vdim;
+	//size_t totdim = vdim*vdim;
 
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
@@ -176,14 +176,14 @@ int main(int argc, char** argv)
 		//std::cout << "3";
 				
 		restriction(xGrids[0], fGrids[0],xGrids[1]);
-		size_t j = 0;
+		size_t jl = 0;
 		//rstrToCoarse(rvec, totdim);
-		for (j = 1; j < level-1; j++)
+		for (jl = 1; jl < level-1; jl++)
 		{
 			vdim = vdim - 2;
 			totdim = vdim*vdim;
-			rbgs(xGrids[j], fGrids[j], V1); 
-			restriction(xGrids[j], fGrids[0], xGrids[j+1]);
+			rbgs(xGrids[jl], fGrids[jl], V1); 
+			restriction(xGrids[jl], fGrids[0], xGrids[jl+1]);
 			//rstrToCoarse(rvec, totdim);
 		}
 		

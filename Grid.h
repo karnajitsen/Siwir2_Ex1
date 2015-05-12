@@ -19,7 +19,7 @@ class Grid
 public:
 	explicit Grid()
 	{
-		posix_memalign(&data,0, ALLIGNMENT);
+		posix_memalign((void **)&data, 0, ALLIGNMENT);
 		sizeX = 0;
 		sizeY = 0;
 	}
@@ -35,7 +35,7 @@ public:
 		posix_memalign((void **)&data, ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 
-		for (int j = 0.0; j < sizeX; j++)
+		for (double j = 0.0; (size_t)j < sizeX; j++)
 		{
 			double k = j*hx;
 			double l = (sizeX - 1.0)*hx;
@@ -79,7 +79,7 @@ public:
 
 	inline Grid* operator-=(const Grid* rhs)
 	{
-
+		return this;
 	}
 		
 	inline size_t getXsize() const
