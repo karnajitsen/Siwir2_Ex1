@@ -19,16 +19,6 @@
 
 using namespace std;
 
-inline void calculatefx(double * fvec)
-{
-
-}
-
-inline double gxy(const double x, const double y)
-{
-	return sin(M_PI * x) * sinh(M_PI * y);
-}
-
 Grid** initialize(double hsize, const int level)
 {
 	int je = level;
@@ -36,20 +26,8 @@ Grid** initialize(double hsize, const int level)
 	Grid** arrGrid = (Grid**)_aligned_malloc(level*sizeof(Grid*), 1024);
 	for (int i = 0; i < level; i++)
 	{
-		std::cout << &arrGrid[i] << "\n";
+		//std::cout << &arrGrid[i] << "\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize);
-		for (int j = 0.0; j < gdim; j++)
-		{
-			double k = j*hsize;
-			double l = (gdim - 1.0)*hsize;
-			(*arrGrid[i])(j, 0) = gxy(k, 0.0);
-			(*arrGrid[i])(0, j) = gxy(0.0, k);
-			(*arrGrid[i])(j, gdim - 1) = gxy(k, l);
-			(*arrGrid[i])(gdim - 1, j) = gxy(l, k);
-
-			//cout << j << " " << gdim - 1 << " " << grd(j, 0) << " " << grd(0, j) << " " << grd(j, gdim - 1) << " " << grd(gdim - 1, j) << "\n\n";
-		}
-		
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
 	}
@@ -60,52 +38,51 @@ Grid** initialize(double hsize, const int level)
 inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	int xlen = (*grd).getXsize() - 1, m = 0;
-	Grid tmpgrd(xlen + 1, xlen + 1, 0.0, 0.0);
+	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
 	for (int i = 1; i < xlen; i++)
 	{
 		for (int j = 1; j < xlen; j++, m++)
-		{
-			tmpgrd(i,j) = (*fgrd)(i,j) - 4.0*(*grd)(i, j) - (*grd)(i, j - 1) - (*grd)(i, j + 1) - (*grd)(i - 1, j) - (*grd)(i + 1, j);
+		{	
+			//std::cout << "j= " << j << " " <<"888888\n ";
+			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*((*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
+					      - (*grd)(j - 1, i) - (*grd)(j + 1, i));
+			
 		}
 	}
-
-	int rlen = (*rgrid).getXsize() - 2;
+	
+	int rlen = (*rgrid).getXsize() - 1;
+	//std::cout << "j= " << (*rgrid).getXsize() << " " << "666666\n ";
 	for (int i = 1; i < rlen; i++)
 	{
 		for (int j = 1; j < rlen; j++)
 		{
-			(*rgrid)(i, j) = (tmpgrd(2 * i - 1, 2 * j - 1) + tmpgrd(2 * i - 1, 2 * j + 1) +
-				tmpgrd(2 * i + 1, 2 * j - 1) + tmpgrd(2 * i + 1, 2 * j + 1) +
-				2.0*(tmpgrd(2 * i, 2 * j - 1) + tmpgrd(2 * i, 2 * j + 1) +
-				tmpgrd(2 * i - 1, 2 * j) + tmpgrd(2 * i + 1, 2 * j)) + 4 * tmpgrd(2 * i, 2 * j)) / 16.0;
+			//std::cout << "j= " << j << " " << "999999\n ";
+			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
+				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
+				2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
+				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4 * tmpgrd(2 * j, 2 * i)) / 16.0;
 		}
 	}
 }
 
-inline void restriction(double * rvec, int const totdim)
+inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 {
-	for (int i = 1, j = 0; i < totdim; i += 2, j++)
-	{
-		rvec[j] = 0.5 * rvec[i] + 0.25 * (rvec[i - 1] + rvec[i + 1]);
-	}
-}
-
-inline void interpolate(const Grid * grd, Grid * tmpgrd)
-{
-	int len = (*grd).getXsize();
-	int hx = (*grd).getHx() / 2.0;
+	int len = (*srcgrd).getXsize()-1;
+	int hx = (*srcgrd).getHx() / 2.0;
 	int nlen = len * 2 - 1;
-	tmpgrd = new Grid(nlen, nlen, hx, hx);
-	for (int i = 0; i < len; i++)
+	Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
+	for (int j = 0; j < len; j++)
 	{
-		int k = 2 * i;
-		for (int j = 0; j < len; j++)
+		int k = 2 * j;
+		for (int i = 0; i < len; i++)
 		{
-			int l = 2 * j;
-			(*tmpgrd)(k, l) = (*grd)(i, j);
-			(*tmpgrd)(k + 1, l) = 0.5*((*grd)(i, j) + (*grd)(i + 1, j));
-			(*tmpgrd)(k, l + 1) = 0.5*((*grd)(i, j) + (*grd)(i, j + 1));
-			(*tmpgrd)(k + 1, l + 1) = 0.25*((*grd)(i, j) + (*grd)(i + 1, j) + (*grd)(i, j + 1) + +(*grd)(i + 1, j + 1));
+			int l = 2 * i;
+			(*tgtgrd)(k, l) += (*srcgrd)(i, j);
+			(*tgtgrd)(k + 1, l) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
+			(*tgtgrd)(k, l + 1) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
+			(*tgtgrd)(k + 1, l + 1) += 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
+											+(*srcgrd)(i + 1, j + 1));
+			
 		}
 	}
 }
@@ -114,6 +91,7 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 {
 	int dimX = (*xgrd).getXsize();
 	//double temp = 0.0;
+	//std::cout << dimX << "#####";
 
 	for (int i = 0; i < iter; i++)
 	{
@@ -121,8 +99,8 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 		{
 			for (int k = ((j + 1) & 0x1) + 1; k < dimX-1; k += 2)
 			{
-				std::cout << "888888\n ";
-				(*xgrd)(j, k) = 0.25*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) + (*xgrd)(j, k - 1));
+				//std::cout << "k= " << k << " " <<"888888\n ";
+				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
 			}
 
 		}
@@ -131,8 +109,8 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 		{
 			for (int k = (j & 0x1)+1; k < dimX-1; k += 2)
 			{
-				std::cout << "99999";
-				(*xgrd)(j, k) = 0.25*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) + (*xgrd)(j, k - 1));
+				//std::cout << "k= " << k << " " << "999999\n ";
+				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
 			}
 
 		}
@@ -142,36 +120,30 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const int iter)
 
 inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
-	int dimX = (*xgrd).getXsize();
+	int dimX = (*xgrd).getXsize()-1;
+	double hX = (*xgrd).getHx() ;
 	double r = 0.0;
 
+	*norm = 0.0;
+
 	for (int j = 1; j < dimX; j++)
 	{
-		for (int k = (j & 1) + 1; k < dimX; k += 2)
+		for (int k = 1; k < dimX; k++)
 		{
-			r = 0.25*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) + (*xgrd)(j, k - 1));
+			r = hX*(*fgrd)(j, k) - 4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) 
+				+ (*xgrd)(j, k - 1);
 			*norm += r*r;
 		}
 
 	}
-
-	for (int j = 1; j < dimX; j++)
-	{
-		for (int k = j & 1; k < dimX; k += 2)
-		{
-			r = 0.25*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) + (*xgrd)(j, k - 1));
-			*norm += r*r;
-		}
-
-	}
-
+	
 	*norm = sqrt(*norm / dimX / dimX);
 }
 
 int main(int argc, char** argv)
 {
 
-	std::cout << "1";
+	//std::cout << "1";
 	if (argc < 3)
 	{
 		std::cout << "Invalid number of argument";
@@ -193,45 +165,46 @@ int main(int argc, char** argv)
 	//fvec = new double[totdim]();
 
 	tim = clock();
-	
 
+	
 	for (int i = 0; i < vcycle; i++)
 	{
-
-		std::cout << "3";
 		rbgs(xGrids[0], fGrids[0], V1);
-		std::cout << "3";
+		//std::cout << "3";
+				
 		restriction(xGrids[0], fGrids[0],xGrids[1]);
+		int j = 0;
 		//rstrToCoarse(rvec, totdim);
-		for (int j = 1; j < level; j++)
+		for (j = 1; j < level-1; j++)
 		{
 			vdim = vdim - 2;
 			totdim = vdim*vdim;
-			rbgs(xGrids[j], fGrids[j], V1);
+			rbgs(xGrids[j], fGrids[j], V1); 
 			restriction(xGrids[j], fGrids[0], xGrids[j+1]);
 			//rstrToCoarse(rvec, totdim);
 		}
-
-		rbgs(xGrids[level + 1], fGrids[level + 1], V1);
-		Grid * tmpgrid = NULL;
-		interpolate(xGrids[level + 1], tmpgrid);
-		for (int j = level; j > 0; j--)
-		{
-			tmpgrid = NULL;
+		
+		for (int j = level-1; j > 0; j--)
+		{	
+			
 			rbgs(xGrids[j], fGrids[j], V2);
-			interpolate(xGrids[j], tmpgrid);
+			//std::cout << "66" << "\n";
+			interpolate(xGrids[j], xGrids[j-1]);
+			
 		}
+		//std::cout << "55" << "\n";
 		oldnorm = newnorm;
 		calNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
 			convrate = newnorm / oldnorm;
 		
-		std::cout << "Residual after " << i + 1 << "V-Cycle = " << newnorm;
-		std::cout << "Covergence rate after " << i + 1 << "V-Cycle = " << convrate;
+		std::cout << "Residual after " << i + 1 << "V-Cycle = " << newnorm << '\n';
+		std::cout << "Covergence rate after " << i + 1 << "V-Cycle = " << convrate << '\n';
 	}
 
 	tim = clock() - tim;
 
-	std::cout << "Time spend for two V - cycles= " << tim;
+	std::cout << "Time spend for two V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
+
 	return 0;
 }

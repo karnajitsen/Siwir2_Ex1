@@ -1,11 +1,14 @@
 #pragma once
 #include<iostream>
 #include <assert.h>
+#include <cmath>
 #define LD 16
+#define ALLIGNMENT 1024
+#define M_PI 3.14
 class Grid
 {
 
-	double * __restrict data = NULL;
+	__declspec(align(128)) double * __restrict data = NULL;
 	size_t sizeX, sizeY, ld, totLength;
 	double hx, hy;
 	
@@ -26,25 +29,41 @@ public:
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
 		data = new double[ld*y]();
-		data++;
+
+		for (int j = 0.0; j < sizeX; j++)
+		{
+			double k = j*hx;
+			double l = (sizeX - 1.0)*hx;
+			data[j] = gxy(k, 0.0);
+			data[j*ld] = gxy(0.0, k);
+			data[j + ld * (sizeX - 1)] = gxy(k, l);
+			data[j * ld + (sizeX - 1)] = gxy(l, k);
+		}
+		//data++;
 	}
 	~Grid()
 	{
-		--data;
+		//--data;
 		free(data);
 	}
 
+	inline double gxy(const double x, const double y)
+	{
+		return sin(M_PI * x) * sinh(M_PI * y);
+	}
+
+
 	inline double& operator()(const int x, const int y)
 	{
-		assert((unsigned) x < sizeX);
-		assert((unsigned) y < sizeY);
+		assert(x < sizeX);
+		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
 	inline double& operator()(const int x, const int y) const
 	{
-		assert((unsigned)x < sizeX);
-		assert((unsigned)y < sizeY);
+		assert(x < sizeX);
+		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
@@ -55,7 +74,7 @@ public:
 
 	inline Grid* operator-=(const Grid* rhs)
 	{
-		return this;
+
 	}
 		
 	inline size_t getXsize() const
