@@ -34,7 +34,7 @@ Grid** initialize(double hsize, const size_t level)
 
 }
 
-void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
+inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*grd).getXsize() - 1, m = 0;
 	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
@@ -142,7 +142,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 int main(int argc, char** argv)
 {
 
-	std::cout << "1";
+	//std::cout << "1";
 	if (argc < 3)
 	{
 		std::cout << "Invalid number of argument";
