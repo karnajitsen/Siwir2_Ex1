@@ -3,8 +3,8 @@
 #include <assert.h>
 #include <cmath>
 #include <stdlib.h>
-//#include <memory>
-//#include <malloc.h>
+#include <memory>
+#include <malloc.h>
 #define LD 16
 #define ALLIGNMENT 32
 //#define M_PI 3.14
@@ -19,7 +19,7 @@ class Grid
 public:
 	explicit Grid()
 	{
-		posix_memalign((void **)&data, 0, ALLIGNMENT);
+		data = (double*)memalign(ALLIGNMENT, 0);
 		sizeX = 0;
 		sizeY = 0;
 	}
@@ -32,7 +32,7 @@ public:
 		hy = _hy;
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
-		posix_memalign((void **)&data, ALLIGNMENT, ld*y*sizeof(double));
+		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 
 		for (int j = 0.0; (size_t)j < sizeX; j++)

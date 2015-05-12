@@ -4,7 +4,7 @@
 //#include "Stencil.h"
 #include <ctime>
 //#include <memory>
-//#include <malloc.h>
+#include <malloc.h>
 //#define M_PI 3.14
 #include <cmath>
 #include <stdlib.h>
@@ -22,8 +22,7 @@ Grid** initialize(double hsize, const size_t level)
 {
 	size_t je = level;
 	size_t gdim = pow(2, je) + 1;
-	Grid** arrGrid = NULL;
-	posix_memalign((void **)arrGrid, ALLIGNMENT, level*sizeof(Grid*));
+	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
 		//std::cout << &arrGrid[i] << "\n";
