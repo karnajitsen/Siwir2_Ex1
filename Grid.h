@@ -55,15 +55,15 @@ public:
 
 	inline double& operator()(const int x, const int y)
 	{
-		assert(x < sizeX);
-		assert(y < sizeY);
+		assert((unsigned int)x < sizeX);
+		assert((unsigned int)y < sizeY);
 		return data[y*ld + x];
 	}
 
 	inline double& operator()(const int x, const int y) const
 	{
-		assert(x < sizeX);
-		assert(y < sizeY);
+		assert((unsigned int)x < sizeX);
+		assert((unsigned int)y < sizeY);
 		return data[y*ld + x];
 	}
 
