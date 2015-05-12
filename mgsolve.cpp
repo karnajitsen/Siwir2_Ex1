@@ -4,6 +4,8 @@
 //#include "Stencil.h"
 #include "stdio.h"
 #include <ctime>
+#include <memory>
+#include <malloc.h>
 
 
 #define M_PI 3.14
