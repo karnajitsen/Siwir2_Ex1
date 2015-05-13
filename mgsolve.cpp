@@ -43,8 +43,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 		{	
 			//std::cout << "j= " << j << " " <<"888888\n ";
 			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
-					      + (*grd)(j - 1, i) + (*grd)(j + 1, i);
-			
+					      + (*grd)(j - 1, i) + (*grd)(j + 1, i);			
 		}
 	}
 	
@@ -85,19 +84,16 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 	}
 }
 
-inline void rbgs(Grid* xgrd, const Grid* fgrd, const size_t iter)
+inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
-	//double temp = 0.0;
-	//std::cout << dimX << "#####";
-
+	
 	for (size_t i = 0; i < iter; i++)
 	{
 		for (size_t j = 1; j < dimX - 1; j++)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				//std::cout << "k= " << k << " " <<"888888\n ";
 				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
 			}
 
@@ -107,7 +103,6 @@ inline void rbgs(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				//std::cout << "k= " << k << " " << "999999\n ";
 				(*xgrd)(k,j) = 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
 			}
 
@@ -155,73 +150,64 @@ int main(int argc, char** argv)
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	//size_t totdim = vdim*vdim;
-
+	
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
 
     std::string fname1 = std::string("data/solutionfunc.txt");
-    std::ofstream	fOut(fname1);
-        for (int y = 0; y < gdim; ++y) {
-            for (int x = 0; x < gdim; ++x) {
+    std::ofstream	fOut1(fname1);
+        for (int y = 0; (size_t)y < gdim; ++y) {
+			for (int x = 0; (size_t)x < gdim; ++x) {
 
-                        fOut << x*hsize << "\t" << y*hsize << "\t" << (*fGrids[0])(x, y) << std::endl;
+                        fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*fGrids[0])(x, y) << std::endl;
             }
-            fOut << std::endl;
+            fOut1 << std::endl;
         }
-        fOut.close();
-	//fvec = new double[totdim]();
-
+        fOut1.close();
+	
 	tim = clock();
 
 	
 	for (size_t i = 0; i < vcycle; i++)
     {
-		rbgs(xGrids[0], fGrids[0], V1);
-		//std::cout << "3";
-				
-		restriction(xGrids[0], fGrids[0],xGrids[1]);
 		size_t jl = 0;
 		
-		for (jl = 1; jl < level - 1; jl++)
+		for (jl = 0; jl < level - 1; jl++)
 		{
-			vdim = vdim - 2;
-			//totdim = vdim*vdim;
-			rbgs(xGrids[jl], fGrids[jl], V1);
+			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[0], xGrids[jl + 1]);
 		}
 		
 		for (size_t j = level - 1; j > 0; j--)
 		{	
-            rbgs(xGrids[j], fGrids[j], V2);
+            smooth(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j-1]);			
 		}
-		//std::cout << "55" << "\n";
+		
         oldnorm = newnorm;
 		calNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
             convrate = newnorm / oldnorm;
 		
-		std::cout << "Residual after " << i + 1 << "V-Cycle = " << newnorm << '\n';
-		std::cout << "Covergence rate after " << i + 1 << "V-Cycle = " << convrate << '\n';
+		std::cout << "Residual after " << i + 1 << " V-Cycle = " << newnorm << '\n';
+		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
 
-        std::string fname = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt") ;
-        std::ofstream	fOut(fname);
-            for (int y = 0; y < gdim; ++y) {
-                for (int x = 0; x < gdim; ++x) {
-
-                            fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-                }
-                fOut << std::endl;
-            }
-            fOut.close();
-	}
-
-
+     }
 
 	tim = clock() - tim;
 
 	std::cout << "Time spend for two V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
+
+	std::string fname = std::string("data/solution.txt");
+	std::ofstream	fOut(fname);
+	for (int y = 0; y < gdim; ++y) {
+		for (int x = 0; x < gdim; ++x) {
+
+			fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+		}
+		fOut << std::endl;
+	}
+	fOut.close();
 
 	return 0;
 }
