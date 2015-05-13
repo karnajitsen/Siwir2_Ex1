@@ -37,7 +37,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*grd).getXsize() - 1;
 	double hx = (*grd).getHx();
-	double perf = 1 / hx / hx;
+	double perf = 1.0 / hx / hx;
 	Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
 	for (size_t i = 1; i < xlen; i++)
 	{
@@ -90,7 +90,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
-	double perf = 1 / hx / hx;
+	double perf = 1.0 / hx / hx;
 	
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -122,7 +122,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	size_t dimX = (*xgrd).getXsize() - 1;
 	double hx = (*xgrd).getHx() ;
 	double r = 0.0;
-	double perf = 1 / hx / hx;
+	double perf = 1.0 / hx / hx;
 
 	*norm = 0.0;
 
