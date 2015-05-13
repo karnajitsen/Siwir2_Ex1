@@ -24,7 +24,7 @@ Grid** initialize(double hsize, const size_t level)
 	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
-		//std::cout << &arrGrid[i] << "\n";
+		std::cout << hsize << "\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize);
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
@@ -160,7 +160,7 @@ int main(int argc, char** argv)
 	size_t gdim = pow(2, level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
-	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
+	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1);
 	
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
