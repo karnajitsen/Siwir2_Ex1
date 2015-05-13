@@ -1,11 +1,10 @@
 #include<iostream>
+#include<fstream>
 #include "Grid.h"
 #include <stdlib.h>
-//#include "Stencil.h"
 #include <ctime>
-//#include <memory>
+#include <string>
 #include <malloc.h>
-//#define M_PI 3.14
 #include <cmath>
 #include <stdlib.h>
 #define XDOMLOW 0.0
@@ -166,7 +165,7 @@ int main(int argc, char** argv)
 
 	
 	for (size_t i = 0; i < vcycle; i++)
-	{
+    {
 		rbgs(xGrids[0], fGrids[0], V1);
 		//std::cout << "3";
 				
@@ -188,14 +187,25 @@ int main(int argc, char** argv)
 			interpolate(xGrids[j], xGrids[j-1]);			
 		}
 		//std::cout << "55" << "\n";
-		oldnorm = newnorm;
+        oldnorm = newnorm;
 		calNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
-			convrate = newnorm / oldnorm;
+            convrate = newnorm / oldnorm;
 		
 		std::cout << "Residual after " << i + 1 << "V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << "V-Cycle = " << convrate << '\n';
 	}
+
+    std::string fname = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt") ;
+    std::ofstream	fOut(fname);
+        for (int y = 0; y < gdim; ++y) {
+            for (int x = 0; x < gdim; ++x) {
+
+                        fOut << x*hx << "\t" << y*hx << "\t" << (*xGrids[0])(x, y) << std::endl;
+            }
+            fOut << std::endl;
+        }
+        fOut.close();
 
 	tim = clock() - tim;
 
