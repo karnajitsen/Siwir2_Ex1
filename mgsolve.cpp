@@ -43,19 +43,17 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{	
-			//std::cout << "j= " << j << " " <<"888888\n ";
 			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
 					      + (*grd)(j - 1, i) + (*grd)(j + 1, i))*perf;			
 		}
 	}
 	
 	size_t rlen = (*rgrid).getXsize() - 1;
-	//std::cout << "j= " << (*rgrid).getXsize() << " " << "666666\n ";
+	
 	for (size_t i = 1; i < rlen; i++)
 	{
 		for (size_t j = 1; j < rlen; j++)
 		{
-			//std::cout << "j= " << j << " " << "999999\n ";
 			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2* i - 1) + tmpgrd(2 * j,  2*i + 1) +
@@ -98,7 +96,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + perf*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
+				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
 			}
 
@@ -108,7 +106,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + perf*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
+				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
 					(*xgrd)(k, j - 1)));
 			}
 
