@@ -36,14 +36,16 @@ Grid** initialize(double hsize, const size_t level)
 inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*grd).getXsize() - 1;
-	Grid tmpgrd(xlen + 1, xlen + 1, (*grd).getHx(), (*grd).getHx());
+	double hx = (*grd).getHx();
+	double perf = 1 / hx / hx;
+	Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
 	for (size_t i = 1; i < xlen; i++)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{	
 			//std::cout << "j= " << j << " " <<"888888\n ";
-			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
-					      + (*grd)(j - 1, i) + (*grd)(j + 1, i);			
+			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
+					      + (*grd)(j - 1, i) + (*grd)(j + 1, i))*perf;			
 		}
 	}
 	
@@ -87,7 +89,8 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
-	size_t hx = (*xgrd).getHx();
+	double hx = (*xgrd).getHx();
+	double perf = 1 / hx / hx;
 	
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -95,7 +98,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k,j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
+				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + perf*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)));
 			}
 
 		}
@@ -104,7 +108,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
+				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + perf*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
+					(*xgrd)(k, j - 1)));
 			}
 
 		}
@@ -115,8 +120,9 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 	size_t dimX = (*xgrd).getXsize() - 1;
-	double hX = (*xgrd).getHx() ;
+	double hx = (*xgrd).getHx() ;
 	double r = 0.0;
+	double perf = 1 / hx / hx;
 
 	*norm = 0.0;
 
@@ -124,8 +130,8 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = hX*hX*(*fgrd)(j, k) - 4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1)
-				+ (*xgrd)(j, k - 1);
+            r = (*fgrd)(j, k) - perf*(4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1)
+				+ (*xgrd)(j, k - 1));
 			*norm += r*r;
 		}
 
