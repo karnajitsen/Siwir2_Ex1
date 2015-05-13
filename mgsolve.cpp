@@ -90,7 +90,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
 	double perf = 1.0 / hx / hx;
-	double 
+	//double 
 	
 	for (size_t i = 0; i < iter; i++)
 	{
