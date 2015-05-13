@@ -131,7 +131,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 
 	}
 	
-	*norm = sqrt(*norm / dimX / dimX);
+	*norm = sqrt(*norm / dimX+1 / dimX+1);
 }
 
 inline double gxy(const double x, const double y)
