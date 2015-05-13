@@ -97,12 +97,12 @@ public:
 		return totLength;
 	}
 
-	inline size_t getHx() const
+	inline double getHx() const
 	{
 		return hx;
 	}
 
-	inline size_t getHy() const
+	inline double getHy() const
 	{
 		return hy;
 	}
