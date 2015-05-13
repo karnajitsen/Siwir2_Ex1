@@ -44,8 +44,8 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{	
-			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
-					      + (*grd)(j - 1, i) + (*grd)(j + 1, i))*perf;			
+			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
+					      - (*grd)(j - 1, i) - (*grd)(j + 1, i))*perf;			
 		}
 	}
 	
