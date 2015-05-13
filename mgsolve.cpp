@@ -75,8 +75,8 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 		{
 			size_t l = 2 * i;
 			(*tgtgrd)(l,k) += (*srcgrd)(i, j);
-			(*tgtgrd)(l,k + 1) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
-			(*tgtgrd)( l + 1,k) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
+			(*tgtgrd)(l,k + 1) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i , j+1));
+			(*tgtgrd)( l + 1,k) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i+1, j ));
 			(*tgtgrd)(l + 1, k + 1) += 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
 											+(*srcgrd)(i + 1, j + 1));
 			
