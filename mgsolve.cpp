@@ -45,7 +45,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 		for (size_t j = 1; j < xlen; j++)
 		{	
 			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
-					      - (*grd)(j - 1, i) - (*grd)(j + 1, i))*perf;			
+					      - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
 	}
 	
@@ -89,7 +89,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
-	//double perf = 1.0 / hx / hx;
+	double perf = 1.0 / hx / hx;
+	double 
 	
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -97,8 +98,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1)));
+				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1));
 			}
 
 		}
@@ -107,8 +108,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
-					(*xgrd)(k, j - 1)));
+				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
+					(*xgrd)(k, j - 1));
 			}
 
 		}
@@ -160,7 +161,7 @@ int main(int argc, char** argv)
 	size_t gdim = pow(2, level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
-	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1);
+	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
