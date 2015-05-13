@@ -133,6 +133,11 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	*norm = sqrt(*norm / dimX / dimX);
 }
 
+inline double gxy(const double x, const double y)
+{
+	return sin(M_PI * x) * sinh(M_PI * y);
+}
+
 int main(int argc, char** argv)
 {
 
@@ -153,13 +158,22 @@ int main(int argc, char** argv)
 	
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
+	Grid sGrid(gdim, gdim, hsize, hsize);
 
-    std::string fname1 = std::string("data/solutionfunc.txt");
+	for (size_t i = 0; i < gdim; i++)
+	{
+		for (size_t j = 0; j < gdim; j++)
+		{
+			sGrid(j, i) = sGrid.gxy(j*hsize, i*hsize);
+		}
+	}
+
+    std::string fname1 = std::string("data/exactsolution.txt");
     std::ofstream	fOut1(fname1);
         for (int y = 0; (size_t)y < gdim; ++y) {
 			for (int x = 0; (size_t)x < gdim; ++x) {
 
-                        fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*fGrids[0])(x, y) << std::endl;
+				fOut1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
             }
             fOut1 << std::endl;
         }
