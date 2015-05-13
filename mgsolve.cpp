@@ -42,8 +42,8 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 		for (size_t j = 1; j < xlen; j++, m++)
 		{	
 			//std::cout << "j= " << j << " " <<"888888\n ";
-			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*((*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
-					      - (*grd)(j - 1, i) - (*grd)(j + 1, i));
+			tmpgrd(j,i) = (*fgrd)(j,i) - 4.0*(*grd)(j, i) + (*grd)(j, i - 1) + (*grd)(j, i + 1) 
+					      + (*grd)(j - 1, i) + (*grd)(j + 1, i);
 			
 		}
 	}
@@ -58,7 +58,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
-				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4 * tmpgrd(2 * j, 2 * i)) / 16.0;
+				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
 		}
 	}
 }
