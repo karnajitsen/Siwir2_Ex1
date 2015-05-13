@@ -38,7 +38,7 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 	size_t xlen = (*grd).getXsize() - 1;
 	double hx = (*grd).getHx();
 	double perf = 1.0 / hx / hx;
-	cout << "AAAAAAAAAAAA " << hx;
+	//cout << "AAAAAAAAAAAA " << hx;
 	Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
 	for (size_t i = 1; i < xlen; i++)
 	{
@@ -129,8 +129,8 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = (*fgrd)(j, k) - perf*(4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1)
-				+ (*xgrd)(j, k - 1));
+            r = (*fgrd)(j, k) - perf*(4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
+				- (*xgrd)(j, k - 1));
 			*norm += r*r;
 		}
 
