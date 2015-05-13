@@ -128,7 +128,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-			r = hX*(*fgrd)(j, k) - 4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1) 
+            r = hX*hX*(*fgrd)(j, k) - 4.0*(*xgrd)(j,k) + (*xgrd)(j + 1, k) + (*xgrd)(j - 1, k) + (*xgrd)(j, k + 1)
 				+ (*xgrd)(j, k - 1);
 			*norm += r*r;
 		}
@@ -159,6 +159,17 @@ int main(int argc, char** argv)
 
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
+
+    std::string fname1 = std::string("data/solutionfunc.txt");
+    std::ofstream	fOut(fname1);
+        for (int y = 0; y < gdim; ++y) {
+            for (int x = 0; x < gdim; ++x) {
+
+                        fOut << x*hsize << "\t" << y*hsize << "\t" << (*fGrids[0])(x, y) << std::endl;
+            }
+            fOut << std::endl;
+        }
+        fOut.close();
 	//fvec = new double[totdim]();
 
 	tim = clock();
@@ -182,8 +193,7 @@ int main(int argc, char** argv)
 		
 		for (size_t j = level - 1; j > 0; j--)
 		{	
-			
-			rbgs(xGrids[j], fGrids[j], V2);
+            rbgs(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j-1]);			
 		}
 		//std::cout << "55" << "\n";
@@ -194,18 +204,20 @@ int main(int argc, char** argv)
 		
 		std::cout << "Residual after " << i + 1 << "V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << "V-Cycle = " << convrate << '\n';
+
+        std::string fname = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt") ;
+        std::ofstream	fOut(fname);
+            for (int y = 0; y < gdim; ++y) {
+                for (int x = 0; x < gdim; ++x) {
+
+                            fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+                }
+                fOut << std::endl;
+            }
+            fOut.close();
 	}
 
-    std::string fname = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt") ;
-    std::ofstream	fOut(fname);
-        for (int y = 0; y < gdim; ++y) {
-            for (int x = 0; x < gdim; ++x) {
 
-                        fOut << x*hx << "\t" << y*hx << "\t" << (*xGrids[0])(x, y) << std::endl;
-            }
-            fOut << std::endl;
-        }
-        fOut.close();
 
 	tim = clock() - tim;
 

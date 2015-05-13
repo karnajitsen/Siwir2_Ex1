@@ -34,11 +34,11 @@ public:
 		totLength = (x - 2)*(y - 2);
 		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
-
+		double l = (sizeX - 1.0)*hx;
 		for (int j = 0.0; (size_t)j < sizeX; j++)
 		{
 			double k = j*hx;
-			double l = (sizeX - 1.0)*hx;
+			
 			data[j] = gxy(k, 0.0);
 			data[j*ld] = gxy(0.0, k);
 			data[j + ld * (sizeX - 1)] = gxy(k, l);
