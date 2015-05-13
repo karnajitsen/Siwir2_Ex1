@@ -190,7 +190,7 @@ int main(int argc, char** argv)
 		for (jl = 0; jl < level - 1; jl++)
 		{
 			smooth(xGrids[jl], fGrids[jl], V1);
-			restriction(xGrids[jl], fGrids[0], xGrids[jl + 1]);
+			restriction(xGrids[jl], fGrids[jl], xGrids[jl + 1]);
 		}
 		
 		for (size_t j = level - 1; j > 0; j--)
