@@ -113,7 +113,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
 
-				std::cout << "\n****xgrid = " << (*xgrd)(k, j) ;
+				std::cout << "\n****xgrid red= " << (*xgrd)(k, j) ;
 			}
 
 		}
@@ -126,7 +126,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 					+ (*xgrd)(k, j - 1)));
 				//(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
 				//	(*xgrd)(k, j - 1));
-				std::cout << "\n****xgrid = " << (*xgrd)(k, j);
+				std::cout << "\n****xgrid black= " << (*xgrd)(k, j);
 			}
 
 		}
