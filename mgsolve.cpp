@@ -208,35 +208,9 @@ int main(int argc, char** argv)
 		
 		for (jl = 0; jl < level - 1; jl++)
 		{
-			/*std::string fnames11 = std::string("data/Downb4_") + std::string(to_string(jl)) + std::string(".txt");
-			std::ofstream	fOutsolt11(fnames11);
-			for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
-				for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
-
-					fOutsolt11 << x* (*xGrids[jl]).getHx() << "\t" << y* (*xGrids[jl]).getHx() << "\t" << (*xGrids[jl])(x, y) << std::endl;
-					//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-				}
-				//fOut << std::endl;
-				fOutsolt11 << std::endl;
-			}
-			fOutsolt11.close();*/
-
-
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 
-			//std::string fnames1 = std::string("data/Down_") + std::string(to_string(jl)) + std::string(".txt");
-			//std::ofstream	fOutsolt1(fnames1);
-			//for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
-			//	for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
-
-			//		fOutsolt1 << x* (*xGrids[jl]).getHx() << "\t" << y* (*xGrids[jl]).getHx() << "\t" << (*xGrids[jl])(x, y) << std::endl;
-			//		//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-			//	}
-			//	//fOut << std::endl;
-			//	fOutsolt1 << std::endl;
-			//}
-			//fOutsolt1.close();
 		}
 		
 		for (size_t j = level - 1; j > 0; j--)
@@ -245,19 +219,7 @@ int main(int argc, char** argv)
 			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
 			(*fGrids[j]).reset();
-
-			//std::string fnames1 = std::string("data/Up_") + std::string(to_string(j)) + std::string(".txt");
-			//std::ofstream	fOutsolt1(fnames1);
-			//for (int y = 0; y < (*xGrids[j-1]).getXsize(); ++y) {
-			//	for (int x = 0; x < (*xGrids[j-1]).getXsize(); ++x) {
-
-			//		fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[j])(x,y) << std::endl;
-			//		//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-			//	}
-			//	//fOut << std::endl;
-			//	fOutsolt1 << std::endl;
-			//}
-			//fOutsolt1.close();
+					
 		}
 		
         oldnorm = newnorm;
@@ -267,9 +229,6 @@ int main(int argc, char** argv)
 		
 		std::cout << "Residual after " << i + 1 << " V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
-
-		
-
      }
 
 	tim = clock() - tim;
