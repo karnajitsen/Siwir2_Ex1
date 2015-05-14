@@ -58,17 +58,17 @@ public:
 	}
 
 
-	inline double& operator()(const int x, const int y)
+	inline double& operator()(const size_t x, const size_t y)
 	{
-		assert((unsigned int)x < sizeX);
-		assert((unsigned int)y < sizeY);
+		assert(x < sizeX);
+		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
-	inline double& operator()(const int x, const int y) const
+	inline double& operator()(const size_t x, const size_t y) const
 	{
-		assert((unsigned int)x < sizeX);
-		assert((unsigned int)y < sizeY);
+		assert(x < sizeX);
+		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
