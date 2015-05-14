@@ -52,6 +52,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 				
+			std::cout << "\n**** rest resd= " << tmpgrd(j,i);
 				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
 	}
@@ -66,6 +67,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2* i - 1) + tmpgrd(2 * j,  2*i + 1) +
 				tmpgrd(2 * j - 1, 2* i) + tmpgrd(2 * j + 1,  2*i)) + 4.0 * tmpgrd(2 * j,  2*i)) / 16.0;
+			std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
 		}
 	}
 }
@@ -113,7 +115,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
 
-				std::cout << "\n****xgrid red= " << (*xgrd)(k, j) ;
+				/*std::cout << "\n****xgrid red= " << (*xgrd)(k, j) ;*/
 			}
 
 		}
@@ -126,7 +128,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 					+ (*xgrd)(k, j - 1)));
 				//(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
 				//	(*xgrd)(k, j - 1));
-				std::cout << "\n****xgrid black= " << (*xgrd)(k, j);
+				/*std::cout << "\n****xgrid black= " << (*xgrd)(k, j);*/
 			}
 
 		}
