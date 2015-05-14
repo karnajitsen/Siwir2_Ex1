@@ -116,8 +116,11 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
+				(*xgrd)(k, j) = 0.25*(((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
+
+				//0.25*((*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
+				//+(*xgrd)(k, j - 1)));
 			}
 
 		}
@@ -126,7 +129,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*((*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
+				(*xgrd)(k, j) = 0.25*(((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
 				
 			}
