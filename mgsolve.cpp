@@ -210,6 +210,19 @@ int main(int argc, char** argv)
 		{
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
+
+			std::string fnames1 = std::string("data/Down_") + std::string(to_string(jl)) + std::string(".txt");
+			std::ofstream	fOutsolt1(fnames1);
+			for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
+				for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
+
+					fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[jl])(x, y) << std::endl;
+					//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
+				}
+				//fOut << std::endl;
+				fOutsolt1 << std::endl;
+			}
+			fOutsolt1.close();
 		}
 		
 		for (size_t j = level - 1; j > 0; j--)
@@ -218,6 +231,19 @@ int main(int argc, char** argv)
 			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
 			(*fGrids[j]).reset();
+
+			std::string fnames1 = std::string("data/Up_") + std::string(to_string(jl)) + std::string(".txt");
+			std::ofstream	fOutsolt1(fnames1);
+			for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
+				for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
+
+					fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[jl])(x, y) << std::endl;
+					//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
+				}
+				//fOut << std::endl;
+				fOutsolt1 << std::endl;
+			}
+			fOutsolt1.close();
 		}
 		
         oldnorm = newnorm;
@@ -228,18 +254,7 @@ int main(int argc, char** argv)
 		std::cout << "Residual after " << i + 1 << " V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
 
-		std::string fnames1 = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt");
-		std::ofstream	fOutsolt1(fnames1);
-		for (int y = 0; y < (*xGrids[i]).getXsize(); ++y) {
-			for (int x = 0; x < (*xGrids[i]).getXsize(); ++x) {
-
-				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-			}
-			//fOut << std::endl;
-			fOutsolt1 << std::endl;
-		}
-		fOutsolt1.close();
+		
 
      }
 
