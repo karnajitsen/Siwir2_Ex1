@@ -42,7 +42,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / hx / hx;
 	double	beta = 1.0 / hy / hy;
-	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
+	double	center =  (2.0 * alpha + 2.0 * beta);
 	
 	Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
 	for (size_t i = 1; i < xlen; i++)
@@ -50,7 +50,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		for (size_t j = 1; j < xlen; j++)
 		{	
 			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
-				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) / center;
+				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 				
 				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
