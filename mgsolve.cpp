@@ -70,7 +70,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			//std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
 		}
 	}
-	delete &tmpgrd;
+	//delete &tmpgrd;
 }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
@@ -106,7 +106,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
 		}
 	}
 
-	delete &tmpgrd;
+	//delete &tmpgrd;
 }
 
 inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
