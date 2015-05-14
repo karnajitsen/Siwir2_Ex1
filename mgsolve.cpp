@@ -213,7 +213,7 @@ int main(int argc, char** argv)
 			for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
 				for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
 
-					fOutsolt11 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[jl])(x, y) << std::endl;
+					fOutsolt11 << x* (*xGrids[jl]).getHx() << "\t" << y* (*xGrids[jl]).getHx() << "\t" << (*xGrids[jl])(x, y) << std::endl;
 					//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
 				}
 				//fOut << std::endl;
@@ -230,7 +230,7 @@ int main(int argc, char** argv)
 			for (int y = 0; y < (*xGrids[jl]).getXsize(); ++y) {
 				for (int x = 0; x < (*xGrids[jl]).getXsize(); ++x) {
 
-					fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[jl])(x,y) << std::endl;
+					fOutsolt1 << x* (*xGrids[jl]).getHx() << "\t" << y* (*xGrids[jl]).getHx() << "\t" << (*xGrids[jl])(x, y) << std::endl;
 					//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
 				}
 				//fOut << std::endl;
