@@ -138,7 +138,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / hx / hx;
 	double	beta = 1.0 / hy / hy;
-	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
+	double	center = (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
 
@@ -147,7 +147,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 		for (size_t k = 1; k < dimX; k++)
 		{
 			r = (*fgrd)(j, k) + alpha*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k)) + beta * ((*xgrd)(j, k + 1)
-				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) / center;
+				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) * center;
           //  r = hx*hx*(*fgrd)(j, k) - (4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
 			//	- (*xgrd)(j, k - 1));
 			*norm += r*r;
@@ -192,6 +192,9 @@ int main(int argc, char** argv)
 			sGrid(j, i) = sGrid.gxy(j*hsize, i*hsize);
 		}
 	}
+	double norm = 0.0;
+	calNorm(&sGrid, fGrids[0], &norm);
+	std::cout << "Norm of Solution grid: " << norm;
 
     std::string fname1 = std::string("data/exactsolution.txt");
     std::ofstream	fOut1(fname1);
