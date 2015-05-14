@@ -156,8 +156,8 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-			r = (*fgrd)(j, k) + alpha*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k)) + beta * ((*xgrd)(j, k + 1)
-				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) * center;
+			r = (*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+				+ (*xgrd)(k, j - 1)) - (*xgrd)(k,j) * center;
           //  r = hx*hx*(*fgrd)(j, k) - (4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
 			//	- (*xgrd)(j, k - 1));
 			*norm += r*r;
