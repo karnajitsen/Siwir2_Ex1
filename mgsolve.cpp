@@ -51,9 +51,6 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		{	
 			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
-				
-			//std::cout << "\n**** rest resd= " << tmpgrd(j,i);
-				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
 	}
 	
@@ -67,10 +64,8 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2* i - 1) + tmpgrd(2 * j,  2*i + 1) +
 				tmpgrd(2 * j - 1, 2* i) + tmpgrd(2 * j + 1,  2*i)) + 4.0 * tmpgrd(2 * j,  2*i)) / 16.0;
-			//std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
 		}
 	}
-	//delete &tmpgrd;
 }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
@@ -90,9 +85,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 			tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
 			tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
 			tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
-											+(*srcgrd)(i + 1, j + 1));
-
-			
+											+(*srcgrd)(i + 1, j + 1));			
 		}
 	}
 
@@ -116,9 +109,6 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double	alpha = 1.0 / (hx * hx); 	
 	double	beta = 1.0 / (hy * hy);
 	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
-
-//	std::cout << "****Center = \n" << center << " Alpha == " << alpha << " beta== " << beta;
-	//double 
 	
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -128,10 +118,6 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			{
 				(*xgrd)(k, j) = center*((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
-				/*(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1)));*/
-
-				/*std::cout << "\n****xgrid red= " << (*xgrd)(k, j) ;*/
 			}
 
 		}
@@ -142,9 +128,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			{
 				(*xgrd)(k, j) = center*((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
-				//(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
-				//	(*xgrd)(k, j - 1));
-				/*std::cout << "\n****xgrid black= " << (*xgrd)(k, j);*/
+				
 			}
 
 		}
@@ -171,8 +155,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 		{
 			r = (*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
 				+ (*xgrd)(k, j - 1)) - (*xgrd)(k,j) * center;
-          //  r = hx*hx*(*fgrd)(j, k) - (4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
-			//	- (*xgrd)(j, k - 1));
+          
 			*norm += r*r;
 		}
 
@@ -244,6 +227,19 @@ int main(int argc, char** argv)
 		
 		std::cout << "Residual after " << i + 1 << " V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
+
+		std::string fnames1 = std::string("data/solution_") + std::string(to_string(i)) + std::string(".txt");
+		std::ofstream	fOutsolt1(fnames1);
+		for (int y = 0; y < (*xGrids[i]).getXsize(); ++y) {
+			for (int x = 0; x < (*xGrids[i]).getXsize(); ++x) {
+
+				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
+			}
+			//fOut << std::endl;
+			fOutsolt1 << std::endl;
+		}
+		fOutsolt1.close();
 
      }
 
