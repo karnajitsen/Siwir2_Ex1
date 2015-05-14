@@ -75,9 +75,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 {
 	size_t len = (*srcgrd).getXsize() - 1;
-	//size_t hx = (*srcgrd).getHx() / 2.0;
-	//size_t nlen = len * 2 - 1;
-	//Grid * tmpgrd = new Grid(nlen, nlen, hx, hx);
+	
 	for (size_t j = 0; j < len; j++)
 	{
 		size_t k = 2 * j;
@@ -99,8 +97,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-	double	alpha = 1.0 / hx / hx; 	
-	double	beta = 1.0 / hy / hy;
+	double	alpha = 1.0 / (hx * hx); 	
+	double	beta = 1.0 / (hy * hy);
 	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
 	std::cout << "****Center = \n" << center;
