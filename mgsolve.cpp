@@ -73,7 +73,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	//delete &tmpgrd;
 }
 
-inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
+inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
 	size_t len = (*srcgrd).getXsize() - 1;
 	size_t txlen = (*tgtgrd).getXsize();
@@ -100,9 +100,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
 	{
 		for (size_t j = 1; j < txlen - 1; j++)
 		{
-			(*tgtgrd)(j,i) += tmpgrd(j, i);
-			(*srcgrd)(j, i) = 0.0;
-			(*fgrd)(j,i) = 0.0;
+			(*tgtgrd)(j,i) += tmpgrd(j, i);	
 
 		}
 	}
@@ -234,7 +232,9 @@ int main(int argc, char** argv)
 		for (size_t j = level - 1; j > 0; j--)
 		{	
             smooth(xGrids[j], fGrids[j], V2);
-			interpolate(xGrids[j], xGrids[j - 1], fGrids[j]);
+			interpolate(xGrids[j], xGrids[j - 1]);
+			xGrids[j].reset();
+			fGrids[j].reset();
 		}
 		
         oldnorm = newnorm;

@@ -57,6 +57,16 @@ public:
 		return sin(M_PI * x) * sinh(M_PI * y);
 	}
 
+	inline void reset()
+	{
+		for (size_t i = 1; i < sizeX - 1; i++)
+		{
+			for (size_t j = 1; j < sizeX - 1; j++)
+			{
+				data[i*ld + j] = 0.0;
+			}
+		}
+	}
 
 	inline double& operator()(const size_t x, const size_t y)
 	{
