@@ -70,11 +70,15 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			//std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
 		}
 	}
+	delete tmpGrid;
 }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
 {
 	size_t len = (*srcgrd).getXsize() - 1;
+	size_t txlen = (*tgtgrd).getXsize();
+	double hx = (*tgtgrd).getHx();
+	Grid tmpgrd(txlen, txlen, hx, hx);
 	
 	for (size_t j = 0; j < len; j++)
 	{
@@ -82,10 +86,10 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
 		for (size_t i = 0; i < len; i++)
 		{
 			size_t l = 2 * i;
-			(*tgtgrd)(l,k) += (*srcgrd)(i, j);
-			(*tgtgrd)(l,k + 1) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i , j+1));
-			(*tgtgrd)( l + 1,k) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i+1, j ));
-			(*tgtgrd)(l + 1, k + 1) += 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
+			tmpgrd(l, k) = (*srcgrd)(i, j);
+			tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
+			tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
+			tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
 											+(*srcgrd)(i + 1, j + 1));
 
 			(*srcgrd)(i, j) = 0.0;
@@ -93,6 +97,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd, Grid * fgrd)
 
 		}
 	}
+
+	for (int i = 1; i < txlen - 1; i++)
+	{
+		for (int j = 1; j < txlen - 1; j++)
+		{
+			(*tgtgrd)(j,i) += tmpgrd(j, i);
+		}
+	}
+
+	delete tmpgrd;
 }
 
 inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
