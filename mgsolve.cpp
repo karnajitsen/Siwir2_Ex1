@@ -99,7 +99,9 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / hx / hx; 	
 	double	beta = 1.0 / hy / hy;
-	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
+	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
+
+	std::cout << "****Center = \n" << center;
 	//double 
 	
 	for (size_t i = 0; i < iter; i++)
