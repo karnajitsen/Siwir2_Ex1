@@ -99,7 +99,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / (hx * hx); 	
 	double	beta = 1.0 / (hy * hy);
-	double	center = (2.0 * alpha + 2.0 * beta);
+	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
 	std::cout << "****Center = \n" << center << " Alpha == " << alpha << " beta== " << beta;
 	//double 
@@ -110,8 +110,10 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
+				(*xgrd)(k, j) = (center*(*fgrd)(k, j) + 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
+				/*(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)));*/
 
 				/*std::cout << "\n****xgrid red= " << (*xgrd)(k, j) ;*/
 			}
@@ -122,7 +124,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
+				(*xgrd)(k, j) = (center*(*fgrd)(k, j) + 0.25*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1)));
 				//(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
 				//	(*xgrd)(k, j - 1));
