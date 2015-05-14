@@ -52,7 +52,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 				
-			std::cout << "\n**** rest resd= " << tmpgrd(j,i);
+			//std::cout << "\n**** rest resd= " << tmpgrd(j,i);
 				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
 	}
@@ -67,7 +67,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2* i - 1) + tmpgrd(2 * j,  2*i + 1) +
 				tmpgrd(2 * j - 1, 2* i) + tmpgrd(2 * j + 1,  2*i)) + 4.0 * tmpgrd(2 * j,  2*i)) / 16.0;
-			std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
+			//std::cout << "\n**** coarse grid= " << (*rgrid)(j, i);
 		}
 	}
 }
@@ -104,7 +104,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double	beta = 1.0 / (hy * hy);
 	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
-	std::cout << "****Center = \n" << center << " Alpha == " << alpha << " beta== " << beta;
+//	std::cout << "****Center = \n" << center << " Alpha == " << alpha << " beta== " << beta;
 	//double 
 	
 	for (size_t i = 0; i < iter; i++)
@@ -202,22 +202,8 @@ int main(int argc, char** argv)
 			sGrid(j, i) = sGrid.gxy(j*hsize, i*hsize);
 		}
 	}
-	double norm = 0.0;
-	calNorm(&sGrid, fGrids[0], &norm);
-	std::cout << "Norm of Solution grid: " << norm;
-
-    std::string fname1 = std::string("data/exactsolution.txt");
-    std::ofstream	fOut1(fname1);
-        for (int y = 0; (size_t)y < gdim; ++y) {
-			for (int x = 0; (size_t)x < gdim; ++x) {
-
-				fOut1 << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-            }
-            fOut1 << std::endl;
-        }
-        fOut1.close();
 	
-	tim = clock();
+   	tim = clock();
 
 	
 	for (size_t i = 0; i < vcycle; i++)
@@ -248,18 +234,23 @@ int main(int argc, char** argv)
 
 	tim = clock() - tim;
 
-	std::cout << "Time spend for two V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
+	std::cout << "Time spend for all V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
 
 	std::string fname = std::string("data/solution.txt");
 	std::ofstream	fOut(fname);
+	std::string fnames = std::string("data/exactsolution.txt");
+	std::ofstream	fOutsolt(fnames);
 	for (int y = 0; y < gdim; ++y) {
 		for (int x = 0; x < gdim; ++x) {
 
 			fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+			fOutsolt << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
 		}
 		fOut << std::endl;
+		fOutsolt << std::endl;
 	}
 	fOut.close();
+	fOutsolt.close();
 
 	return 0;
 }
