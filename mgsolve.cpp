@@ -87,7 +87,8 @@ inline void interpolate(const Grid * srcgrd, const Grid * tgtgrd)
 			(*tgtgrd)( l + 1,k) += 0.5*((*srcgrd)(i, j) + (*srcgrd)(i+1, j ));
 			(*tgtgrd)(l + 1, k + 1) += 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
 											+(*srcgrd)(i + 1, j + 1));
-			
+
+			(*srcgrd)(i, j) = 0.0;
 		}
 	}
 }
