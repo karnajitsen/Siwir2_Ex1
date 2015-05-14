@@ -37,15 +37,22 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*grd).getXsize() - 1;
 	double hx = (*grd).getHx();
-	double perf = 1.0 / hx / hx;
-	//cout << "AAAAAAAAAAAA " << hx;
+	//double perf = 1.0 / hx / hx;
+	double hx = (*xgrd).getHx();
+	double hy = (*xgrd).getHy();
+	double	alpha = 1.0 / hx / hx;
+	double	beta = 1.0 / hy / hy;
+	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
+	
 	Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
 	for (size_t i = 1; i < xlen; i++)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{	
-			tmpgrd(j,i) = (*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) 
-					      - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
+			tmpgrd(j, i) = (*fgrd)(j, k) + alpha*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k)) + beta * ((*xgrd)(j, k + 1)
+				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) / center;
+				
+				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
 	}
 	
@@ -89,7 +96,10 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
-	double perf = 1.0 / hx / hx;
+	double hy = (*xgrd).getHy();
+	double	alpha = 1.0 / hx / hx; 	
+	double	beta = 1.0 / hy / hy;
+	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
 	//double 
 	
 	for (size_t i = 0; i < iter; i++)
@@ -98,8 +108,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1));
+				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)));
 			}
 
 		}
@@ -108,8 +118,10 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-				(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
-					(*xgrd)(k, j - 1));
+				(*xgrd)(k, j) = center *((*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta*((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)));
+				//(*xgrd)(k, j) = 0.25*(hx*hx*(*fgrd)(k, j) + (*xgrd)(k + 1, j) + (*xgrd)(k - 1, j) + (*xgrd)(k, j + 1) +
+				//	(*xgrd)(k, j - 1));
 			}
 
 		}
@@ -120,9 +132,13 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 	size_t dimX = (*xgrd).getXsize() - 1;
-	double hx = (*xgrd).getHx() ;
+	//double hx = (*xgrd).getHx() ;
 	double r = 0.0;
-	double perf = 1.0 / hx / hx;
+	double hx = (*xgrd).getHx();
+	double hy = (*xgrd).getHy();
+	double	alpha = 1.0 / hx / hx;
+	double	beta = 1.0 / hy / hy;
+	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
 
@@ -130,8 +146,10 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = (*fgrd)(j, k) - perf*(4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
-				- (*xgrd)(j, k - 1));
+			r = (*fgrd)(j, k) + alpha*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k)) + beta * ((*xgrd)(j, k + 1)
+				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) / center;
+          //  r = hx*hx*(*fgrd)(j, k) - (4.0*(*xgrd)(j,k) - (*xgrd)(j + 1, k) - (*xgrd)(j - 1, k) - (*xgrd)(j, k + 1)
+			//	- (*xgrd)(j, k - 1));
 			*norm += r*r;
 		}
 

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <memory>
 #include <malloc.h>
+#include "stencil.h"
 #define LD 16
 #define ALLIGNMENT 32
 //#define M_PI 3.14
