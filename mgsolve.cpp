@@ -33,10 +33,10 @@ Grid** initialize(double hsize, const size_t level)
 
 }
 
-inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
+inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 {
-	size_t xlen = (*grd).getXsize() - 1;
-	double hx = (*grd).getHx();
+	size_t xlen = (*xgrd).getXsize() - 1;
+	//double hx = (*grd).getHx();
 	//double perf = 1.0 / hx / hx;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
@@ -49,8 +49,8 @@ inline void restriction(const Grid * grd, const Grid * fgrd, Grid* rgrid)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{	
-			tmpgrd(j, i) = (*fgrd)(j, k) + alpha*((*xgrd)(j + 1, k) + (*xgrd)(j - 1, k)) + beta * ((*xgrd)(j, k + 1)
-				+ (*xgrd)(j, k - 1)) - (*xgrd)(j, k) / center;
+			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
+				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) / center;
 				
 				//(*fgrd)(j,i) - (4.0*(*grd)(j, i) - (*grd)(j, i - 1) - (*grd)(j, i + 1) - (*grd)(j - 1, i) - (*grd)(j + 1, i));			
 		}
