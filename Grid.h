@@ -12,14 +12,14 @@ class Grid
 {
 
 	//__declspec(align(128)) 
-	double * __restrict data = NULL;
+	long double * __restrict data = NULL;
 	size_t sizeX, sizeY, ld, totLength;
 	double hx, hy;
 	
 public:
 	explicit Grid()
 	{
-		data = (double*)memalign(ALLIGNMENT, 0);
+		data = (long double*)memalign(ALLIGNMENT, 0);
 		sizeX = 0;
 		sizeY = 0;
 	}
@@ -32,7 +32,7 @@ public:
 		hy = _hy;
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
-		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
+		data = (long double*) memalign(ALLIGNMENT, ld*y*sizeof(long double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 		double l = (sizeX - 1.0)*hx;
 		for (int j = 0.0; (size_t)j < sizeX; j++)
