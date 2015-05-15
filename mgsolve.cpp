@@ -293,8 +293,8 @@ int main(int argc, char** argv)
 		{	
             smooth(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j - 1]);
-			//(*xGrids[j]).reset();
-			//(*fGrids[j]).reset();					
+			(*xGrids[j]).reset();
+			(*fGrids[j]).reset();					
 		}
 		
 		smooth(xGrids[0], fGrids[0], V1);
