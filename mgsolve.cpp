@@ -54,7 +54,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
         }
     }
 
-	cout << "====After Restriction Residual=== \n\n"
+	cout << "====After Restriction Residual=== \n\n";
 		for (size_t j = 0; j < xlen+1; j++)
 		{
 			for (size_t k = 0; k < xlen+1; k++)
@@ -78,7 +78,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
-	cout << "====After Restriction Coarse=== \n\n"
+	cout << "====After Restriction Coarse=== \n\n";
 		for (size_t j = 0; j < rlen+1; j++)
 		{
 			for (size_t k = 0; k < rlen+1; k++)
@@ -164,7 +164,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 	}
 
-	cout << "After Smoothing\n\n"
+	cout << "After Smoothing\n\n";
 	for (size_t j = 0; j < dimX; j++)
 	{
 		for (size_t k = 0; k < dimX; k++)
