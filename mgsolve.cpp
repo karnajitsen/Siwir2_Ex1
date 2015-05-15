@@ -121,6 +121,17 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
+	cout << "====After Interpolation === \n\n";
+	for (size_t j = 0; j < txlen; j++)
+	{
+		for (size_t k = 0; k < txlen; k++)
+		{
+			cout << (*tgtgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 	//delete &tmpgrd;
 }
 
