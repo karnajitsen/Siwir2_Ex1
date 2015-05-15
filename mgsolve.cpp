@@ -87,7 +87,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			}
 
 			cout << '\n';
-		*/}
+		}*/
 
 }
 
