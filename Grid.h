@@ -82,7 +82,7 @@ public:
 		return data[y*ld + x];
 	}
 
-	inline Grid * operator+=(const Grid * rhs)
+	/*inline Grid * operator+=(const Grid * rhs)
 	{
 		return this;
 	}
@@ -91,7 +91,7 @@ public:
 	{
 		return this;
 	}
-		
+	*/	
 	inline size_t getXsize() const
 	{
 		return sizeX;
