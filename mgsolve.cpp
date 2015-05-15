@@ -98,10 +98,10 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx);
 	
-	for (size_t j = 1; j < len; j++)
+	for (size_t j = 0; j < len; j++)
 	{
 		size_t k = 2 * j;
-		for (size_t i = 1; i < len; i++)
+		for (size_t i = 0; i < len; i++)
 		{
 			size_t l = 2 * i;
 			tmpgrd(l, k) = (*srcgrd)(i, j);

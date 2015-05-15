@@ -52,9 +52,9 @@ public:
 		free(data);
 	}
 
-	inline double gxy(const double x, const double y)
+	inline long double gxy(const double x, const double y)
 	{
-		return sin(M_PI * x) * sinh(M_PI * y);
+		return (long double) sin(M_PI * x) * sinh(M_PI * y);
 	}
 
 	inline void reset()
@@ -68,14 +68,14 @@ public:
 		}
 	}
 
-	inline double& operator()(const size_t x, const size_t y)
+	inline long double& operator()(const size_t x, const size_t y)
 	{
 		assert(x < sizeX);
 		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
-	inline double& operator()(const size_t x, const size_t y) const
+	inline long double& operator()(const size_t x, const size_t y) const
 	{
 		assert(x < sizeX);
 		assert(y < sizeY);
