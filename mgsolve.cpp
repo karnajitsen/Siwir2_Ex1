@@ -40,8 +40,8 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	//double perf = 1.0 / hx / hx;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0 ;
-    double	beta = 1.0;
+    double	alpha = 1.0 /hx/hx;
+    double	beta = 1.0/hy/hy;
 	double	center =  (2.0 * alpha + 2.0 * beta);
 	
     Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
@@ -49,21 +49,21 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     {
         for (size_t j = 1; j < xlen; j++)
         {
-            tmpgrd(j, i) = hx * hx*(*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
+            tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
                 + (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
         }
     }
 
-	cout << "====After Restriction Residual=== \n\n";
-		for (size_t j = 0; j < xlen+1; j++)
-		{
-			for (size_t k = 0; k < xlen+1; k++)
-			{
-				cout << tmpgrd(k, j) << " ";
-			}
+	//cout << "====After Restriction Residual=== \n\n";
+	//	for (size_t j = 0; j < xlen+1; j++)
+	//	{
+	//		for (size_t k = 0; k < xlen+1; k++)
+	//		{
+	//			cout << tmpgrd(k, j) << " ";
+	//		}
 
-			cout << '\n';
-		}
+	//		cout << '\n';
+	//	}
 	
 	size_t rlen = (*rgrid).getXsize() - 1;
 	
@@ -78,7 +78,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
-	cout << "====After Restriction Coarse=== \n\n";
+/*	cout << "====After Restriction Coarse=== \n\n";
 		for (size_t j = 0; j < rlen+1; j++)
 		{
 			for (size_t k = 0; k < rlen+1; k++)
@@ -87,7 +87,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			}
 
 			cout << '\n';
-		}
+		*/}
 
 }
 
@@ -112,16 +112,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
-	cout << "====After Interpolation b4 Add === \n\n";
-	for (size_t j = 0; j < txlen; j++)
-	{
-		for (size_t k = 0; k < txlen; k++)
-		{
-			cout << tmpgrd(k, j) << " ";
-		}
+	//cout << "====After Interpolation b4 Add === \n\n";
+	//for (size_t j = 0; j < txlen; j++)
+	//{
+	//	for (size_t k = 0; k < txlen; k++)
+	//	{
+	//		cout << tmpgrd(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
@@ -132,16 +132,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
-	cout << "====After Interpolation === \n\n";
-	for (size_t j = 0; j < txlen; j++)
-	{
-		for (size_t k = 0; k < txlen; k++)
-		{
-			cout << (*tgtgrd)(k, j) << " ";
-		}
+	//cout << "====After Interpolation === \n\n";
+	//for (size_t j = 0; j < txlen; j++)
+	//{
+	//	for (size_t k = 0; k < txlen; k++)
+	//	{
+	//		cout << (*tgtgrd)(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 	//delete &tmpgrd;
 }
@@ -151,8 +151,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0;
-    double	beta = 1.0;
+    double	alpha = 1.0/hx/hx;
+    double	beta = 1.0/hx/hx;
     double	center = (2.0 * alpha + 2.0 * beta);
 	
 	for (size_t i = 0; i < iter; i++)
@@ -161,7 +161,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-                (*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+                (*xgrd)(k, j) = ((*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
                     +(*xgrd)(k, j - 1)))/center;
 
 				//0.25*((*fgrd)(k, j) + ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + ((*xgrd)(k, j + 1)
@@ -176,7 +176,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		{
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
-                (*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+                (*xgrd)(k, j) = ((*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
                     + (*xgrd)(k, j - 1)))/center;
 
 				//cout << " " <<k << " " << j << " " << (*xgrd)(k, j) << '\n';
@@ -186,7 +186,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 	}
 
-	cout << "After Smoothing\n\n";
+	/*cout << "After Smoothing\n\n";
 	for (size_t j = 0; j < dimX; j++)
 	{
 		for (size_t k = 0; k < dimX; k++)
@@ -195,7 +195,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 	
 		cout << '\n';
-	}
+	}*/
 
 }
 
@@ -207,8 +207,8 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	double r = 0.0;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0 ;
-    double	beta = 1.0;
+    double	alpha = 1.0/hx/hx ;
+    double	beta = 1.0/hx/hx;
 	double	center = (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
@@ -217,7 +217,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = hx*hx*(*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+            r = (*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
 				+ (*xgrd)(k, j - 1)) - (*xgrd)(k,j) * center;
           
 			*norm += r*r;
@@ -268,10 +268,10 @@ int main(int argc, char** argv)
 	smooth(xGrids[0], fGrids[0], V1);
 	for (size_t i = 0; i < vcycle; i++)
     {
-		size_t jl = 0;
+		//size_t jl = 0;
 		restriction(xGrids[0], fGrids[0], fGrids[1]);
 		
-		for (jl = 1; jl < level - 1; jl++)
+		for (size_t jl = 1; jl < level - 1; jl++)
 		{
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
@@ -282,11 +282,10 @@ int main(int argc, char** argv)
             smooth(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
-			(*fGrids[j]).reset();
-					
+			(*fGrids[j]).reset();					
 		}
 		
-		smooth(xGrids[0], fGrids[0], V2);
+		smooth(xGrids[0], fGrids[0], V1);
         oldnorm = newnorm;
 		calNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
