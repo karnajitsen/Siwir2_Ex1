@@ -141,6 +141,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
+
 	size_t dimX = (*xgrd).getXsize() - 1;
 	//double hx = (*xgrd).getHx() ;
 	double r = 0.0;
