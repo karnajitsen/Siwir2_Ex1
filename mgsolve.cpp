@@ -154,6 +154,18 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
     double	alpha = 1.0/hx/hx;
     double	beta = 1.0/hx/hx;
     double	center = (2.0 * alpha + 2.0 * beta);
+
+	cout << "Before Smoothing\n\n";
+	for (size_t j = 0; j < dimX; j++)
+	{
+		for (size_t k = 0; k < dimX; k++)
+		{
+			cout << (*xgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 	
 	for (size_t i = 0; i < iter; i++)
 	{
