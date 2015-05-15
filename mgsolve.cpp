@@ -40,8 +40,8 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	//double perf = 1.0 / hx / hx;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0 /hx/hx;
-    double	beta = 1.0/hy/hy;
+    double	alpha = 1.0 ;
+    double	beta = 1.0;
 	double	center =  (2.0 * alpha + 2.0 * beta);
 	
     Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
