@@ -33,7 +33,7 @@ Grid** initialize(double hsize, const size_t level)
 		{
 			for (size_t k = 0; k < gdim; k++)
 			{
-				cout << *(arrGrid[i])(k,j) << " ";
+				cout << (*arrGrid[i])(k,j) << " ";
 			}
 
 			cout << '\n';
