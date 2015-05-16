@@ -106,7 +106,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
-	size_t len = (*srcgrd).getXsize() ;
+	size_t len = (*srcgrd).getXsize() -1;
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx,false);
