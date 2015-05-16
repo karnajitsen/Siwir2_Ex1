@@ -75,11 +75,11 @@ public:
 
 	inline void printo(std::string text)
 	{
-		cout << '\n\n ' << this.getXsize();
+		cout << '\n\n ' << this->getXsize();
 		cout << " ======== " << text << " ========" << '\n\n';
-		for (size_t j = this.getXsize() -1; j >= 0; j--)
+		for (size_t j = this->getXsize() -1; j >= 0; j--)
 		{
-			for (size_t k = 0; k < this.getXsize(); k++)
+			for (size_t k = 0; k < this->getXsize(); k++)
 			{
 				cout << data[j*ld + k] << " ";
 			}
