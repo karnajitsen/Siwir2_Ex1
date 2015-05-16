@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <memory>
 #include <string>
+#include<malloc.h>
 #define LD 16
 #define ALLIGNMENT 32
 using namespace std;
