@@ -107,16 +107,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
-	for (size_t j = 1; j < txlen-1; j++)
+	for (size_t j = 1; j < txlen - 1; j++)
 	{
-		for (size_t i = 1; i < txlen-1; i++)
+		for (size_t i = 1; i < txlen - 1; i++)
 		{
 			tmpgrd(i, j) = (4.0 * tmpgrd2(i, j) + 2.0 * (tmpgrd2(i - 1, j) + tmpgrd2(i, j + 1) + tmpgrd2(i, j - 1)
 				+ tmpgrd2(i + 1, j)) + tmpgrd2(i + 1, j + 1) + tmpgrd2(i + 1, j - 1)
 				+ tmpgrd2(i - 1, j + 1) + tmpgrd2(i - 1, j - 1))*0.25;
-			
+
 		}
-	
+	}
 
 		cout << "====b4 Interpolation === \n\n";
 		for (size_t j = 0; j < txlen; j++)
