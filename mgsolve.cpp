@@ -94,7 +94,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
 	size_t len = (*srcgrd).getXsize() ;
-	size_t txlen = (*tgtgrd).getXsize()-1;
+	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx);
 	Grid tmpgrd2(txlen, txlen, hx, hx);
@@ -107,9 +107,9 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
-	for (size_t j = 1; j < txlen; j++)
+	for (size_t j = 1; j < txlen-1; j++)
 	{
-		for (size_t i = 1; i < txlen; i++)
+		for (size_t i = 1; i < txlen-1; i++)
 		{
 			tmpgrd(i, j) = (4.0 * tmpgrd2(i, j) + 2.0 * (tmpgrd2(i - 1, j) + tmpgrd2(i, j + 1) + tmpgrd2(i, j - 1)
 				+ tmpgrd2(i + 1, j)) + tmpgrd2(i + 1, j + 1) + tmpgrd2(i + 1, j - 1)
