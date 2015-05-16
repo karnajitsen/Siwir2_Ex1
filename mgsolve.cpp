@@ -21,13 +21,15 @@ Grid** initialize(double hsize, const size_t level)
 {
 	size_t je = level;
 	size_t gdim = pow(2, je) + 1;
+	bool flag = true;
 	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
 		std::cout << hsize << "\n";
-		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize);
+		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize,flag);
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
+		flag = false;
 	}
 	return arrGrid;
 
@@ -44,7 +46,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     double	beta = 1.0;
 	double	center =  (2.0 * alpha + 2.0 * beta);
 	
-    Grid tmpgrd(xlen + 1, xlen + 1,hx,hx);
+    Grid tmpgrd(xlen + 1, xlen + 1,hx,hx,false);
     for (size_t i = 1; i < xlen; i++)
     {
         for (size_t j = 1; j < xlen; j++)
@@ -96,8 +98,8 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	size_t len = (*srcgrd).getXsize() ;
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
-	Grid tmpgrd(txlen, txlen, hx, hx);
-	Grid tmpgrd2(txlen, txlen, hx, hx);
+	Grid tmpgrd(txlen, txlen, hx, hx,false);
+	Grid tmpgrd2(txlen, txlen, hx, hx,false);
 
 	for (size_t j = 0; j < len; j++)
 	{
@@ -307,7 +309,7 @@ int main(int argc, char** argv)
 	
 	Grid ** xGrids = initialize(hsize, level);
 	Grid ** fGrids = initialize(hsize, level);
-	Grid sGrid(gdim, gdim, hsize, hsize);
+	Grid sGrid(gdim, gdim, hsize, hsize,true);
 
 	for (size_t i = 0; i < gdim; i++)
 	{

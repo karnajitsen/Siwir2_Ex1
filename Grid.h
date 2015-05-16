@@ -24,7 +24,7 @@ public:
 		sizeY = 0;
 	}
 
-	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy )
+	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN)
 	{
 		sizeX = x;
 		sizeY = y;
@@ -34,15 +34,18 @@ public:
 		totLength = (x - 2)*(y - 2);
 		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
-		double l = (sizeX - 1.0)*hx;
-		for (int j = 0.0; (size_t)j < sizeX; j++)
+		if (bndrYN)
 		{
-			double k = j*hx;
-			
-			data[j] = gxy(k, 0.0);
-			data[j*ld] = gxy(0.0, k);
-			data[j + ld * (sizeX - 1)] = gxy(k, l);
-			data[j * ld + (sizeX - 1)] = gxy(l, k);
+			double l = (sizeX - 1.0)*hx;
+			for (int j = 0.0; (size_t)j < sizeX; j++)
+			{
+				double k = j*hx;
+
+				data[j] = gxy(k, 0.0);
+				data[j*ld] = gxy(0.0, k);
+				data[j + ld * (sizeX - 1)] = gxy(k, l);
+				data[j * ld + (sizeX - 1)] = gxy(l, k);
+			}
 		}
 		//data++;
 	}
