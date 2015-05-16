@@ -71,6 +71,21 @@ public:
 		}
 	}
 
+	inline void print(string text)
+	{
+		cout << '\n\n';
+		cout << " ======== " << text << " ========" << '\n\n';
+		for (size_t j = 0; j < xlen + 1; j++)
+		{
+			for (size_t k = 0; k < xlen + 1; k++)
+			{
+				cout << tmpgrd(k, j) << " ";
+			}
+
+			cout << '\n';
+		}
+	}
+
 	inline double& operator()(const size_t x, const size_t y)
 	{
 		assert(x < sizeX);
