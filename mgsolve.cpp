@@ -22,6 +22,7 @@ Grid** initialize(double hsize, const size_t level)
 	size_t je = level;
 	size_t gdim = pow(2, je) + 1;
 	bool flag = true;
+
 	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
