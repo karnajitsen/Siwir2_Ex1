@@ -1,12 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include "Grid.h"
-#include <stdlib.h>
-#include <ctime>
-#include <string>
-#include <malloc.h>
-#include <cmath>
-#include <stdlib.h>
+#include <sys/time.h>
 
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
@@ -210,7 +205,6 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	clock_t tim;
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
@@ -230,13 +224,11 @@ int main(int argc, char** argv)
 		}
 	}
 	
-   	tim = clock();
-
-	smooth(xGrids[0], fGrids[0], V1);
+	timeval start, end;
+	gettimeofday(&start, 0);
+	
 	for (size_t i = 0; i < vcycle; i++)
     {
-		//size_t jl = 0;
-		//restriction(xGrids[0], fGrids[0], fGrids[1]);
 		
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
@@ -252,7 +244,6 @@ int main(int argc, char** argv)
 			(*fGrids[j]).reset();					
 		}
 		
-		//smooth(xGrids[0], fGrids[0], V1);
         oldnorm = newnorm;
 		resdualNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
@@ -262,9 +253,9 @@ int main(int argc, char** argv)
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
      }
 
-	tim = clock() - tim;
+	gettimeofday(&end, 0);
 
-	std::cout << "Time spend for all V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
+	std::cout << "Time spend for all V - cycles= " << (end - start)/ CLOCKS_PER_SEC << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
 	std::cout << "Error Norm for h as 1/" << gdim-1 <<" = " << newnorm << '\n';
