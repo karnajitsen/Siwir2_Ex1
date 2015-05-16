@@ -97,8 +97,28 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx);
+	Grid tmpgrd2(txlen, txlen, hx, hx);
+
+	for (size_t j = 0; j < len+1; j++)
+	{
+		for (size_t i = 0; i < len+1; i++)
+		{
+			tmpgrd2(2 * i, 2 * j) = (*srcgrd)(i, j);
+		}
+	}
+
+	for (size_t j = 1; j < len; j++)
+	{
+		for (size_t i = 1; i < len; i++)
+		{
+			tmpgrd(i, j) = (4.0 * (*srcgrd)(i, j) + 2.0 * ((*srcgrd)(i - 1, j) + (*srcgrd)(i, j + 1) + (*srcgrd)(i, j - 1)
+				+ (*srcgrd)(i + 1, j)) + (*srcgrd)(i + 1, j + 1) + (*srcgrd)(i + 1, j - 1) 
+				+ (*srcgrd)(i - 1, j + 1) + (*srcgrd)(i - 1, j - 1))*0.25;
+			
+		}
+	}
 	
-	for (size_t j = 0; j < len; j++)
+	/*for (size_t j = 0; j < len; j++)
 	{
 		size_t k = 2 * j;
 		for (size_t i = 0; i < len; i++)
@@ -110,7 +130,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 			tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
 											+(*srcgrd)(i + 1, j + 1));			
 		}
-	}
+	}*/
 
 	cout << "====After Interpolation b4 Add === \n\n";
 	for (size_t j = 0; j < txlen; j++)

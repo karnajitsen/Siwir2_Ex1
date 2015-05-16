@@ -12,14 +12,14 @@ class Grid
 {
 
 	//__declspec(align(128)) 
-	long double * __restrict data = NULL;
+	double * __restrict data = NULL;
 	size_t sizeX, sizeY, ld, totLength;
 	double hx, hy;
 	
 public:
 	explicit Grid()
 	{
-		data = (long double*)memalign(ALLIGNMENT, 0);
+		data = (double*)memalign(ALLIGNMENT, 0);
 		sizeX = 0;
 		sizeY = 0;
 	}
@@ -32,7 +32,7 @@ public:
 		hy = _hy;
 		ld = x + LD;
 		totLength = (x - 2)*(y - 2);
-		data = (long double*) memalign(ALLIGNMENT, ld*y*sizeof(long double));
+		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
 		double l = (sizeX - 1.0)*hx;
 		for (int j = 0.0; (size_t)j < sizeX; j++)
@@ -68,14 +68,14 @@ public:
 		}
 	}
 
-	inline long double& operator()(const size_t x, const size_t y)
+	inline double& operator()(const size_t x, const size_t y)
 	{
 		assert(x < sizeX);
 		assert(y < sizeY);
 		return data[y*ld + x];
 	}
 
-	inline long double& operator()(const size_t x, const size_t y) const
+	inline double& operator()(const size_t x, const size_t y) const
 	{
 		assert(x < sizeX);
 		assert(y < sizeY);
