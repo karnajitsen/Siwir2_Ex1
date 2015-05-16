@@ -13,11 +13,20 @@ mgsolve:
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
 	
 test:
-	./mgsolve 10 2
+	./mgsolve 8 10
+	git add data
+	git commit -m "new data file"
 
+allnorm:
+	./mgsolve 3 5
+	./mgsolve 4 5
+	./mgsolve 5 5
+	./mgsolve 6 5
+	./mgsolve 7 5
+	./mgsolve 8 5
+	
 clean:
 	rm -f *.o mgsolve
-	rm -rf ./data/arch/*.*
-	mv ./data/*.* ./data/arch/
-
+	rm -f ./data/*.*
+	
 .PHONY : all clean
