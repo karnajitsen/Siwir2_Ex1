@@ -29,7 +29,7 @@ Grid** initialize(double hsize, const size_t level)
 	{
 		std::cout << hsize << " " << gdim <<"\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize,flag);
-		for (size_t j = 0; j < gdim; j++)
+		/*for (size_t j = 0; j < gdim; j++)
 		{
 			for (size_t k = 0; k < gdim; k++)
 			{
@@ -37,7 +37,7 @@ Grid** initialize(double hsize, const size_t level)
 			}
 
 			cout << '\n';
-		}
+		}*/
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
 		flag = false;
@@ -53,8 +53,8 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	//double perf = 1.0 / hx / hx;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0/hx/hx;
-    double	beta = 1.0/hx/hx;
+    double	alpha = 1.0;
+    double	beta = 1.0;
 	double	center =  (2.0 * alpha + 2.0 * beta);
 	
     Grid tmpgrd(xlen + 1, xlen + 1,hx,hx,false);
@@ -62,7 +62,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     {
         for (size_t j = 1; j < xlen; j++)
         {
-            tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
+            tmpgrd(j, i) = hx*hx*(*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
                 + (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
         }
     }
@@ -206,8 +206,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-	double	alpha = 1.0;
-    double	beta = 1.0;
+	double	alpha = 1.0/hx/hx;
+    double	beta = 1.0/hx/hx;
     double	center = (2.0 * alpha + 2.0 * beta);
 
 	/*cout << "Before Smoothing\n\n";
@@ -274,8 +274,8 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	double r = 0.0;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0/hx/hx;
-    double	beta = 1.0/hy/hy;
+    double	alpha = 1.0;
+    double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
@@ -284,7 +284,7 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = (*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+            r = hx*hx*(*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
 				+ (*xgrd)(k, j - 1)) - (*xgrd)(k,j) * center;
           
 			*norm += r*r;
