@@ -205,7 +205,6 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	clock_t tim;
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
@@ -228,7 +227,6 @@ int main(int argc, char** argv)
 	timeval start, end;
 	gettimeofday(&start, 0);
 	
-	smooth(xGrids[0], fGrids[0], V1);
 	for (size_t i = 0; i < vcycle; i++)
     {
 		
@@ -257,7 +255,7 @@ int main(int argc, char** argv)
 
 	gettimeofday(&end, 0);
 
-	std::cout << "Time spend for all V - cycles= " << ((float)end) / CLOCKS_PER_SEC << '\n';
+	std::cout << "Time spend for all V - cycles= " << (end - start)/ CLOCKS_PER_SEC << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
 	std::cout << "Error Norm for h as 1/" << gdim-1 <<" = " << newnorm << '\n';
