@@ -75,9 +75,9 @@ public:
 	{
 		cout << '\n\n';
 		cout << " ======== " << text << " ========" << '\n\n';
-		for (size_t j = xSize-1; j >= 0; --j)
+		for (size_t j = sizeX - 1; j >= 0; --j)
 		{
-			for (size_t k = xSize-1; k >= 0; --k)
+			for (size_t k = sizeX - 1; k >= 0; --k)
 			{
 				cout << data[j*ld + k] << " ";
 			}
