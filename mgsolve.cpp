@@ -7,6 +7,7 @@
 #include <malloc.h>
 #include <cmath>
 #include <stdlib.h>
+
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
