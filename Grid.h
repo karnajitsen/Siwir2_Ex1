@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <memory>
 #include <malloc.h>
+#include <string>
 #define LD 16
 #define ALLIGNMENT 32
+using namespace std;
 //#define M_PI 3.14
 class Grid
 {
@@ -71,7 +73,7 @@ public:
 		}
 	}
 
-	inline void print(string text)
+	inline void print(std::string text)
 	{
 		cout << '\n\n';
 		cout << " ======== " << text << " ========" << '\n\n';
