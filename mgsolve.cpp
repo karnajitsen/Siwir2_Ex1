@@ -29,7 +29,7 @@ Grid** initialize(double hsize, const size_t level)
 	{
 		std::cout << hsize << " " << gdim <<"\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize,flag);
-		for (size_t j = 0; k < gdim; j++)
+		for (size_t j = 0; j < gdim; j++)
 		{
 			for (size_t k = 0; k < gdim; k++)
 			{
