@@ -138,7 +138,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	}
 }
 
-inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
@@ -165,6 +165,34 @@ inline void calNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	}
 	
 	*norm = sqrt(*norm / (dimX+1) / (dimX+1));
+}
+
+inline void errorNorm(Grid* xgrd, const Grid * sgrd, double& norm)
+{
+
+	size_t dimX = (*xgrd).getXsize() - 1;
+	//double hx = (*xgrd).getHx() ;
+	double r = 0.0;
+	double hx = (*xgrd).getHx();
+	double hy = (*xgrd).getHy();
+	double	alpha = 1.0;
+	double	beta = 1.0;
+	double	center = (2.0 * alpha + 2.0 * beta);
+
+	norm = 0.0;
+
+	for (size_t j = 1; j < dimX; j++)
+	{
+		for (size_t k = 1; k < dimX; k++)
+		{
+			r = (*sgrd)(k + 1, j) - (*xgrd)(k, j);
+
+		 norm += r*r;
+		}
+
+	}
+
+	norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
 }
 
 inline double gxy(const double x, const double y)
@@ -226,7 +254,7 @@ int main(int argc, char** argv)
 		
 		//smooth(xGrids[0], fGrids[0], V1);
         oldnorm = newnorm;
-		calNorm(xGrids[0], fGrids[0], &newnorm);
+		resdualNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
             convrate = newnorm / oldnorm;
 		
@@ -237,6 +265,8 @@ int main(int argc, char** argv)
 	tim = clock() - tim;
 
 	std::cout << "Time spend for all V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
+
+	errorNorm(xGrids[0],&sgrid, &newnorm);
 
 	std::string fname = std::string("data/solution.txt");
 	std::ofstream	fOut(fname);
