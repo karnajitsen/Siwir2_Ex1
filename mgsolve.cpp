@@ -11,6 +11,12 @@
 #define V1 2
 #define V2 1
 
+int req = 0;
+
+Grid ** xGrids;
+Grid ** fGrids;
+Grid *sGrid;
+
 using namespace std;
 
 Grid** initialize(double hsize, const size_t level, bool flag)
@@ -186,36 +192,23 @@ inline double gxy(const double x, const double y)
 	return sin(M_PI * x) * sinh(M_PI * y);
 }
 
-int main(int argc, char** argv)
+inline void mgsolver(size_t level, size_t vcycle)
 {
-
-	//std::cout << "1";
-	if (argc < 3)
-	{
-		std::cout << "Invalid number of argument";
-		exit(0);
-	}
-
-	size_t level = atoi(argv[1]);
-	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 
-	Grid ** xGrids = initialize(hsize, level, true);
-	Grid ** fGrids = initialize(hsize, level, false);
-	Grid sGrid(gdim, gdim, hsize, hsize, true);
+	xGrids = initialize(hsize, level, true);
+	fGrids = initialize(hsize, level, false);
+	sGrid = new Grid(gdim, gdim, hsize, hsize, true);
 
 	for (size_t i = 0; i < gdim; i++)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
-			sGrid(j, i) = sGrid.gxy(j*hsize, i*hsize);
+			(*sGrid)(j, i) = (*sGrid).gxy(j*hsize, i*hsize);
 		}
 	}
-
-	timeval start, end;
-	gettimeofday(&start, 0);
 
 	for (size_t i = 0; i < vcycle; i++)
 	{
@@ -243,27 +236,53 @@ int main(int argc, char** argv)
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
 	}
 
-	gettimeofday(&end, 0);
-	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-	std::cout << "Time spend for all V - cycles= " << elapsed << '\n';
-
-	errorNorm(xGrids[0], &sGrid, &newnorm);
+	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n';
-	std::string fname = std::string("data/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-	std::ofstream	fOut(fname);
-	std::string fnames = std::string("data/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-	std::ofstream	fOutsolt(fnames);
-	for (size_t y = 0; y < gdim; ++y) {
-		for (size_t x = 0; x < gdim; ++x) {
+	
+}
 
-			fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-			fOutsolt << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
-		}
-		fOut << std::endl;
-		fOutsolt << std::endl;
+int main(int argc, char** argv)
+{
+
+	//std::cout << "1";
+	if (argc < 3)
+	{
+		std::cout << "Invalid number of argument";
+		exit(0);
 	}
-	fOut.close();
-	fOutsolt.close();
 
+	size_t level = atoi(argv[1]);
+	size_t vcycle = atoi(argv[2]);
+	
+	timeval start, end;
+
+	for (int i = 0; i < 2 i++)
+	{
+		gettimeofday(&start, 0);
+
+		mgsolver(level, vcycle,i);
+
+		gettimeofday(&end, 0);
+		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+		std::cout << "Time spend for Multigrid Solver for Exercise " << (i+1) << " = " << elapsed << '\n';
+
+		double hsize = (*xGrids[0]).getHx();
+
+		std::string fname = std::string("data/solution_") + std::string(to_string(i + 1)) + std::string("/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOut(fname);
+		std::string fnames = std::string("data/solution_") + std::string(to_string(i + 1)) + std::string("/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOutsolt(fnames);
+		for (size_t y = 0; y < gdim; ++y) {
+			for (size_t x = 0; x < gdim; ++x) {
+
+				fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				fOutsolt << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+			}
+			fOut << std::endl;
+			fOutsolt << std::endl;
+		}
+		fOut.close();
+		fOutsolt.close();
+	}
 	return 0;
 }
