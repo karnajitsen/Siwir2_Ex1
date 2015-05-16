@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	inline void print(std::string text)
+	inline void printo(std::string text)
 	{
 		cout << '\n\n ' << sizeX;
 		cout << " ======== " << text << " ========" << '\n\n';
