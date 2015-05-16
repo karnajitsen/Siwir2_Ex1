@@ -132,9 +132,9 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}*/
 
 		cout << "====b4 Interpolation === \n\n";
-		for (size_t j = 0; j < txlen; j++)
+		for (size_t j = 0; j < len; j++)
 		{
-			for (size_t k = 0; k < txlen; k++)
+			for (size_t k = 0; k < len; k++)
 			{
 				cout << (*srcgrd)(k, j) << " ";
 			}
