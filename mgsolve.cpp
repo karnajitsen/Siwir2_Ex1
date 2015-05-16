@@ -254,8 +254,8 @@ int main(int argc, char** argv)
 	}
 
 	gettimeofday(&end, 0);
-
-	std::cout << "Time spend for all V - cycles= " << (end - start) / CLOCKS_PER_SEC << '\n';
+	long elapsed = (end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec;
+	std::cout << "Time spend for all V - cycles= " << elapsed << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
 	std::cout << "Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n';
