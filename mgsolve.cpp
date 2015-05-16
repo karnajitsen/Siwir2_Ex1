@@ -22,7 +22,7 @@ Grid** initialize(double hsize, const size_t level, bool flag)
 	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
-		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize,flag);
+		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize, flag);
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
 		flag = false;
@@ -36,30 +36,30 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	size_t xlen = (*xgrd).getXsize() - 1;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0/hx/hx;
-    double	beta = 1.0/hx/hx;
-	double	center =  (2.0 * alpha) + (2.0 * beta);
-	
-    Grid tmpgrd(xlen + 1, xlen + 1,hx,hx,false);
-    for (size_t i = 1; i < xlen; i++)
-    {
-        for (size_t j = 1; j < xlen; j++)
-        {
-            tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
-                + (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
-        }
-    }
-	
+	double	alpha = 1.0 / hx / hx;
+	double	beta = 1.0 / hx / hx;
+	double	center = (2.0 * alpha) + (2.0 * beta);
+
+	Grid tmpgrd(xlen + 1, xlen + 1, hx, hx, false);
+	for (size_t i = 1; i < xlen; i++)
+	{
+		for (size_t j = 1; j < xlen; j++)
+		{
+			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
+				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
+		}
+	}
+
 	size_t rlen = (*rgrid).getXsize() - 1;
-	
+
 	for (size_t i = 1; i < rlen; i++)
 	{
 		for (size_t j = 1; j < rlen; j++)
 		{
 			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
-				2.0*(tmpgrd(2 * j, 2* i - 1) + tmpgrd(2 * j,  2*i + 1) +
-				tmpgrd(2 * j - 1, 2* i) + tmpgrd(2 * j + 1,  2*i)) + 4.0 * tmpgrd(2 * j,  2*i)) / 16.0;
+				2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
+				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
 		}
 	}
 
@@ -67,11 +67,11 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
-	size_t len = (*srcgrd).getXsize() -1;
+	size_t len = (*srcgrd).getXsize() - 1;
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
-	Grid tmpgrd(txlen, txlen, hx, hx,false);
-		
+	Grid tmpgrd(txlen, txlen, hx, hx, false);
+
 	for (size_t j = 0; j < len; j++)
 	{
 		size_t k = 2 * j;
@@ -82,7 +82,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 			tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
 			tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
 			tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
-											+(*srcgrd)(i + 1, j + 1));			
+				+ (*srcgrd)(i + 1, j + 1));
 		}
 	}
 
@@ -90,7 +90,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	{
 		for (size_t j = 1; j < txlen - 1; j++)
 		{
-			(*tgtgrd)(j,i) += tmpgrd(j, i);	
+			(*tgtgrd)(j, i) += tmpgrd(j, i);
 
 		}
 	}
@@ -104,8 +104,8 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
-    double	center = (2.0 * alpha + 2.0 * beta);
-	
+	double	center = (2.0 * alpha + 2.0 * beta);
+
 	for (size_t i = 0; i < iter; i++)
 	{
 		for (size_t j = 1; j < dimX - 1; j++)
@@ -113,7 +113,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
 				(*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-                    +(*xgrd)(k, j - 1)))/center;
+					+ (*xgrd)(k, j - 1))) / center;
 
 			}
 
@@ -126,7 +126,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 				(*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
 					+ (*xgrd)(k, j - 1))) / center;
 
-				
+
 			}
 
 		}
@@ -141,8 +141,8 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	double r = 0.0;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
-    double	alpha = 1.0;
-    double	beta = 1.0;
+	double	alpha = 1.0;
+	double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
@@ -151,15 +151,15 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-            r = hx*hx*(*fgrd)(k,j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-				+ (*xgrd)(k, j - 1)) - (*xgrd)(k,j) * center;
-          
+			r = hx*hx*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+				+ (*xgrd)(k, j - 1)) - (*xgrd)(k, j) * center;
+
 			*norm += r*r;
 		}
 
 	}
-	
-	*norm = sqrt(*norm / (dimX+1) / (dimX+1));
+
+	*norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
 }
 
 inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
@@ -182,7 +182,7 @@ inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
 		{
 			r = (*sgrd)(k + 1, j) - (*xgrd)(k, j);
 
-		*norm += r*r;
+			*norm += r*r;
 		}
 
 	}
@@ -205,17 +205,16 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	clock_t tim;
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
 	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	
+
 	Grid ** xGrids = initialize(hsize, level, true);
-	Grid ** fGrids = initialize(hsize, level,false);
-	Grid sGrid(gdim, gdim, hsize, hsize,true);
+	Grid ** fGrids = initialize(hsize, level, false);
+	Grid sGrid(gdim, gdim, hsize, hsize, true);
 
 	for (size_t i = 0; i < gdim; i++)
 	{
@@ -224,43 +223,42 @@ int main(int argc, char** argv)
 			sGrid(j, i) = sGrid.gxy(j*hsize, i*hsize);
 		}
 	}
-	
+
 	timeval start, end;
 	gettimeofday(&start, 0);
-	
-	smooth(xGrids[0], fGrids[0], V1);
+
 	for (size_t i = 0; i < vcycle; i++)
-    {
-		
+	{
+
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
-		
+
 		for (size_t j = level - 1; j > 0; j--)
-		{	
-            smooth(xGrids[j], fGrids[j], V2);
+		{
+			smooth(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
-			(*fGrids[j]).reset();					
+			(*fGrids[j]).reset();
 		}
-		
-        oldnorm = newnorm;
+
+		oldnorm = newnorm;
 		resdualNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
-            convrate = newnorm / oldnorm;
-		
+			convrate = newnorm / oldnorm;
+
 		std::cout << "Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
-     }
+	}
 
 	gettimeofday(&end, 0);
 
-	std::cout << "Time spend for all V - cycles= " << ((float)end) / CLOCKS_PER_SEC << '\n';
+	std::cout << "Time spend for all V - cycles= " << (end - start) / CLOCKS_PER_SEC << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
-	std::cout << "Error Norm for h as 1/" << gdim-1 <<" = " << newnorm << '\n';
+	std::cout << "Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n';
 	std::string fname = std::string("data/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOut(fname);
 	std::string fnames = std::string("data/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
