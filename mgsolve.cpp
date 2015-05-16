@@ -167,7 +167,7 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	*norm = sqrt(*norm / (dimX+1) / (dimX+1));
 }
 
-inline void errorNorm(Grid* xgrd, const Grid * sgrd, double& norm)
+inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
@@ -179,7 +179,7 @@ inline void errorNorm(Grid* xgrd, const Grid * sgrd, double& norm)
 	double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
 
-	norm = 0.0;
+	*norm = 0.0;
 
 	for (size_t j = 1; j < dimX; j++)
 	{
@@ -187,12 +187,12 @@ inline void errorNorm(Grid* xgrd, const Grid * sgrd, double& norm)
 		{
 			r = (*sgrd)(k + 1, j) - (*xgrd)(k, j);
 
-		 norm += r*r;
+		*norm += r*r;
 		}
 
 	}
 
-	norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
+	*norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
 }
 
 inline double gxy(const double x, const double y)
