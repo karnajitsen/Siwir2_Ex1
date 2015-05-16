@@ -75,11 +75,11 @@ public:
 	{
 		cout << '\n\n';
 		cout << " ======== " << text << " ========" << '\n\n';
-		for (size_t j = 0; j < xlen + 1; j++)
+		for (size_t j = xSize-1; j >= 0; --j)
 		{
-			for (size_t k = 0; k < xlen + 1; k++)
+			for (size_t k = xSize-1; k >= 0; --k)
 			{
-				cout << tmpgrd(k, j) << " ";
+				cout << data[j*ld + k] << " ";
 			}
 
 			cout << '\n';
