@@ -37,7 +37,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / hx / hx;
-	double	beta = 1.0 / hx / hx;
+	double	beta = 1.0 / hy / hy;
 	double	center = (2.0 * alpha) + (2.0 * beta);
 
 	Grid tmpgrd(xlen + 1, xlen + 1, hx, hx, false);
@@ -101,7 +101,6 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
 	double hx = (*xgrd).getHx();
-	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
@@ -137,10 +136,8 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
-	//double hx = (*xgrd).getHx() ;
 	double r = 0.0;
 	double hx = (*xgrd).getHx();
-	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
@@ -168,12 +165,6 @@ inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
 	size_t dimX = (*xgrd).getXsize() - 1;
 	//double hx = (*xgrd).getHx() ;
 	double r = 0.0;
-	double hx = (*xgrd).getHx();
-	double hy = (*xgrd).getHy();
-	double	alpha = 1.0;
-	double	beta = 1.0;
-	double	center = (2.0 * alpha + 2.0 * beta);
-
 	*norm = 0.0;
 
 	for (size_t j = 1; j < dimX; j++)
@@ -208,7 +199,6 @@ int main(int argc, char** argv)
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
 	size_t gdim = pow(2, level) + 1;
-	size_t vdim = gdim - 2;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 
@@ -263,8 +253,8 @@ int main(int argc, char** argv)
 	std::ofstream	fOut(fname);
 	std::string fnames = std::string("data/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOutsolt(fnames);
-	for (int y = 0; y < gdim; ++y) {
-		for (int x = 0; x < gdim; ++x) {
+	for (size_t y = 0; y < gdim; ++y) {
+		for (size_t x = 0; x < gdim; ++x) {
 
 			fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
 			fOutsolt << x*hsize << "\t" << y*hsize << "\t" << sGrid(x, y) << std::endl;
