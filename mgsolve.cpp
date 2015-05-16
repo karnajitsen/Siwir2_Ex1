@@ -192,7 +192,7 @@ inline double gxy(const double x, const double y)
 	return sin(M_PI * x) * sinh(M_PI * y);
 }
 
-inline void mgsolver(size_t level, size_t vcycle, int num)
+void mgsolver(size_t level, size_t vcycle, int num)
 {
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
