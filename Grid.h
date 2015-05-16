@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	inline void printo(std::string text)
+	/*inline void printo(std::string text)
 	{
 		cout << '\n\n ' << this->getXsize();
 		cout << " ======== " << text << " ========" << '\n\n';
@@ -86,7 +86,7 @@ public:
 
 			cout << '\n';
 		}
-	}
+	}*/
 
 	inline double& operator()(const size_t x, const size_t y)
 	{
