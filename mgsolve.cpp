@@ -93,27 +93,27 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
-	size_t len = (*srcgrd).getXsize() - 1;
-	size_t txlen = (*tgtgrd).getXsize();
+	size_t len = (*srcgrd).getXsize() ;
+	size_t txlen = (*tgtgrd).getXsize()-1;
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx);
 	Grid tmpgrd2(txlen, txlen, hx, hx);
 
-	for (size_t j = 0; j < len+1; j++)
+	for (size_t j = 0; j < len; j++)
 	{
-		for (size_t i = 0; i < len+1; i++)
+		for (size_t i = 0; i < len; i++)
 		{
 			tmpgrd2(2 * i, 2 * j) = (*srcgrd)(i, j);
 		}
 	}
 
-	for (size_t j = 1; j < len; j++)
+	for (size_t j = 1; j < txlen; j++)
 	{
-		for (size_t i = 1; i < len; i++)
+		for (size_t i = 1; i < txlen; i++)
 		{
-			tmpgrd(i, j) = (4.0 * (*srcgrd)(i, j) + 2.0 * ((*srcgrd)(i - 1, j) + (*srcgrd)(i, j + 1) + (*srcgrd)(i, j - 1)
-				+ (*srcgrd)(i + 1, j)) + (*srcgrd)(i + 1, j + 1) + (*srcgrd)(i + 1, j - 1) 
-				+ (*srcgrd)(i - 1, j + 1) + (*srcgrd)(i - 1, j - 1))*0.25;
+			tmpgrd(i, j) = (4.0 * tmpgrd2(i, j) + 2.0 * tmpgrd2(i - 1, j) + tmpgrd2(i, j + 1) + tmpgrd2(i, j - 1)
+				+ tmpgrd2(i + 1, j)) + tmpgrd2(i + 1, j + 1) + tmpgrd2(i + 1, j - 1)
+				+ tmpgrd2(i - 1, j + 1) + tmpgrd2(i - 1, j - 1))*0.25;
 			
 		}
 	}
