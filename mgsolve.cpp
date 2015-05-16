@@ -258,7 +258,7 @@ int main(int argc, char** argv)
 		if (oldnorm != 0.0)
             convrate = newnorm / oldnorm;
 		
-		std::cout << "Residual after " << i + 1 << " V-Cycle = " << newnorm << '\n';
+		std::cout << "Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n';
 		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
      }
 
@@ -267,10 +267,10 @@ int main(int argc, char** argv)
 	std::cout << "Time spend for all V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
-	std::cout << "Error Norm for h = 1/" << gdim-1 <<" = " << newnorm << '\n';
-	std::string fname = std::string("data/solution.txt");
+	std::cout << "Error Norm for h as 1/" << gdim-1 <<" = " << newnorm << '\n';
+	std::string fname = std::string("data/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOut(fname);
-	std::string fnames = std::string("data/exactsolution.txt");
+	std::string fnames = std::string("data/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOutsolt(fnames);
 	for (int y = 0; y < gdim; ++y) {
 		for (int x = 0; x < gdim; ++x) {
