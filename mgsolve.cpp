@@ -192,7 +192,7 @@ inline double gxy(const double x, const double y)
 	return sin(M_PI * x) * sinh(M_PI * y);
 }
 
-inline void mgsolver(size_t level, size_t vcycle)
+inline void mgsolver(size_t level, size_t vcycle, int num)
 {
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
@@ -256,7 +256,7 @@ int main(int argc, char** argv)
 	
 	timeval start, end;
 
-	for (int i = 0; i < 2 i++)
+	for (int i = 0; i < 2; i++)
 	{
 		gettimeofday(&start, 0);
 
@@ -267,6 +267,7 @@ int main(int argc, char** argv)
 		std::cout << "Time spend for Multigrid Solver for Exercise " << (i+1) << " = " << elapsed << '\n';
 
 		double hsize = (*xGrids[0]).getHx();
+		double gdim = (*xGrids[0]).getXsize();
 
 		std::string fname = std::string("data/solution_") + std::string(to_string(i + 1)) + std::string("/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 		std::ofstream	fOut(fname);
