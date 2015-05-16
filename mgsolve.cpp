@@ -18,11 +18,11 @@
 
 using namespace std;
 
-Grid** initialize(double hsize, const size_t level)
+Grid** initialize(double hsize, const size_t level, bool flag)
 {
 	size_t je = level;
 	size_t gdim = pow(2, je) + 1;
-	bool flag = true;
+	//bool flag = true;
 
 	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
@@ -318,8 +318,8 @@ int main(int argc, char** argv)
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	
-	Grid ** xGrids = initialize(hsize, level);
-	Grid ** fGrids = initialize(hsize, level);
+	Grid ** xGrids = initialize(hsize, level, true);
+	Grid ** fGrids = initialize(hsize, level,false);
 	Grid sGrid(gdim, gdim, hsize, hsize,true);
 
 	for (size_t i = 0; i < gdim; i++)
