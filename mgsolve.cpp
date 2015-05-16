@@ -336,9 +336,9 @@ int main(int argc, char** argv)
 	for (size_t i = 0; i < vcycle; i++)
     {
 		//size_t jl = 0;
-		restriction(xGrids[0], fGrids[0], fGrids[1]);
+		//restriction(xGrids[0], fGrids[0], fGrids[1]);
 		
-		for (size_t jl = 1; jl < level - 1; jl++)
+		for (size_t jl = 0; jl < level - 1; jl++)
 		{
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
@@ -352,7 +352,7 @@ int main(int argc, char** argv)
 			(*fGrids[j]).reset();					
 		}
 		
-		smooth(xGrids[0], fGrids[0], V1);
+		//smooth(xGrids[0], fGrids[0], V1);
         oldnorm = newnorm;
 		calNorm(xGrids[0], fGrids[0], &newnorm);
 		if (oldnorm != 0.0)
