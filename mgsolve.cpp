@@ -267,7 +267,7 @@ int main(int argc, char** argv)
 	std::cout << "Time spend for all V - cycles= " << ((float)tim) / CLOCKS_PER_SEC << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
-
+	std::cout << "Error Norm for h = 1/" << gdim-1 <<" = " << newnorm << '\n';
 	std::string fname = std::string("data/solution.txt");
 	std::ofstream	fOut(fname);
 	std::string fnames = std::string("data/exactsolution.txt");
