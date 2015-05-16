@@ -75,7 +75,7 @@ public:
 
 	inline void print(std::string text)
 	{
-		cout << '\n\n';
+		cout << '\n\n ' << sizeX;
 		cout << " ======== " << text << " ========" << '\n\n';
 		for (size_t j = sizeX - 1; j >= 0; j--)
 		{
