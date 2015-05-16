@@ -54,7 +54,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
         }
     }
 
-	cout << "====After Restriction Residual=== \n\n";
+	/*cout << "====After Restriction Residual=== \n\n";
 		for (size_t j = 0; j < xlen+1; j++)
 		{
 			for (size_t k = 0; k < xlen+1; k++)
@@ -63,7 +63,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			}
 
 			cout << '\n';
-		}
+		}*/
 	
 	size_t rlen = (*rgrid).getXsize() - 1;
 	
@@ -78,7 +78,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
-	cout << "====After Restriction Coarse=== \n\n";
+	/*cout << "====After Restriction Coarse=== \n\n";
 		for (size_t j = 0; j < rlen+1; j++)
 		{
 			for (size_t k = 0; k < rlen+1; k++)
@@ -87,7 +87,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			}
 
 			cout << '\n';
-		}
+		}*/
 
 }
 
@@ -116,6 +116,28 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 				+ tmpgrd2(i - 1, j + 1) + tmpgrd2(i - 1, j - 1))*0.25;
 			
 		}
+	
+
+		cout << "====b4 Interpolation === \n\n";
+		for (size_t j = 0; j < txlen; j++)
+		{
+			for (size_t k = 0; k < txlen; k++)
+			{
+				cout << tmpgrd2(k, j) << " ";
+			}
+
+			cout << '\n';
+		}
+
+	cout << "====After Interpolation === \n\n";
+	for (size_t j = 0; j < txlen; j++)
+	{
+		for (size_t k = 0; k < txlen; k++)
+		{
+			cout << tmpgrd(k, j) << " ";
+		}
+
+		cout << '\n';
 	}
 	
 	/*for (size_t j = 0; j < len; j++)
@@ -132,7 +154,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}*/
 
-	cout << "====After Interpolation b4 Add === \n\n";
+	/*cout << "====After Interpolation b4 Add === \n\n";
 	for (size_t j = 0; j < txlen; j++)
 	{
 		for (size_t k = 0; k < txlen; k++)
@@ -141,7 +163,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
@@ -152,7 +174,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
-	cout << "====After Interpolation === \n\n";
+	/*cout << "====After Interpolation === \n\n";
 	for (size_t j = 0; j < txlen; j++)
 	{
 		for (size_t k = 0; k < txlen; k++)
@@ -161,7 +183,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 	//delete &tmpgrd;
 }
@@ -175,7 +197,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
     double	beta = 1.0;
     double	center = (2.0 * alpha + 2.0 * beta);
 
-	cout << "Before Smoothing\n\n";
+	/*cout << "Before Smoothing\n\n";
 	for (size_t j = 0; j < dimX; j++)
 	{
 		for (size_t k = 0; k < dimX; k++)
@@ -184,7 +206,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 	
 	for (size_t i = 0; i < iter; i++)
@@ -218,7 +240,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 	}
 
-	cout << "After Smoothing\n\n";
+	/*cout << "After Smoothing\n\n";
 	for (size_t j = 0; j < dimX; j++)
 	{
 		for (size_t k = 0; k < dimX; k++)
@@ -227,7 +249,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 	
 		cout << '\n';
-	}
+	}*/
 
 }
 
