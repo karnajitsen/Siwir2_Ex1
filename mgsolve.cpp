@@ -27,7 +27,7 @@ Grid** initialize(double hsize, const size_t level)
 	{
 		std::cout << hsize << "\n";
 		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize,flag);
-		(*arrGrid[i]).print("After Initilization " + i+ " "); 
+		(*arrGrid[i]).print(std::string("After Initilization ") + std::string(to_string(i)) + std::string(" "));
 		gdim = pow(2, --je) + 1;
 		hsize *= 2.0;
 		flag = false;
