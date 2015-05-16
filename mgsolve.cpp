@@ -244,7 +244,7 @@ int main(int argc, char** argv)
 	}
 
 	gettimeofday(&end, 0);
-	long elapsed = ((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec)*0.000001;
+	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Time spend for all V - cycles= " << elapsed << '\n';
 
 	errorNorm(xGrids[0], &sGrid, &newnorm);
