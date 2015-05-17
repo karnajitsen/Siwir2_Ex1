@@ -1,10 +1,3 @@
-#include<iostream>
-#include<fstream>
-#include "Grid.h"
-#include <sys/time.h>
-#include "MGNeumann.h"
-#include "MGDirichlet.h"
-
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
@@ -16,15 +9,21 @@ Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
 int ndflag = 1;
+#include<iostream>
+#include<fstream>
+#include "Grid.h"
+#include <sys/time.h>
+#include "MGNeumann.h"
+#include "MGDirichlet.h"
+
 using namespace std;
 
-void init(double hsize, const size_t level, bool dirflag)
+void init(double hsize, const size_t level, bool dirflg)
 {
 	size_t je = level;
 	size_t ydim = pow(2, je) + 1;
 	size_t xdim = ydim;
-	size_t nxdim, nydim;
-	
+	bool flag = true;
 	xGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	fGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
@@ -59,7 +58,7 @@ inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	double	beta = 1.0 / hy / hy;
 	double	center = (2.0 * alpha) + (2.0 * beta);
 
-	Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false);
+	Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false,true);
 	for (size_t i = 1; i < ylen; i++)
 	{
 		for (size_t j = 1; j < xlen; j++)
@@ -111,7 +110,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	size_t len = (*srcgrd).getXsize() - 1;
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
-	Grid tmpgrd(txlen, txlen, hx, hx, false);
+	Grid tmpgrd(txlen, txlen, hx, hx, false,true);
 
 	for (size_t j = 0; j < len; j++)
 	{
@@ -138,7 +137,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 }
 
-inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
@@ -156,7 +155,7 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
-			r = hx*hx*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+			r = hx*hy*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
 				+ (*xgrd)(k, j - 1)) - (*xgrd)(k, j) * center;
 
 			*norm += r*r;
@@ -164,12 +163,12 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 
 		if (ndflag == 0)
 		{
-			r = hx*hx*(*fgrd)(0, i) + (2.0 * hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
+			r = hx*hy*(*fgrd)(0, i) + (2.0 * hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
 				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center * 0.5;
 
 			*norm += r*r;
 
-			r = hx*hx*(*fgrd)(dimX, i) - (2.0 * hx) + alpha*((*xgrd)(dimX - 1, i)) + beta * ((*xgrd)(dimX, i + 1)
+			r = hx*hy*(*fgrd)(dimX, i) - (2.0 * hx) + alpha*((*xgrd)(dimX - 1, i)) + beta * ((*xgrd)(dimX, i + 1)
 				+ (*xgrd)(dimX, i - 1)) - (*xgrd)(dimX, i) * center * 0.5;
 
 			*norm += r*r;
@@ -185,7 +184,7 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 
 
 
-inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
+inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize();
@@ -240,8 +239,8 @@ int main(int argc, char** argv)
 		for (size_t y = 0; y < gdim; ++y) {
 			for (size_t x = 0; x < gdim; ++x) {
 
-				fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				fOutsolt << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+				fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
 			}
 			fOut1 << std::endl;
 			fOutsolt1 << std::endl;
@@ -257,11 +256,11 @@ int main(int argc, char** argv)
 		MGNeumann(level, vcycle);
 
 		gettimeofday(&end, 0);
-		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+		elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 		std::cout << "Time spend for Multigrid Solver for Neumann = " << elapsed << '\n';
 
-		double hsize = (*xGrids[0]).getHx();
-		double gdim = (*xGrids[0]).getXsize();
+		hsize = (*xGrids[0]).getHx();
+		gdim = (*xGrids[0]).getXsize();
 
 		std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 		std::ofstream	fOut2(fname);
