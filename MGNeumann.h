@@ -90,7 +90,7 @@ inline void MGNeumann(size_t level, size_t vcycle)
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 
-	init(hsize, level, false);
+	//init(hsize, level, false);
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, false);
 
 	/*for (size_t i = 0; i < gdim; i++)
