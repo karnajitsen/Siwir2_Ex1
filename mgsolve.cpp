@@ -224,7 +224,7 @@ int main(int argc, char** argv)
 	timeval start, end;
 
 		gettimeofday(&start, 0);
-		cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
+		//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
 		MGDirichlet(level, vcycle);	
