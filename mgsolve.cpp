@@ -13,7 +13,7 @@
 Grid ** xGrids = NULL;
 Grid ** fGrids = NULL;
 Grid *sGrid = NULL;
-size_t ndflag = 1;
+size_t *ndflag = NULL;
 
 #include "MGNeumann.h"
 #include "MGDirichlet.h"
@@ -69,7 +69,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 		}
 
-		if (ndflag == 0)
+		if (*ndflag == 0)
 		{
 			tmpgrd(0, i) = (*fgrd)(0, i) + (2.0 / hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
 				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center * 0.5;
@@ -93,7 +93,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
 		}
 
-		if (ndflag == 0)
+		if (*ndflag == 0)
 		{
 			(*rgrid)(0, i) = (2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
 				2.0*(tmpgrd(0, 2 * i - 1) + tmpgrd(0, 2 * i + 1) +
@@ -130,7 +130,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
-		for (size_t j = ndflag; j < txlen - ndflag; j++)
+		for (size_t j = *ndflag; j < txlen - *ndflag; j++)
 		{
 			(*tgtgrd)(j, i) += tmpgrd(j, i);
 
@@ -163,7 +163,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			*norm += r*r;
 		}
 
-		if (ndflag == 0)
+		if (*ndflag == 0)
 		{
 			r = hx*hy*(*fgrd)(0, j) + (2.0 * hx) + alpha*((*xgrd)(1, j)) + beta * ((*xgrd)(0, j + 1)
 				+ (*xgrd)(0, j - 1)) - (*xgrd)(0, j) * center * 0.5;
@@ -227,6 +227,7 @@ int main(int argc, char** argv)
 		//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
+		*ndflag = 1;
 		MGDirichlet(level, vcycle);	
 		cout << " 11222";
 		gettimeofday(&end, 0);
@@ -254,10 +255,10 @@ int main(int argc, char** argv)
 		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
 		std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
-		delete xGrids;
-		delete fGrids;
-		delete sGrid;
-		ndflag = 0;
+		 xGrids = NULL;
+		 fGrids = NULL;
+		 sGrid = NULL; 
+		 *ndflag = 0;
 		gettimeofday(&start, 0);
 		MGNeumann(level, vcycle);
 		gettimeofday(&end, 0);
