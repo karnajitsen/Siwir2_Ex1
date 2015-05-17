@@ -147,7 +147,7 @@ inline void MGNeumann(size_t level, size_t vcycle)
 		std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
 		std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 
-		orthogonalize(xGrids[0]);
+		//orthogonalize(xGrids[0]);
 	}
 
 	errorNorm(xGrids[0], sGrid, &newnorm);
