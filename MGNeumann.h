@@ -24,7 +24,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			if (k == 0)
 			{
 				(*xgrd)(k, j) = 0.25*(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k , j+1) + (*xgrd)(k , j-1));
-				(*xgrd)(dimX - 1, j) = 0.25(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j) 
+				(*xgrd)(dimX - 1, j) = 0.25*(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j) 
 										+ (*xgrd)(dimX - 2, j + 1) + (*xgrd)(dimX - 2, j - 1));
 				k += 2;
 			}
@@ -42,7 +42,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			if (k == 0)
 			{
 				(*xgrd)(k, j) = 0.25*(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
-				(*xgrd)(dimX - 1, j) = 0.25(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j)
+				(*xgrd)(dimX - 1, j) = 0.25*(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j)
 					+ (*xgrd)(dimX - 2, j + 1) + (*xgrd)(dimX - 2, j - 1));
 				k += 2;
 			}
@@ -93,13 +93,13 @@ void MGNeumann(size_t level, size_t vcycle)
 	init(hsize, level, false);
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, false);
 
-	for (size_t i = 0; i < gdim; i++)
+	/*for (size_t i = 0; i < gdim; i++)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
 			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize, i*hsize);
 		}
-	}
+	}*/
 
 	for (size_t i = 0; i < vcycle; i++)
 	{
@@ -125,14 +125,14 @@ void MGNeumann(size_t level, size_t vcycle)
 		if (oldnorm != 0.0)
 			convrate = newnorm / oldnorm;
 
-		std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n\n';
-		std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n\n';
+		std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+		std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 
 		orthogonalize(xGrids[0]);
 	}
 
 	errorNorm(xGrids[0], sGrid, &newnorm);
-	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n\n';
+	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
 }
 
