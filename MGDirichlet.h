@@ -84,11 +84,11 @@ void MGDirichlet(size_t level, size_t vcycle)
 		if (oldnorm != 0.0)
 			convrate = newnorm / oldnorm;
 		
-		std::cout << "Dirichlet:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n\n';
-		std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n\n';
+		std::cout << "Dirichlet:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+		std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 	}
 	errorNorm(xGrids[0], sGrid, &newnorm);
-	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n\n';
+	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
 }
 

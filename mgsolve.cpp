@@ -258,7 +258,7 @@ int main(int argc, char** argv)
 
 		gettimeofday(&end, 0);
 		elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Time spend for Multigrid Solver for Neumann = " << elapsed << '\n';
+		std::cout << "Time spend for Multigrid Solver for Neumann = " << elapsed << "\n";
 
 		hsize = (*xGrids[0]).getHx();
 		gdim = (*xGrids[0]).getXsize();
