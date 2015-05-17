@@ -42,7 +42,7 @@ void init(double hsize, const size_t level, bool dirflg)
 	{
 		(*fGrids[0])(0, i) = 1.0;
 		(*fGrids[0])((*fGrids[0]).getXsize() - 1, i) = 1.0;
-		for (size_t j = 1; i < (*fGrids[0]).getXsize() - 1; j++)
+		for (size_t j = 1; j < (*fGrids[0]).getXsize() - 1; j++)
 		{
 			(*fGrids[0])(j, i) = 2.0;
 		}
