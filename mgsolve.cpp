@@ -231,7 +231,7 @@ int main(int argc, char** argv)
 		MGDirichlet(level, vcycle);	
 		cout << " 11222";
 		gettimeofday(&end, 0);
-		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+		/*double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 		std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
 
 		double hsize = (*xGrids[0]).getHx();
@@ -252,7 +252,7 @@ int main(int argc, char** argv)
 		}
 		fOut1.close();
 		fOutsolt1.close();
-		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
+		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";*/
 
 		/*std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
 		 xGrids = NULL;
