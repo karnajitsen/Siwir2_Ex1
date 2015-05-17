@@ -120,13 +120,17 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 		if (*ndflag == 0)
 		{
-			(*rgrid)(0, i) = (2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
+			(*rgrid)(0, i) = 0.5 * tmpgrd(0, 2 * i) + 0.25 * tmpgrd(1, 2 * i) + 0.125*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1));
+				
+				/*(2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
 				2.0*(tmpgrd(0, 2 * i - 1) + tmpgrd(0, 2 * i + 1) +
-				2.0 * (hx + tmpgrd(1, 2 * i))) + 4.0 * tmpgrd(0, 2 * i)) / 16.0;
+				2.0 * (hx + tmpgrd(1, 2 * i))) + 4.0 * tmpgrd(0, 2 * i)) / 16.0;*/
 
-			(*rgrid)(rxlen, i) = (2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
+			(*rgrid)(rxlen, i) = 0.5 * tmpgrd(xlen, 2 * i) + 0.25 * tmpgrd(xlen - 1, 2 * i) + 0.125*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1));
+				
+			/*(2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
 				2.0*(tmpgrd(xlen, 2 * i - 1) + tmpgrd(xlen, 2 * i + 1) +
-				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen, 2 * i)) / 16.0;
+				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen, 2 * i)) / 16.0;*/
 		}
 	}
 
