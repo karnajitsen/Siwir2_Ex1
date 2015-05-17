@@ -65,7 +65,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	{
 		for (size_t k = 0; k <= xlen; k++)
 		{
-			cout << (*xgrid)(k, j) << " ";
+			cout << (*xgrd)(k, j) << " ";
 		}
 
 		cout << '\n';
@@ -96,7 +96,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	{
 		for (size_t k = 0; k <= xlen; k++)
 		{
-			cout << (*xgrid)(k, j) << " ";
+			cout << tmpgrd(k, j) << " ";
 		}
 
 		cout << '\n';
