@@ -49,7 +49,7 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	std::cout << "00000";
-	init(hsize, level, true);
+	//init(hsize, level, true);
 	std::cout << "1111131131131";
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, true);
 
