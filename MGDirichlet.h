@@ -1,4 +1,9 @@
 using namespace std;
+void init(double, const size_t, bool);
+void restriction(const Grid *, const Grid *, Grid*);
+void interpolate(Grid *, Grid *);
+void resdualNorm(const Grid*, const Grid *, double*);
+void errorNorm(const Grid*, const Grid *, double*);
 
 inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
@@ -69,7 +74,7 @@ void MGDirichlet(size_t level, size_t vcycle)
 		for (size_t j = level - 1; j > 0; j--)
 		{
 			dirichsmooth(xGrids[j], fGrids[j], V2);
-			dirichInterp(xGrids[j], xGrids[j - 1]);
+			interpolation(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
 			(*fGrids[j]).reset();
 		}
@@ -82,7 +87,6 @@ void MGDirichlet(size_t level, size_t vcycle)
 		std::cout << "Dirichlet:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n\n';
 		std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n\n';
 	}
-
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n\n';
 

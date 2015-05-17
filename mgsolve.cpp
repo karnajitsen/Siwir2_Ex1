@@ -1,10 +1,3 @@
-#include<iostream>
-#include<fstream>
-#include "Grid.h"
-#include <sys/time.h>
-#include "MGNeumann.h"
-#include "MGDirichlet.h"
-
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
@@ -16,15 +9,21 @@ Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
 int ndflag = 1;
+#include<iostream>
+#include<fstream>
+#include "Grid.h"
+#include <sys/time.h>
+#include "MGNeumann.h"
+#include "MGDirichlet.h"
+
 using namespace std;
 
-void init(double hsize, const size_t level, bool dirflag)
+void init(double hsize, const size_t level, bool dirflg)
 {
 	size_t je = level;
 	size_t ydim = pow(2, je) + 1;
 	size_t xdim = ydim;
-	size_t nxdim, nydim;
-	
+	bool flag = true;
 	xGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	fGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
@@ -138,7 +137,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 }
 
-inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
+inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
@@ -185,7 +184,7 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 
 
 
-inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
+inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize();
