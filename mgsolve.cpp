@@ -333,11 +333,11 @@ int main(int argc, char** argv)
 	gettimeofday(&end, 0);
 
 
-	elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
-	hsize = (*xGrids[0]).getHx();
-	gdim = (*xGrids[0]).getXsize();
+	double hsize = (*xGrids[0]).getHx();
+	double gdim = (*xGrids[0]).getXsize();
 
 	std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOut2(fname2);
