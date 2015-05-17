@@ -89,6 +89,7 @@ public:
 
 	inline double& operator()(const size_t x, const size_t y)
 	{
+		std::cout << x << " here I am 11 " << y;
 		assert(x < sizeX);
 		assert(y < sizeY);
 		return data[y*ld + x];
@@ -96,6 +97,7 @@ public:
 
 	inline double& operator()(const size_t x, const size_t y) const
 	{
+		std::cout << x << " here I am 22 " << y;
 		assert(x < sizeX);
 		assert(y < sizeY);
 		return data[y*ld + x];
