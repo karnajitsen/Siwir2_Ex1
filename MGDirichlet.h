@@ -69,7 +69,6 @@ inline void mgDirichlet(size_t level, size_t vcycle)
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
 			dirichsmooth(xGrids[jl], fGrids[jl], V1);
-			cout << "2222";
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
 

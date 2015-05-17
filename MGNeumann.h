@@ -8,6 +8,17 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double	beta = 1.0;
 	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
+	cout << "====B4 smoothing=== \n\n";
+	for (size_t j = 0; j < dimY; j++)
+	{
+		for (size_t k = 0; k < dimY; k++)
+		{
+			cout << (*xgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 	for (size_t i = 0; i < iter; i++)
 	{
 		for (size_t j = 1; j < dimY - 1; j++)
@@ -28,6 +39,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 		}
 
+
 		for (size_t j = 1; j < dimY - 1; j++)
 		{
 			size_t k = j & 0x1;
@@ -45,7 +57,21 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			}
 
 		}
+
 	}
+
+
+	cout << "====After smoothing=== \n\n";
+	for (size_t j = 0; j < dimY; j++)
+	{
+		for (size_t k = 0; k < dimY; k++)
+		{
+			cout << (*xgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 }
 
 
@@ -85,13 +111,13 @@ inline void MGNeumann(size_t level, size_t vcycle)
 	init(hsize, level, false);
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, false);
 
-	/*for (size_t i = 0; i < gdim; i++)
+	for (size_t i = 0; i < gdim; i++)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
-			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize, i*hsize);
+			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize);
 		}
-	}*/
+	}
 
 	for (size_t i = 0; i < vcycle; i++)
 	{
@@ -105,7 +131,6 @@ inline void MGNeumann(size_t level, size_t vcycle)
 
 		for (size_t j = level - 1; j > 0; j--)
 		{
-			//orthogonalize(fGrids[j]);
 			neumannsmooth(xGrids[j], fGrids[j], V2);
 			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
@@ -123,8 +148,8 @@ inline void MGNeumann(size_t level, size_t vcycle)
 		orthogonalize(xGrids[0]);
 	}
 
-	errorNorm(xGrids[0], sGrid, &newnorm);
-	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+	//errorNorm(xGrids[0], sGrid, &newnorm);
+	//std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
 }
 
