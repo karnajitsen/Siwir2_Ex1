@@ -26,7 +26,7 @@ public:
 		sizeY = 0;
 	}
 
-	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN)
+	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN , bool dirflag)
 	{
 		sizeX = x;
 		sizeY = y;
@@ -36,17 +36,26 @@ public:
 		totLength = (x - 2)*(y - 2);
 		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
-		if (bndrYN)
+		if (bndrYN && dirflag)
 		{
 			double l = (sizeX - 1.0)*hx;
 			for (int j = 0.0; (size_t)j < sizeX; j++)
 			{
 				double k = j*hx;
+				data[j] = gxy1(k, 0.0);
+				data[j*ld] = gxy1(0.0, k);
+				data[j + ld * (sizeX - 1)] = gxy1(k, l);
+				data[j * ld + (sizeX - 1)] = gxy1(l, k);
+			}
+		}
 
-				data[j] = gxy(k, 0.0);
-				data[j*ld] = gxy(0.0, k);
-				data[j + ld * (sizeX - 1)] = gxy(k, l);
-				data[j * ld + (sizeX - 1)] = gxy(l, k);
+		if (bndrYN && !dirflag)
+		{
+			for (int j = 0.0; (size_t)j < sizeX; j++)
+			{
+				double k = j*hx;
+				data[j] = gxy2(k);
+				data[j + ld * (sizeX - 1)] = gxy2(k);
 			}
 		}
 		//data++;
@@ -57,9 +66,14 @@ public:
 		free(data);
 	}
 
-	inline long double gxy(const double x, const double y)
+	inline double gxy1(const double x, const double y)
 	{
-		return (long double) sin(M_PI * x) * sinh(M_PI * y);
+		return sin(M_PI * x) * sinh(M_PI * y);
+	}
+
+	inline double gxy2(const double x)
+	{
+		return (x * (1.0 - x));
 	}
 
 	inline void reset()
@@ -72,21 +86,6 @@ public:
 			}
 		}
 	}
-
-	/*inline void printo(std::string text)
-	{
-		cout << '\n\n ' << this->getXsize();
-		cout << " ======== " << text << " ========" << '\n\n';
-		for (size_t j = this->getXsize() -1; j >= 0; j--)
-		{
-			for (size_t k = 0; k < this->getXsize(); k++)
-			{
-				cout << data[j*ld + k] << " ";
-			}
-
-			cout << '\n';
-		}
-	}*/
 
 	inline double& operator()(const size_t x, const size_t y)
 	{
@@ -102,7 +101,7 @@ public:
 		return data[y*ld + x];
 	}
 
-	/*inline Grid * operator+=(const Grid * rhs)
+	inline Grid * operator+=(const Grid * rhs)
 	{
 		return this;
 	}
@@ -111,7 +110,7 @@ public:
 	{
 		return this;
 	}
-	*/	
+		
 	inline size_t getXsize() const
 	{
 		return sizeX;
