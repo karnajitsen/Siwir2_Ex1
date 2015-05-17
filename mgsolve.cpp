@@ -254,7 +254,7 @@ int main(int argc, char** argv)
 		fOutsolt1.close();
 		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
-		std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
+		/*std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
 		 xGrids = NULL;
 		 fGrids = NULL;
 		 sGrid = NULL; 
@@ -286,6 +286,6 @@ int main(int argc, char** argv)
 		fOut2.close();
 		fOutsolt2.close();
 
-		std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";
+		std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";*/
 	return 0;
 }
