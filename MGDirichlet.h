@@ -46,7 +46,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 inline void mgDirichlet(size_t level, size_t vcycle)
 {
-	size_t gdim = pow(2, level) + 1;
+	/*size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	std::cout << "00000";
@@ -90,7 +90,7 @@ inline void mgDirichlet(size_t level, size_t vcycle)
 		std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 	}
 	errorNorm(xGrids[0], sGrid, &newnorm);
-	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";*/
 
 }
 
