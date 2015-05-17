@@ -62,7 +62,7 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	}
 	std::cout << "11111";
 
-	for (size_t i = 0; i < vcycle; i++)
+	/*for (size_t i = 0; i < vcycle; i++)
 	{
 
 		for (size_t jl = 0; jl < level - 1; jl++)
@@ -90,6 +90,6 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	}
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
-
+*/
 }
 
