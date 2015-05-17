@@ -173,6 +173,12 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 			tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
 				+ (*srcgrd)(i + 1, j + 1));
 		}
+
+		if (ndflag == 1)
+		{
+			tmpgrd(2 * len, j + 1) = 0.5*((*srcgrd)(len, j) + (*srcgrd)(len, j + 1));
+			tmpgrd(2 * len, j) = (*srcgrd)(len, j);
+		}
 	}
 
 	cout << "====b4 Interpolate Add === \n\n";
