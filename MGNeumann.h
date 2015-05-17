@@ -1,11 +1,3 @@
-void init(double, const size_t, bool);
-void restriction(const Grid *, const Grid *, Grid*);
-void interpolate(Grid *, Grid *);
-void resdualNorm(const Grid*, const Grid *, double*);
-void errorNorm(const Grid*, const Grid *, double*);
-
-using namespace std;
-
 inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 {
 	size_t dimX = (*xgrd).getXsize();
