@@ -10,9 +10,9 @@
 #define V1 2
 #define V2 1
 
-Grid ** xGrids = (Grid**)memalign(ALLIGNMENT, sizeof(Grid*));;
-Grid ** fGrids = (Grid**)memalign(ALLIGNMENT, sizeof(Grid*));
-Grid *sGrid = (Grid*)memalign(ALLIGNMENT, sizeof(Grid*));
+Grid ** xGrids = nullptr;
+Grid ** fGrids = nullptr;
+Grid *sGrid = nullptr;
 size_t *ndflag = new size_t(1);
 
 #include "MGNeumann.h"
