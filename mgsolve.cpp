@@ -13,7 +13,7 @@
 Grid ** xGrids = NULL;
 Grid ** fGrids = NULL;
 Grid *sGrid = NULL;
-size_t *ndflag = 0;
+size_t *ndflag = new size_t(1);
 
 #include "MGNeumann.h"
 #include "MGDirichlet.h"
@@ -227,8 +227,8 @@ int main(int argc, char** argv)
 		//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
-		//*ndflag = 1;
-		MGDirichlet(level, vcycle);	
+		*ndflag = 1;
+		//MGDirichlet(level, vcycle);	
 		cout << " 11222";
 		gettimeofday(&end, 0);
 		/*double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
