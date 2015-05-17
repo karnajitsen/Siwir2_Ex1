@@ -26,11 +26,11 @@ void init(double hsize, const size_t level, bool dirflg)
 	size_t xdim = ydim;
 	bool flag = true;
 	xGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
-	fGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
+	//fGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
 		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, dirflg);
-		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, dirflg);
+		//fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, dirflg);
 		ydim = pow(2, --je) + 1;
 		xdim = ydim;
 		hsize *= 2.0;
@@ -38,7 +38,7 @@ void init(double hsize, const size_t level, bool dirflg)
 	}
 
 
-	for (size_t i = 1; i < (*fGrids[0]).getYsize()-1; i++)
+	/*for (size_t i = 1; i < (*fGrids[0]).getYsize()-1; i++)
 	{
 		(*fGrids[0])(0, i) = 1.0;
 		(*fGrids[0])((*fGrids[0]).getXsize() - 1, i) = 1.0;
@@ -46,7 +46,7 @@ void init(double hsize, const size_t level, bool dirflg)
 		{
 			(*fGrids[0])(j, i) = 2.0;
 		}
-	}
+	}*/
 }
 
 void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
