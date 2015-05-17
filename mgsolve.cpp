@@ -25,8 +25,8 @@ void init(double hsize, const size_t level, bool dirflg)
 	size_t ydim = pow(2, je) + 1;
 	size_t xdim = ydim;
 	bool flag = true;
-	xGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
-	fGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
+	xGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
+	fGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
 		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, dirflg);
