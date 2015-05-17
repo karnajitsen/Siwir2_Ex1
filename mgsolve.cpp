@@ -13,7 +13,7 @@
 Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
-int ndflag = 1;
+size_t ndflag = 1;
 
 #include "MGNeumann.h"
 #include "MGDirichlet.h"
@@ -101,7 +101,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 			(*rgrid)(rxlen, i) = (2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
 				2.0*(tmpgrd(xlen, 2 * i - 1) + tmpgrd(xlen, 2 * i + 1) +
-				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen - 1, 2 * i)) / 16.0;
+				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen, 2 * i)) / 16.0;
 		}
 	}
 
@@ -198,7 +198,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 	{
 		for (size_t k = 0; k < dimX; k++)
 		{
-			r = (*sgrd)(k + 1, j) - (*xgrd)(k, j);
+			r = (*sgrd)(k , j) - (*xgrd)(k, j);
 
 			*norm += r*r;
 		}
@@ -226,7 +226,7 @@ int main(int argc, char** argv)
 		gettimeofday(&start, 0);
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
-		//MGDirichlet(level, vcycle);	
+		MGDirichlet(level, vcycle);	
 		cout << " 11222";
 		gettimeofday(&end, 0);
 		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
