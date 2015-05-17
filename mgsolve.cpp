@@ -9,6 +9,7 @@
 #define TOLERR 0.01
 #define V1 2
 #define V2 1
+
 Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
@@ -223,12 +224,13 @@ int main(int argc, char** argv)
 	timeval start, end;
 
 		gettimeofday(&start, 0);
-		std::cout << "\n\n =============== Output for Dirichlet Bounday Value Problem 1 ===================\n\n" ;
+		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
+		cout << " 31312321"
 		MGDirichlet(level, vcycle);	
-
+		cout << " 11222"
 		gettimeofday(&end, 0);
 		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Time spend for Multigrid Solver for Dirichlet = " << elapsed << '\n';
+		std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
 
 		double hsize = (*xGrids[0]).getHx();
 		double gdim = (*xGrids[0]).getXsize();
@@ -240,17 +242,17 @@ int main(int argc, char** argv)
 		for (size_t y = 0; y < gdim; ++y) {
 			for (size_t x = 0; x < gdim; ++x) {
 
-				fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+				//fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
 			}
 			fOut1 << std::endl;
 			fOutsolt1 << std::endl;
 		}
 		fOut1.close();
 		fOutsolt1.close();
-		std::cout << "\n\n =============== Dirichlet Bounday Value Problem 1 ends here ===================\n\n";
+		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
-		std::cout << "\n\n =============== Output for Neumann Bounday Value Problem 2 ===================\n\n";
+		std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
 
 		ndflag = 0;
 		gettimeofday(&start, 0);
@@ -258,7 +260,7 @@ int main(int argc, char** argv)
 
 		gettimeofday(&end, 0);
 		elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Time spend for Multigrid Solver for Neumann = " << elapsed << "\n";
+		std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
 		hsize = (*xGrids[0]).getHx();
 		gdim = (*xGrids[0]).getXsize();
