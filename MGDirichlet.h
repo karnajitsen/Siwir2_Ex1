@@ -61,13 +61,15 @@ void MGDirichlet(size_t level, size_t vcycle)
 			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
 	}
-	
+	cout << "11111";
+
 	for (size_t i = 0; i < vcycle; i++)
 	{
 
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
 			dirichsmooth(xGrids[jl], fGrids[jl], V1);
+			cout << "2222";
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
 
