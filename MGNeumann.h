@@ -89,9 +89,18 @@ inline void orthogonalize(Grid* grd)
 		{
 			sum += (*grd)(x, y);
 		}
+
+		if (sum != 0.0)
+		{
+				for (size_t x = 0; x < dimX; x++)
+				{
+					(*grd)(x, y) -= sum / dimX;
+				}
+		}
+		sum = 0.0;
 	}
 
-	if (sum != 0.0)
+	/*if (sum != 0.0)
 	{
 		for (size_t y = 1; y < dimY - 1; y++)
 		{
@@ -100,7 +109,7 @@ inline void orthogonalize(Grid* grd)
 				(*grd)(x, y) -= sum / dimX / (dimY-2.0);
 			}
 		}
-	}
+	}*/
 
 }
 
