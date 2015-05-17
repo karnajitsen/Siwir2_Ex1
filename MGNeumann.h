@@ -149,7 +149,7 @@ inline void MGNeumann(size_t level, size_t vcycle)
 
 		//orthogonalize(xGrids[0]);
 	}
-
+	orthogonalize(xGrids[0]);
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
