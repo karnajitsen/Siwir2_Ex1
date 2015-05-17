@@ -6,13 +6,13 @@
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
 #define YDOMHIGH 1.0
-#define TOLERR 0.01
+#define TOLERR 0.00001
 #define V1 2
 #define V2 1
 
-Grid ** xGrids;
-Grid ** fGrids;
-Grid *sGrid;
+Grid ** xGrids = NULL;
+Grid ** fGrids = NULL;
+Grid *sGrid = NULL;
 size_t ndflag = 1;
 
 #include "MGNeumann.h"
@@ -224,6 +224,7 @@ int main(int argc, char** argv)
 	timeval start, end;
 
 		gettimeofday(&start, 0);
+		cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
 		MGDirichlet(level, vcycle);	

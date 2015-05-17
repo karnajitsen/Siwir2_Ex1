@@ -53,13 +53,13 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	std::cout << "1111131131131";
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, true);
 
-	/*for (size_t i = 0; i < gdim; i++)
+	for (size_t i = 0; i < gdim; i++)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
 			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
-	}*/
+	}
 	std::cout << "11111";
 
 	for (size_t i = 0; i < vcycle; i++)
