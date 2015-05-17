@@ -30,7 +30,7 @@ void init(double hsize, const size_t level, bool dirflg)
 	for (size_t i = 0; i < level; i++)
 	{
 		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, dirflg);
-		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, dirflg);
+		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, dirflg);
 		ydim = pow(2, --je) + 1;
 		xdim = ydim;
 		hsize *= 2.0;
