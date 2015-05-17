@@ -208,87 +208,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 	*norm = sqrt(*norm / dimX / dimY);
 }
 
-int main(int argc, char** argv)
-{
 
-	//std::cout << "1";
-	if (argc < 3)
-	{
-		std::cout << "Invalid number of argument";
-		exit(0);
-	}
-
-	size_t level = atoi(argv[1]);
-	size_t vcycle = atoi(argv[2]);
-	
-	timeval start, end;
-
-		gettimeofday(&start, 0);
-		//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
-		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
-		cout << " 31312321";
-		*ndflag = 1;
-		mgDirichlet(level, vcycle);	
-		cout << " 11222";
-		gettimeofday(&end, 0);
-		/*double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
-
-		double hsize = (*xGrids[0]).getHx();
-		double gdim = (*xGrids[0]).getXsize();
-
-		std::string fname1 = std::string("data/Dirichlet/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOut1(fname1);
-		std::string fnames1 = std::string("data/Dirichlet/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOutsolt1(fnames1);
-		for (size_t y = 0; y < gdim; ++y) {
-			for (size_t x = 0; x < gdim; ++x) {
-
-				fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
-			}
-			fOut1 << std::endl;
-			fOutsolt1 << std::endl;
-		}
-		fOut1.close();
-		fOutsolt1.close();
-		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";*/
-
-		/*std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
-		 xGrids = NULL;
-		 fGrids = NULL;
-		 sGrid = NULL; 
-		 *ndflag = 0;
-		gettimeofday(&start, 0);
-		MGNeumann(level, vcycle);
-		gettimeofday(&end, 0);
-		
-		
-		elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
-
-		hsize = (*xGrids[0]).getHx();
-		gdim = (*xGrids[0]).getXsize();
-
-		std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOut2(fname2);
-		std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOutsolt2(fnames2);
-		for (size_t y = 0; y < gdim; ++y) {
-			for (size_t x = 0; x < gdim; ++x) {
-
-				fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
-			}
-			fOut2 << std::endl;
-			fOutsolt2 << std::endl;
-		}
-		fOut2.close();
-		fOutsolt2.close();
-
-		std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";*/
-	return 0;
-}
 
 
 inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
@@ -377,4 +297,86 @@ inline void mgDirichlet(size_t level, size_t vcycle)
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
+}
+
+int main(int argc, char** argv)
+{
+
+	//std::cout << "1";
+	if (argc < 3)
+	{
+		std::cout << "Invalid number of argument";
+		exit(0);
+	}
+
+	size_t level = atoi(argv[1]);
+	size_t vcycle = atoi(argv[2]);
+
+	timeval start, end;
+
+	gettimeofday(&start, 0);
+	//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
+	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
+	cout << " 31312321";
+	*ndflag = 1;
+	mgDirichlet(level, vcycle);
+	cout << " 11222";
+	gettimeofday(&end, 0);
+	/*double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+	std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
+
+	double hsize = (*xGrids[0]).getHx();
+	double gdim = (*xGrids[0]).getXsize();
+
+	std::string fname1 = std::string("data/Dirichlet/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+	std::ofstream	fOut1(fname1);
+	std::string fnames1 = std::string("data/Dirichlet/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+	std::ofstream	fOutsolt1(fnames1);
+	for (size_t y = 0; y < gdim; ++y) {
+	for (size_t x = 0; x < gdim; ++x) {
+
+	fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+	fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+	}
+	fOut1 << std::endl;
+	fOutsolt1 << std::endl;
+	}
+	fOut1.close();
+	fOutsolt1.close();
+	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";*/
+
+	/*std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
+	xGrids = NULL;
+	fGrids = NULL;
+	sGrid = NULL;
+	*ndflag = 0;
+	gettimeofday(&start, 0);
+	MGNeumann(level, vcycle);
+	gettimeofday(&end, 0);
+
+
+	elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+	std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
+
+	hsize = (*xGrids[0]).getHx();
+	gdim = (*xGrids[0]).getXsize();
+
+	std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+	std::ofstream	fOut2(fname2);
+	std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+	std::ofstream	fOutsolt2(fnames2);
+	for (size_t y = 0; y < gdim; ++y) {
+	for (size_t x = 0; x < gdim; ++x) {
+
+	fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+	fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+	}
+	fOut2 << std::endl;
+	fOutsolt2 << std::endl;
+	}
+	fOut2.close();
+	fOutsolt2.close();
+
+	std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";*/
+	return 0;
 }
