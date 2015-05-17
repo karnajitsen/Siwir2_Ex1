@@ -46,6 +46,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 inline void mgDirichlet(size_t level, size_t vcycle)
 {
+	size_t gdim = pow(2, level) + 1;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	init(hsize, level, true);
 	/*size_t gdim = pow(2, level) + 1;
