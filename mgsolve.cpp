@@ -226,7 +226,7 @@ int main(int argc, char** argv)
 		gettimeofday(&start, 0);
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
 		cout << " 31312321";
-		MGDirichlet(level, vcycle);	
+		//MGDirichlet(level, vcycle);	
 		cout << " 11222";
 		gettimeofday(&end, 0);
 		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
@@ -242,8 +242,8 @@ int main(int argc, char** argv)
 		for (size_t y = 0; y < gdim; ++y) {
 			for (size_t x = 0; x < gdim; ++x) {
 
-				//fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-				//fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+				fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
 			}
 			fOut1 << std::endl;
 			fOutsolt1 << std::endl;
