@@ -14,7 +14,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
-	double	center = 1/(2.0 * alpha + 2.0 * beta);
+	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
 	for (size_t i = 0; i < iter; i++)
 	{

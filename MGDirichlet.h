@@ -13,7 +13,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
-	double	center = 1/(2.0 * alpha + 2.0 * beta);
+	double	center = 1.0/(2.0 * alpha + 2.0 * beta);
 
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -50,7 +50,7 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 	std::cout << "00000";
 	init(hsize, level, true);
-	/*std::cout << "1111131131131";
+	std::cout << "1111131131131";
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, true);
 
 	for (size_t i = 0; i < gdim; i++)
@@ -60,9 +60,9 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
 	}
-	std::cout << "11111";*/
+	std::cout << "11111";
 
-	/*for (size_t i = 0; i < vcycle; i++)
+	for (size_t i = 0; i < vcycle; i++)
 	{
 
 		for (size_t jl = 0; jl < level - 1; jl++)
@@ -90,6 +90,6 @@ inline void MGDirichlet(size_t level, size_t vcycle)
 	}
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
-*/
+
 }
 
