@@ -59,6 +59,19 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	double	beta = 1.0 / hy / hy;
 	double	center = (2.0 * alpha) + (2.0 * beta);
 
+
+	cout << "====B4 restriction residual=== \n\n";
+	for (size_t j = 0; j <= xlen; j++)
+	{
+		for (size_t k = 0; k <= xlen; k++)
+		{
+			cout << (*xgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
+
 	Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false,true);
 	for (size_t i = 1; i < ylen; i++)
 	{
@@ -78,8 +91,21 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
+	cout << "====After restriction residual=== \n\n";
+	for (size_t j = 0; j <= xlen; j++)
+	{
+		for (size_t k = 0; k <= xlen; k++)
+		{
+			cout << (*xgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 	size_t rxlen = (*rgrid).getXsize() - 1;
 	size_t rylen = (*rgrid).getYsize() - 1;
+
+	
 
 	for (size_t i = 1; i < rylen; i++)
 	{
@@ -104,6 +130,17 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
+	cout << "====After restriction === \n\n";
+	for (size_t j = 0; j <= rxlen; j++)
+	{
+		for (size_t k = 0; k <= rxlen; k++)
+		{
+			cout << (*rgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
@@ -112,6 +149,17 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	size_t txlen = (*tgtgrd).getXsize();
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx, false,true);
+
+	cout << "====b4 Interpolate === \n\n";
+	for (size_t j = 0; j <= len; j++)
+	{
+		for (size_t k = 0; k <= len; k++)
+		{
+			cout << (*srcgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
 
 	for (size_t j = 0; j < len; j++)
 	{
@@ -127,6 +175,17 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
+	cout << "====b4 Interpolate Add === \n\n";
+	for (size_t j = 0; j < txlen; j++)
+	{
+		for (size_t k = 0; k < txlen; k++)
+		{
+			cout << tmpgrd(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
 		for (size_t j = *ndflag; j < txlen - *ndflag; j++)
@@ -134,6 +193,18 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 			(*tgtgrd)(j, i) += tmpgrd(j, i);
 
 		}
+	}
+
+
+	cout << "====After Interpolate Add === \n\n";
+	for (size_t j = 0; j < txlen; j++)
+	{
+		for (size_t k = 0; k < txlen; k++)
+		{
+			cout << (*tgtgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
 	}
 
 }
@@ -221,11 +292,10 @@ int main(int argc, char** argv)
 	size_t vcycle = atoi(argv[2]);
 
 	timeval start, end;
-
+	
+	
+	/*std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
 	gettimeofday(&start, 0);
-	
-	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
-	
 	*ndflag = 1;
 	mgDirichlet(level, vcycle);
 	
@@ -251,7 +321,7 @@ int main(int argc, char** argv)
 	}
 	fOut1.close();
 	fOutsolt1.close();
-	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
+	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";*/
 
 	std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
 	delete xGrids;
