@@ -24,6 +24,8 @@ public:
 		data = (double*)memalign(ALLIGNMENT, 0);
 		sizeX = 0;
 		sizeY = 0;
+		hx = 0.0;
+		hy = 0.0;
 	}
 
 	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN , bool dirflag)
