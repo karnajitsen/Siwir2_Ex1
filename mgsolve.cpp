@@ -2,6 +2,8 @@
 #include<fstream>
 #include "Grid.h"
 #include <sys/time.h>
+#include "MGNeumann.h"
+#include "MGDirichlet.h"
 
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
@@ -10,62 +12,95 @@
 #define TOLERR 0.01
 #define V1 2
 #define V2 1
-
-int req = 0;
-
 Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
-
+int ndflag = 1;
 using namespace std;
 
-Grid** initialize(double hsize, const size_t level, bool flag)
+void init(double hsize, const size_t level, bool dirflag)
 {
 	size_t je = level;
-	size_t gdim = pow(2, je) + 1;
-	//bool flag = true;
-
-	Grid** arrGrid = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
+	size_t ydim = pow(2, je) + 1;
+	size_t xdim = ydim;
+	size_t nxdim, nydim;
+	
+	xGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
+	fGrids = (Grid**)memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
-		arrGrid[i] = new Grid(gdim, gdim, hsize, hsize, flag);
-		gdim = pow(2, --je) + 1;
+		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, true, dirflg);
+		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, dirflg);
+		ydim = pow(2, --je) + 1;
+		xdim = ydim;
 		hsize *= 2.0;
 		flag = false;
 	}
-	return arrGrid;
 
+
+	for (size_t i = 1; i < (*fGrids[0]).getYsize()-1; i++)
+	{
+		(*fGrids[0])(0, i) = 1.0;
+		(*fGrids[0])((*fGrids[0]).getXsize() - 1, i) = 1.0;
+		for (size_t j = 1; i < (*fGrids[0]).getXsize() - 1; j++)
+		{
+			(*fGrids[0])(j, i) = 2.0;
+		}
+	}
 }
 
 inline void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*xgrd).getXsize() - 1;
+	size_t ylen = (*xgrd).getYsize() - 1;
 	double hx = (*xgrd).getHx();
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0 / hx / hx;
 	double	beta = 1.0 / hy / hy;
 	double	center = (2.0 * alpha) + (2.0 * beta);
 
-	Grid tmpgrd(xlen + 1, xlen + 1, hx, hx, false);
-	for (size_t i = 1; i < xlen; i++)
+	Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false);
+	for (size_t i = 1; i < ylen; i++)
 	{
 		for (size_t j = 1; j < xlen; j++)
 		{
 			tmpgrd(j, i) = (*fgrd)(j, i) + alpha*((*xgrd)(j + 1, i) + (*xgrd)(j - 1, i)) + beta * ((*xgrd)(j, i + 1)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 		}
+
+		if (ndflag == 0)
+		{
+			tmpgrd(0, i) = (*fgrd)(0, i) + (2.0 / hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
+				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center * 0.5;
+
+			tmpgrd(xlen, i) = (*fgrd)(xlen, i) - (2.0 / hx) + alpha*((*xgrd)(xlen - 1, i)) + beta * ((*xgrd)(xlen, i + 1)
+				+ (*xgrd)(xlen, i - 1)) - (*xgrd)(xlen, i) * center * 0.5;
+		}
 	}
 
-	size_t rlen = (*rgrid).getXsize() - 1;
+	size_t rxlen = (*rgrid).getXsize() - 1;
+	size_t rylen = (*rgrid).getYsize() - 1;
 
-	for (size_t i = 1; i < rlen; i++)
+	for (size_t i = 1; i < rylen; i++)
 	{
-		for (size_t j = 1; j < rlen; j++)
+
+		for (size_t j = 1; j < rxlen; j++)
 		{
 			(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
 				tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
 				2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
 				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
+		}
+
+		if (ndflag == 0)
+		{
+			(*rgrid)(0, i) = (2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
+				2.0*(tmpgrd(0, 2 * i - 1) + tmpgrd(0, 2 * i + 1) +
+				2.0 * (hx + tmpgrd(1, 2 * i))) + 4.0 * tmpgrd(0, 2 * i)) / 16.0;
+
+			(*rgrid)(rxlen, i) = (2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
+				2.0*(tmpgrd(xlen, 2 * i - 1) + tmpgrd(xlen, 2 * i + 1) +
+				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen - 1, 2 * i)) / 16.0;
 		}
 	}
 
@@ -94,7 +129,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
-		for (size_t j = 1; j < txlen - 1; j++)
+		for (size_t j = ndflag; j < txlen - ndflag; j++)
 		{
 			(*tgtgrd)(j, i) += tmpgrd(j, i);
 
@@ -103,54 +138,21 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 }
 
-inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
-{
-	size_t dimX = (*xgrd).getXsize();
-	double hx = (*xgrd).getHx();
-	double	alpha = 1.0;
-	double	beta = 1.0;
-	double	center = (2.0 * alpha + 2.0 * beta);
-
-	for (size_t i = 0; i < iter; i++)
-	{
-		for (size_t j = 1; j < dimX - 1; j++)
-		{
-			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
-			{
-				(*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1))) / center;
-
-			}
-
-		}
-
-		for (size_t j = 1; j < dimX - 1; j++)
-		{
-			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
-			{
-				(*xgrd)(k, j) = (hx*hx*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1))) / center;
-
-
-			}
-
-		}
-	}
-}
-
 inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 {
 
 	size_t dimX = (*xgrd).getXsize() - 1;
+	size_t dimY = (*xgrd).getYsize() - 1;
 	double r = 0.0;
 	double hx = (*xgrd).getHx();
+	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
 	double	center = (2.0 * alpha + 2.0 * beta);
 
 	*norm = 0.0;
 
-	for (size_t j = 1; j < dimX; j++)
+	for (size_t j = 1; j < dimY; j++)
 	{
 		for (size_t k = 1; k < dimX; k++)
 		{
@@ -160,22 +162,40 @@ inline void resdualNorm(Grid* xgrd, const Grid * fgrd, double* norm)
 			*norm += r*r;
 		}
 
+		if (ndflag == 0)
+		{
+			r = hx*hx*(*fgrd)(0, i) + (2.0 * hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
+				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center * 0.5;
+
+			*norm += r*r;
+
+			r = hx*hx*(*fgrd)(dimX, i) - (2.0 * hx) + alpha*((*xgrd)(dimX - 1, i)) + beta * ((*xgrd)(dimX, i + 1)
+				+ (*xgrd)(dimX, i - 1)) - (*xgrd)(dimX, i) * center * 0.5;
+
+			*norm += r*r;
+		}
+
 	}
 
-	*norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
+	if (ndflag == 0)
+		*norm = sqrt(*norm / (dimX + 1) / (dimY - 1));
+	else
+		*norm = sqrt(*norm / (dimX - 1) / (dimY + 1));
 }
+
+
 
 inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
 {
 
-	size_t dimX = (*xgrd).getXsize() - 1;
-	//double hx = (*xgrd).getHx() ;
+	size_t dimX = (*xgrd).getXsize();
+	size_t dimY = (*xgrd).getYsize();
 	double r = 0.0;
 	*norm = 0.0;
 
-	for (size_t j = 1; j < dimX; j++)
+	for (size_t j = 0; j < dimY; j++)
 	{
-		for (size_t k = 1; k < dimX; k++)
+		for (size_t k = 0; k < dimX; k++)
 		{
 			r = (*sgrd)(k + 1, j) - (*xgrd)(k, j);
 
@@ -184,61 +204,7 @@ inline void errorNorm(Grid* xgrd, const Grid * sgrd, double* norm)
 
 	}
 
-	*norm = sqrt(*norm / (dimX + 1) / (dimX + 1));
-}
-
-inline double gxy(const double x, const double y)
-{
-	return sin(M_PI * x) * sinh(M_PI * y);
-}
-
-void mgsolver(size_t level, size_t vcycle, int num)
-{
-	size_t gdim = pow(2, level) + 1;
-	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
-	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-
-	xGrids = initialize(hsize, level, true);
-	fGrids = initialize(hsize, level, false);
-	sGrid = new Grid(gdim, gdim, hsize, hsize, true);
-
-	for (size_t i = 0; i < gdim; i++)
-	{
-		for (size_t j = 0; j < gdim; j++)
-		{
-			(*sGrid)(j, i) = (*sGrid).gxy(j*hsize, i*hsize);
-		}
-	}
-
-	for (size_t i = 0; i < vcycle; i++)
-	{
-
-		for (size_t jl = 0; jl < level - 1; jl++)
-		{
-			smooth(xGrids[jl], fGrids[jl], V1);
-			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
-		}
-
-		for (size_t j = level - 1; j > 0; j--)
-		{
-			smooth(xGrids[j], fGrids[j], V2);
-			interpolate(xGrids[j], xGrids[j - 1]);
-			(*xGrids[j]).reset();
-			(*fGrids[j]).reset();
-		}
-
-		oldnorm = newnorm;
-		resdualNorm(xGrids[0], fGrids[0], &newnorm);
-		if (oldnorm != 0.0)
-			convrate = newnorm / oldnorm;
-
-		std::cout << "Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << '\n';
-		std::cout << "Covergence rate after " << i + 1 << " V-Cycle = " << convrate << '\n';
-	}
-
-	errorNorm(xGrids[0], sGrid, &newnorm);
-	std::cout << "Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << '\n';
-	
+	*norm = sqrt(*norm / dimX / dimY);
 }
 
 int main(int argc, char** argv)
@@ -256,34 +222,63 @@ int main(int argc, char** argv)
 	
 	timeval start, end;
 
-	for (int i = 0; i < 2; i++)
-	{
 		gettimeofday(&start, 0);
-
-		mgsolver(level, vcycle,i);
+		std::cout << "\n\n =============== Output for Dirichlet Bounday Value Problem 1 ===================\n\n" ;
+		MGDirichlet(level, vcycle);	
 
 		gettimeofday(&end, 0);
 		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
-		std::cout << "Time spend for Multigrid Solver for Exercise " << (i+1) << " = " << elapsed << '\n';
+		std::cout << "Time spend for Multigrid Solver for Dirichlet = " << elapsed << '\n';
 
 		double hsize = (*xGrids[0]).getHx();
 		double gdim = (*xGrids[0]).getXsize();
 
-		std::string fname = std::string("data/solution_") + std::string(to_string(i + 1)) + std::string("/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOut(fname);
-		std::string fnames = std::string("data/solution_") + std::string(to_string(i + 1)) + std::string("/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOutsolt(fnames);
+		std::string fname1 = std::string("data/Dirichlet/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOut1(fname1);
+		std::string fnames1 = std::string("data/Dirichlet/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOutsolt1(fnames1);
 		for (size_t y = 0; y < gdim; ++y) {
 			for (size_t x = 0; x < gdim; ++x) {
 
 				fOut << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
 				fOutsolt << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
 			}
-			fOut << std::endl;
-			fOutsolt << std::endl;
+			fOut1 << std::endl;
+			fOutsolt1 << std::endl;
 		}
-		fOut.close();
-		fOutsolt.close();
-	}
+		fOut1.close();
+		fOutsolt1.close();
+		std::cout << "\n\n =============== Dirichlet Bounday Value Problem 1 ends here ===================\n\n";
+
+		std::cout << "\n\n =============== Output for Neumann Bounday Value Problem 2 ===================\n\n";
+
+		ndflag = 0;
+		gettimeofday(&start, 0);
+		MGNeumann(level, vcycle);
+
+		gettimeofday(&end, 0);
+		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+		std::cout << "Time spend for Multigrid Solver for Neumann = " << elapsed << '\n';
+
+		double hsize = (*xGrids[0]).getHx();
+		double gdim = (*xGrids[0]).getXsize();
+
+		std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOut2(fname);
+		std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+		std::ofstream	fOutsolt2(fnames2);
+		for (size_t y = 0; y < gdim; ++y) {
+			for (size_t x = 0; x < gdim; ++x) {
+
+				fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+				fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+			}
+			fOut2 << std::endl;
+			fOutsolt2 << std::endl;
+		}
+		fOut2.close();
+		fOutsolt2.close();
+
+		std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";
 	return 0;
 }
