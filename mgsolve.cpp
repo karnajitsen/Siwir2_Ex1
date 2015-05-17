@@ -1,3 +1,7 @@
+#include "Grid.h"
+#include<iostream>
+#include<fstream>
+#include <sys/time.h>
 #define XDOMLOW 0.0
 #define XDOMHIGH 1.0
 #define YDOMLOW 0.0
@@ -9,10 +13,7 @@ Grid ** xGrids;
 Grid ** fGrids;
 Grid *sGrid;
 int ndflag = 1;
-#include<iostream>
-#include<fstream>
-#include "Grid.h"
-#include <sys/time.h>
+
 #include "MGNeumann.h"
 #include "MGDirichlet.h"
 
