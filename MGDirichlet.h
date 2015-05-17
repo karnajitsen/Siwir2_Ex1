@@ -58,7 +58,7 @@ void MGDirichlet(size_t level, size_t vcycle)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
-			(*sGrid)(j, i) = (*sGrid).gxy(j*hsize, i*hsize);
+			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
 	}
 	
@@ -74,7 +74,7 @@ void MGDirichlet(size_t level, size_t vcycle)
 		for (size_t j = level - 1; j > 0; j--)
 		{
 			dirichsmooth(xGrids[j], fGrids[j], V2);
-			interpolation(xGrids[j], xGrids[j - 1]);
+			interpolate(xGrids[j], xGrids[j - 1]);
 			(*xGrids[j]).reset();
 			(*fGrids[j]).reset();
 		}

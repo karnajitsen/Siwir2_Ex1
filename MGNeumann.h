@@ -23,7 +23,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			size_t k = ((j + 1) & 0x1);
 			if (k == 0)
 			{
-				(*xgrd)(k, j) = 0.25(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k , j+1) + (*xgrd)(k , j-1));
+				(*xgrd)(k, j) = 0.25*(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k , j+1) + (*xgrd)(k , j-1));
 				(*xgrd)(dimX - 1, j) = 0.25(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j) 
 										+ (*xgrd)(dimX - 2, j + 1) + (*xgrd)(dimX - 2, j - 1));
 				k += 2;
@@ -41,7 +41,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			size_t k = j & 0x1;
 			if (k == 0)
 			{
-				(*xgrd)(k, j) = 0.25(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
+				(*xgrd)(k, j) = 0.25*(hx*hy*(*fgrd)(k, j) + 2.0*hx + (*xgrd)(k + 1, j) + (*xgrd)(k, j + 1) + (*xgrd)(k, j - 1));
 				(*xgrd)(dimX - 1, j) = 0.25(hx*hy*(*fgrd)(k, j) - 2.0*hx + (*xgrd)(dimX - 2, j)
 					+ (*xgrd)(dimX - 2, j + 1) + (*xgrd)(dimX - 2, j - 1));
 				k += 2;
@@ -67,7 +67,7 @@ void orthogonalize(Grid* grd)
 	{
 		for (size_t x = 0; x < dimX; x++)
 		{
-			sum + = (*grd)(x, y);
+			sum += (*grd)(x, y);
 		}
 	}
 
@@ -97,7 +97,7 @@ void MGNeumann(size_t level, size_t vcycle)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
-			(*sGrid)(j, i) = (*sGrid).gxy(j*hsize, i*hsize);
+			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize, i*hsize);
 		}
 	}
 
