@@ -176,8 +176,8 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 		if (*ndflag == 0)
 		{
-			tmpgrd(2 * len, j + 1) = 0.5*((*srcgrd)(len, j) + (*srcgrd)(len, j + 1));
-			tmpgrd(2 * len, j) = (*srcgrd)(len, j);
+			tmpgrd(2 * len, 2*j + 1) = 0.5*((*srcgrd)(len, j) + (*srcgrd)(len, j + 1));
+			tmpgrd(2 * len, 2*j) = (*srcgrd)(len, j);
 		}
 	}
 
