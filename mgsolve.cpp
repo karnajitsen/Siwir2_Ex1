@@ -220,16 +220,16 @@ int main(int argc, char** argv)
 	size_t level = atoi(argv[1]);
 	size_t vcycle = atoi(argv[2]);
 
-	timeval start, end;
+	//timeval start, end;
 
-	gettimeofday(&start, 0);
+	//gettimeofday(&start, 0);
 	//cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
-	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
+	/*std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
 	cout << " 31312321";
-	*ndflag = 1;
+	*ndflag = 1;*/
 	mgDirichlet(level, vcycle);
-	cout << " 11222";
-	gettimeofday(&end, 0);
+	/*cout << " 11222";
+	gettimeofday(&end, 0);*/
 	/*double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
 
