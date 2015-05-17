@@ -43,14 +43,11 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 }
 
 
-void MGDirichlet(size_t level, size_t vcycle)
+inline void MGDirichlet(size_t level, size_t vcycle)
 {
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-
-	//xGrids = initialize(hsize, level, true,true);
-	//fGrids = initialize(hsize, level, false,true);
 	std::cout << "00000";
 	init(hsize, level, true);
 	std::cout << "1111131131131";
