@@ -223,12 +223,12 @@ int main(int argc, char** argv)
 	timeval start, end;
 
 	gettimeofday(&start, 0);
-	cout << " ++++++++++%%%%%%%%%%%%%$$$$$$$$$" << level << " " << vcycle;
+	
 	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
-	cout << " 31312321";
+	
 	*ndflag = 1;
 	mgDirichlet(level, vcycle);
-	cout << " 11222";
+	
 	gettimeofday(&end, 0);
 	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
@@ -253,10 +253,10 @@ int main(int argc, char** argv)
 	fOutsolt1.close();
 	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
-	/*std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
-	xGrids = NULL;
-	fGrids = NULL;
-	sGrid = NULL;
+	std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
+	delete xGrids;
+	delete fGrids;
+	delete sGrid;
 	*ndflag = 0;
 	gettimeofday(&start, 0);
 	MGNeumann(level, vcycle);
@@ -285,6 +285,6 @@ int main(int argc, char** argv)
 	fOut2.close();
 	fOutsolt2.close();
 
-	std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";*/
+	std::cout << "\n\n =============== Neumann Bounday Value Problem 2 ends here ===================\n\n";
 	return 0;
 }

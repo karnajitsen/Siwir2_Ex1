@@ -50,9 +50,9 @@ inline void mgDirichlet(size_t level, size_t vcycle)
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
-	std::cout << "00000";
+	
 	init(hsize, level, true);
-	std::cout << "1111131131131";
+	
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, true);
 
 	for (size_t i = 0; i < gdim; i++)
@@ -62,8 +62,7 @@ inline void mgDirichlet(size_t level, size_t vcycle)
 			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
 	}
-	std::cout << "11111";
-
+	
 	for (size_t i = 0; i < vcycle; i++)
 	{
 
