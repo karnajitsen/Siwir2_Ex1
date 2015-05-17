@@ -164,13 +164,13 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 
 		if (ndflag == 0)
 		{
-			r = hx*hy*(*fgrd)(0, i) + (2.0 * hx) + alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
-				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center * 0.5;
+			r = hx*hy*(*fgrd)(0, j) + (2.0 * hx) + alpha*((*xgrd)(1, j)) + beta * ((*xgrd)(0, j + 1)
+				+ (*xgrd)(0, j - 1)) - (*xgrd)(0, j) * center * 0.5;
 
 			*norm += r*r;
 
-			r = hx*hy*(*fgrd)(dimX, i) - (2.0 * hx) + alpha*((*xgrd)(dimX - 1, i)) + beta * ((*xgrd)(dimX, i + 1)
-				+ (*xgrd)(dimX, i - 1)) - (*xgrd)(dimX, i) * center * 0.5;
+			r = hx*hy*(*fgrd)(dimX, j) - (2.0 * hx) + alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
+				+ (*xgrd)(dimX, j - 1)) - (*xgrd)(dimX, j) * center * 0.5;
 
 			*norm += r*r;
 		}
@@ -264,7 +264,7 @@ int main(int argc, char** argv)
 		gdim = (*xGrids[0]).getXsize();
 
 		std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
-		std::ofstream	fOut2(fname);
+		std::ofstream	fOut2(fname2);
 		std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 		std::ofstream	fOutsolt2(fnames2);
 		for (size_t y = 0; y < gdim; ++y) {
