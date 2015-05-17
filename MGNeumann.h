@@ -84,7 +84,7 @@ void orthogonalize(Grid* grd)
 
 }
 
-void MGNeumann(size_t level, size_t vcycle)
+inline void MGNeumann(size_t level, size_t vcycle)
 {
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;

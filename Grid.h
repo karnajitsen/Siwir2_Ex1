@@ -94,7 +94,7 @@ public:
 		return data[y*ld + x];
 	}
 
-	inline double& operator()(const size_t x, const size_t y) const
+	inline double operator()(const size_t x, const size_t y) const
 	{
 		assert(x < sizeX);
 		assert(y < sizeY);
