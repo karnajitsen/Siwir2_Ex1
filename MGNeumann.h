@@ -13,7 +13,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	{
 		for (size_t k = 0; k < dimY; k++)
 		{
-			cout << (*xgrid)(k, j) << " ";
+			cout << (*xgrd)(k, j) << " ";
 		}
 
 		cout << '\n';
@@ -66,7 +66,7 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	{
 		for (size_t k = 0; k < dimY; k++)
 		{
-			cout << (*xgrid)(k, j) << " ";
+			cout << (*xgrd)(k, j) << " ";
 		}
 
 		cout << '\n';
