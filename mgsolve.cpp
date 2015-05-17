@@ -225,9 +225,9 @@ int main(int argc, char** argv)
 
 		gettimeofday(&start, 0);
 		std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n" ;
-		cout << " 31312321"
+		cout << " 31312321";
 		MGDirichlet(level, vcycle);	
-		cout << " 11222"
+		cout << " 11222";
 		gettimeofday(&end, 0);
 		double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 		std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
