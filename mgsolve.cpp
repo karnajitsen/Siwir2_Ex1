@@ -254,12 +254,15 @@ int main(int argc, char** argv)
 		std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
 		std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
-
+		delete xGrids;
+		delete fGrids;
+		delete sGrid;
 		ndflag = 0;
 		gettimeofday(&start, 0);
 		MGNeumann(level, vcycle);
-
 		gettimeofday(&end, 0);
+		
+		
 		elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 		std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
