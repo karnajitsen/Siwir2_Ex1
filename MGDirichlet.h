@@ -51,7 +51,9 @@ void MGDirichlet(size_t level, size_t vcycle)
 
 	//xGrids = initialize(hsize, level, true,true);
 	//fGrids = initialize(hsize, level, false,true);
+	cout << "00000";
 	init(hsize, level, true);
+	cout << "1111131131131";
 	sGrid = new Grid(gdim, gdim, hsize, hsize, true, true);
 
 	for (size_t i = 0; i < gdim; i++)
