@@ -135,7 +135,7 @@ inline void MGNeumann(size_t level, size_t vcycle)
 
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
-			orthogonalize(fGrids[jl]);
+			//orthogonalize(fGrids[jl]);
 			neumannsmooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
@@ -158,7 +158,7 @@ inline void MGNeumann(size_t level, size_t vcycle)
 
 		//orthogonalize(xGrids[0]);
 	}
-	orthogonalize(xGrids[0]);
+	//orthogonalize(xGrids[0]);
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 
