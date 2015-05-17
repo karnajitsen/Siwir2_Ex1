@@ -86,7 +86,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 			tmpgrd(0, i) = (*fgrd)(0, i) + (2.0 / hx) + 2.0*alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
 				+ (*xgrd)(0, i - 1)) - (*xgrd)(0, i) * center ;
 
-			tmpgrd(xlen, i) = (*fgrd)(xlen, i) - (2.0 / hx) + 2.0*alpha*((*xgrd)(xlen - 1, i)) + beta * ((*xgrd)(xlen, i + 1)
+			tmpgrd(xlen, i) = (*fgrd)(xlen, i) + (2.0 / hx) + 2.0*alpha*((*xgrd)(xlen - 1, i)) + beta * ((*xgrd)(xlen, i + 1)
 				+ (*xgrd)(xlen, i - 1)) - (*xgrd)(xlen, i) * center ;
 		}
 	}
@@ -246,7 +246,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 
 			*norm += r*r;
 
-			r = hx*hy*(*fgrd)(dimX, j) - (2.0 * hx) + 2.0*alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
+			r = hx*hy*(*fgrd)(dimX, j) + (2.0 * hx) + 2.0*alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
 				+ (*xgrd)(dimX, j - 1)) - (*xgrd)(dimX, j) * center;
 
 			*norm += r*r;
