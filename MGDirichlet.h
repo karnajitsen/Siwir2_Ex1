@@ -13,7 +13,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 	double hy = (*xgrd).getHy();
 	double	alpha = 1.0;
 	double	beta = 1.0;
-	double	center = (2.0 * alpha + 2.0 * beta);
+	double	center = 1/(2.0 * alpha + 2.0 * beta);
 
 	for (size_t i = 0; i < iter; i++)
 	{
@@ -22,7 +22,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
 			{
 				(*xgrd)(k, j) = (hx*hy*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1))) / center;
+					+ (*xgrd)(k, j - 1))) * center;
 
 			}
 
@@ -33,7 +33,7 @@ inline void dirichsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
 			{
 				(*xgrd)(k, j) = (hx*hy*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-					+ (*xgrd)(k, j - 1))) / center;
+					+ (*xgrd)(k, j - 1))) * center;
 
 
 			}
