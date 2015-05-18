@@ -13,7 +13,7 @@ mgsolve:
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
 	
 test:
-	./mgsolve 7 3
+	./mgsolve 8 5
 	git add data
 	git commit -m "new data file"
 
