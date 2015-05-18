@@ -315,13 +315,10 @@ void mgsolve(size_t level, size_t vcycle)
 		}
 	}
 
-	for (int i = 0; i < vcycle; i++)
+	for (int i = 0; i < (int)vcycle; i++)
 	{
-		//orthogonalize(xGrids[0]);
-
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
-			//orthogonalize(fGrids[jl]);
 			smooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
@@ -374,8 +371,10 @@ int main(int argc, char** argv)
 
 	timeval start, end;
 	
+	std::cout << "Dirichlet:: Level = " << level << " V-Cycles=" << vcycle << "\n\n";
 	
 	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
+	
 	gettimeofday(&start, 0);
 	isNeumann = false;
 	mgsolve(level, vcycle);
@@ -412,8 +411,7 @@ int main(int argc, char** argv)
 	gettimeofday(&start, 0);
 	mgsolve(level, vcycle);
 	gettimeofday(&end, 0);
-
-
+	
 	elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
