@@ -33,9 +33,9 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			if (*ndflag == 0 && l == 1)
 			{
-				(*xgrd)( l - 1, j) = 2.0 * hx + (*xgrd)(1, j);
+				(*xgrd)( l - 1, j) =  - 2.0 * hx + (*xgrd)(1, j);
 				//+ beta*((*xgrd)(k , j+1) + (*xgrd)(k , j-1)));
-				(*xgrd)(dimX - 1, j) = 2.0 * hx + (*xgrd)(dimX - 2, j);
+				(*xgrd)(dimX - 1, j) = - 2.0 * hx + (*xgrd)(dimX - 2, j);
 			}
 
 
@@ -53,9 +53,9 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			if (*ndflag == 0 && l == 1)
 			{
-				(*xgrd)(l - 1, j) = 2.0 * hx + (*xgrd)(1, j);
+				(*xgrd)(l - 1, j) = - 2.0 * hx + (*xgrd)(1, j);
 				//+ beta*((*xgrd)(k , j+1) + (*xgrd)(k , j-1)));
-				(*xgrd)(dimX - 1, j) = 2.0 * hx + (*xgrd)(dimX - 2, j);
+				(*xgrd)(dimX - 1, j) =  - 2.0 * hx + (*xgrd)(dimX - 2, j);
 			}
 
 
