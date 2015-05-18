@@ -339,12 +339,12 @@ void mgsolve(size_t level, size_t vcycle)
 		if (isNeumann)
 		{
 			std::cout << "Neumann:: Residual L2 Norm after " << i  << " V-Cycle = " << newnorm << "\n";
-			std::cout << "Neumann:: Covergence rate after " << i  << " V-Cycle = " << convrate << "\n\n";
+			std::cout << "Neumann:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
 		}
 		else
 		{
-			std::cout << "Dirichlet:: Residual L2 Norm after " << i  << " V-Cycle = " << newnorm << "\n";
-			std::cout << "Dirichlet:: Covergence rate after " << i  << " V-Cycle = " << convrate << "\n\n";
+			std::cout << "Dirichlet:: Residual L2 Norm after " << i << " V-Cycle = " << newnorm << "\n";
+			std::cout << "Dirichlet:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
 		}
 
 	}
@@ -384,7 +384,7 @@ int main(int argc, char** argv)
 	std::cout << "Dirichlet:: Time spend for Multigrid Solver = " << elapsed << '\n';
 
 	double hsize = (*xGrids[0]).getHx();
-	double gdim = (*xGrids[0]).getXsize();
+	size_t gdim = (*xGrids[0]).getXsize();
 
 	std::string fname1 = std::string("data/Dirichlet/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOut1(fname1);
