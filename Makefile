@@ -27,7 +27,7 @@ allnorm:
 	
 clean:
 	rm -f *.o mgsolve
-	rm -f ./data/Neumann/*.*
-	rm -f ./data/Dirichlet/*.*
+	rm -f ./data/Neumann/*.txt
+	rm -f ./data/Dirichlet/*.txt
 	
 .PHONY : all clean
