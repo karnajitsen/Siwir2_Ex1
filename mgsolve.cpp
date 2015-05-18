@@ -13,11 +13,7 @@
 Grid ** xGrids = nullptr;
 Grid ** fGrids = nullptr;
 Grid *sGrid = nullptr;
-size_t *ndflag = new size_t(1);
-
-#include "MGDirichlet.h"
-#include "MGNeumann.h"
-
+size_t *ndflag = 1;
 
 void init(double hsize, const size_t level, bool dirflg)
 {
@@ -49,6 +45,58 @@ void init(double hsize, const size_t level, bool dirflg)
 	}
 }
 
+
+inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
+{
+	size_t dimX = (*xgrd).getXsize();
+	size_t dimY = (*xgrd).getYsize();
+	double hx = (*xgrd).getHx();
+	double hy = (*xgrd).getHy();
+	double	alpha = 1.0;
+	double	beta = 1.0;
+	double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
+
+	for (size_t i = 0; i < iter; i++)
+	{
+		for (size_t j = 1; j < dimY - 1; j++)
+		{
+			for (size_t k = ((j + 1) & 0x1) + 1; k < dimX - 1; k += 2)
+			{
+				(*xgrd)(k, j) = (hx*hy*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1))) * center;
+
+			}
+
+			if (*ndflag == 0 && l == 1 && xgrd == xGrids[0])
+			{
+				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
+				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
+
+			}
+
+		}
+
+		for (size_t j = 1; j < dimY - 1; j++)
+		{
+			for (size_t k = (j & 0x1) + 1; k < dimX - 1; k += 2)
+			{
+				(*xgrd)(k, j) = (hx*hy*(*fgrd)(k, j) + alpha * ((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1))) * center;
+
+
+			}
+
+			if (*ndflag == 0 && l == 1 && xgrd == xGrids[0])
+			{
+				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
+				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
+
+			}
+
+		}
+	}
+}
+
 void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 {
 	size_t xlen = (*xgrd).getXsize() - 1;
@@ -60,7 +108,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	double	center = (2.0 * alpha) + (2.0 * beta);
 
 
-	cout << "====B4 restriction residual=== \n\n";
+	/*cout << "====B4 restriction residual=== \n\n";
 	for (size_t j = 0; j <= xlen; j++)
 	{
 		for (size_t k = 0; k <= xlen; k++)
@@ -69,7 +117,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 
 	Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false,true);
@@ -93,16 +141,16 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}*/
 	}
 
-	cout << "====After restriction residual=== \n\n";
-	for (size_t j = 0; j <= xlen; j++)
-	{
-		for (size_t k = 0; k <= xlen; k++)
-		{
-			cout << tmpgrd(k, j) << " ";
-		}
+	//cout << "====After restriction residual=== \n\n";
+	//for (size_t j = 0; j <= xlen; j++)
+	//{
+	//	for (size_t k = 0; k <= xlen; k++)
+	//	{
+	//		cout << tmpgrd(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 	size_t rxlen = (*rgrid).getXsize() - 1;
 	size_t rylen = (*rgrid).getYsize() - 1;
@@ -136,16 +184,16 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		//}
 	}
 
-	cout << "====After restriction === \n\n";
-	for (size_t j = 0; j <= rxlen; j++)
-	{
-		for (size_t k = 0; k <= rxlen; k++)
-		{
-			cout << (*rgrid)(k, j) << " ";
-		}
+	//cout << "====After restriction === \n\n";
+	//for (size_t j = 0; j <= rxlen; j++)
+	//{
+	//	for (size_t k = 0; k <= rxlen; k++)
+	//	{
+	//		cout << (*rgrid)(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 }
 
@@ -156,16 +204,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	double hx = (*tgtgrd).getHx();
 	Grid tmpgrd(txlen, txlen, hx, hx, false,true);
 
-	cout << "====b4 Interpolate === \n\n";
-	for (size_t j = 0; j <= len; j++)
-	{
-		for (size_t k = 0; k <= len; k++)
-		{
-			cout << (*srcgrd)(k, j) << " ";
-		}
+	//cout << "====b4 Interpolate === \n\n";
+	//for (size_t j = 0; j <= len; j++)
+	//{
+	//	for (size_t k = 0; k <= len; k++)
+	//	{
+	//		cout << (*srcgrd)(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 	for (size_t j = 0; j < len; j++)
 	{
@@ -187,16 +235,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}*/
 	}
 
-	cout << "====b4 Interpolate Add === \n\n";
-	for (size_t j = 0; j < txlen; j++)
-	{
-		for (size_t k = 0; k < txlen; k++)
-		{
-			cout << tmpgrd(k, j) << " ";
-		}
+	//cout << "====b4 Interpolate Add === \n\n";
+	//for (size_t j = 0; j < txlen; j++)
+	//{
+	//	for (size_t k = 0; k < txlen; k++)
+	//	{
+	//		cout << tmpgrd(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
@@ -208,16 +256,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}
 
 
-	cout << "====After Interpolate Add === \n\n";
-	for (size_t j = 0; j < txlen; j++)
-	{
-		for (size_t k = 0; k < txlen; k++)
-		{
-			cout << (*tgtgrd)(k, j) << " ";
-		}
+	//cout << "====After Interpolate Add === \n\n";
+	//for (size_t j = 0; j < txlen; j++)
+	//{
+	//	for (size_t k = 0; k < txlen; k++)
+	//	{
+	//		cout << (*tgtgrd)(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
 }
 
@@ -245,26 +293,6 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			*norm += r*r;
 		}
 
-		/*if (*ndflag == 0)
-		{
-			r = hx*hy*(*fgrd)(0, j) - 2.0 * hx + 2.0 * alpha*((*xgrd)(1, j)) +  beta * ((*xgrd)(0, j + 1)
-				+ (*xgrd)(0, j - 1)) 
-				- (*xgrd)(0, j) * center ;
-
-			*norm += r*r;
-
-			r = hx*hy*(*fgrd)(dimX, j) - 2.0 * hx + 2.0 * alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
-				+ (*xgrd)(dimX, j - 1)) 
-				- (*xgrd)(dimX, j) * center;
-
-			*norm += r*r;
-		}*/
-
-	}
-
-	/*if (*ndflag == 0)
-		*norm = sqrt(*norm / (dimX + 1) / (dimY - 1));
-	else*/
 		*norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
 }
 
@@ -292,6 +320,67 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 	*norm = sqrt(*norm / dimX / dimY);
 }
 
+inline void mgsolve(size_t level, size_t vcycle)
+{
+	size_t gdim = pow(2, level) + 1;
+	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
+	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
+
+	init(hsize, level, false);
+	sGrid = new Grid(gdim, gdim, hsize, hsize, true, false);
+
+	for (size_t i = 0; i < gdim; i++)
+	{
+		for (size_t j = 0; j < gdim; j++)
+		{
+			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize);
+		}
+	}
+
+	for (size_t i = 0; i < vcycle; i++)
+	{
+		//orthogonalize(xGrids[0]);
+
+		for (size_t jl = 0; jl < level - 1; jl++)
+		{
+			//orthogonalize(fGrids[jl]);
+			smooth(xGrids[jl], fGrids[jl], V1);
+			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
+		}
+
+		for (size_t j = level - 1; j > 0; j--)
+		{
+			smooth(xGrids[j], fGrids[j], V2);
+			interpolate(xGrids[j], xGrids[j - 1]);
+			(*xGrids[j]).reset();
+			(*fGrids[j]).reset();
+		}
+
+		oldnorm = newnorm;
+		resdualNorm(xGrids[0], fGrids[0], &newnorm);
+		if (oldnorm != 0.0)
+			convrate = newnorm / oldnorm;
+
+		if (*ndflag == 0)
+		{
+			std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
+		}
+		else
+		{
+			std::cout << "Dirichlet:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
+		}
+
+	}
+	//orthogonalize(xGrids[0]);
+	errorNorm(xGrids[0], sGrid, &newnorm);
+	if (*ndflag == 0)
+	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+	else
+	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+}
+
 int main(int argc, char** argv)
 {
 
@@ -308,10 +397,10 @@ int main(int argc, char** argv)
 	timeval start, end;
 	
 	
-	/*std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
+	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
 	gettimeofday(&start, 0);
 	*ndflag = 1;
-	mgDirichlet(level, vcycle);
+	mgsolve(level, vcycle);
 	
 	gettimeofday(&end, 0);
 	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
@@ -335,7 +424,7 @@ int main(int argc, char** argv)
 	}
 	fOut1.close();
 	fOutsolt1.close();
-	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";*/
+	std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
 	std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
 	delete xGrids;
@@ -343,15 +432,15 @@ int main(int argc, char** argv)
 	delete sGrid;
 	*ndflag = 0;
 	gettimeofday(&start, 0);
-	MGNeumann(level, vcycle);
+	mgsolve(level, vcycle);
 	gettimeofday(&end, 0);
 
 
-	double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+	elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
 	std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
-	double hsize = (*xGrids[0]).getHx();
-	double gdim = (*xGrids[0]).getXsize();
+	hsize = (*xGrids[0]).getHx();
+	gdim = (*xGrids[0]).getXsize();
 
 	std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
 	std::ofstream	fOut2(fname2);
