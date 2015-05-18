@@ -200,7 +200,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 	for (size_t i = 1; i < txlen - 1; i++)
 	{
-		for (size_t j = *ndflag; j < txlen - *ndflag; j++)
+		for (size_t j = 1; j < txlen - 1; j++)
 		{
 			(*tgtgrd)(j, i) += tmpgrd(j, i);
 
