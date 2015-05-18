@@ -341,12 +341,12 @@ inline void mgsolve(size_t level, size_t vcycle)
 
 		if (isNeumann)
 		{
-			std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Neumann:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
 			std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 		}
 		else
 		{
-			std::cout << "Dirichlet:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Dirichlet:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
 			std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 		}
 
@@ -354,9 +354,9 @@ inline void mgsolve(size_t level, size_t vcycle)
 	//orthogonalize(xGrids[0]);
 	errorNorm(xGrids[0], sGrid, &newnorm);
 	if (isNeumann)
-	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+	std::cout << "Neumann:: Error L2 Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 	else
-	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
+	std::cout << "Dirichlet:: Error L2 Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 }
 
 int main(int argc, char** argv)
