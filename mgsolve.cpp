@@ -81,16 +81,16 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				+ (*xgrd)(j, i - 1)) - (*xgrd)(j, i) * center;
 		}
 
-		/*if (*ndflag == 0)
+		if (*ndflag == 0)
 		{
-			tmpgrd(0, i) = (*fgrd)(0, i) + (2.0 / hx) + 2.0 * alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
+			tmpgrd(0, i) = (*fgrd)(0, i) - (2.0 / hx) + 2.0 * alpha*((*xgrd)(1, i)) + beta * ((*xgrd)(0, i + 1)
 				+ (*xgrd)(0, i - 1)) 
 				- (*xgrd)(0, i) * center ;
 
-			tmpgrd(xlen, i) = (*fgrd)(xlen, i) + (2.0 / hx) + 2.0 * alpha*((*xgrd)(xlen - 1, i)) + beta * ((*xgrd)(xlen, i + 1)
+			tmpgrd(xlen, i) = (*fgrd)(xlen, i) - (2.0 / hx) + 2.0 * alpha*((*xgrd)(xlen - 1, i)) + beta * ((*xgrd)(xlen, i + 1)
 				+ (*xgrd)(xlen, i - 1)) 
 				- (*xgrd)(xlen, i) * center ;
-		}*/
+		}
 	}
 
 	cout << "====After restriction residual=== \n\n";
@@ -120,20 +120,20 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 				tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
 		}
 
-		//if (*ndflag == 0)
-		//{
-		//	(*rgrid)(0, i) = 0.5 * tmpgrd(0, 2 * i) + 0.25 * tmpgrd(1, 2 * i) + 0.125*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1));
-		//		
-		//		/*(2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
-		//		2.0*(tmpgrd(0, 2 * i - 1) + tmpgrd(0, 2 * i + 1) +
-		//		2.0 * (hx + tmpgrd(1, 2 * i))) + 4.0 * tmpgrd(0, 2 * i)) / 16.0;*/
+		if (*ndflag == 0)
+		{
+			(*rgrid)(0, i) = 0.5 * tmpgrd(0, 2 * i) + 0.25 * tmpgrd(1, 2 * i) + 0.125*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1));
+				
+				/*(2.0*(tmpgrd(1, 2 * i - 1) + tmpgrd(1, 2 * i + 1) + 2.0 * hx) +
+				2.0*(tmpgrd(0, 2 * i - 1) + tmpgrd(0, 2 * i + 1) +
+				2.0 * (hx + tmpgrd(1, 2 * i))) + 4.0 * tmpgrd(0, 2 * i)) / 16.0;*/
 
-		//	(*rgrid)(rxlen, i) = 0.5 * tmpgrd(xlen, 2 * i) + 0.25 * tmpgrd(xlen - 1, 2 * i) + 0.125*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1));
-		//		
-		//	/*(2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
-		//		2.0*(tmpgrd(xlen, 2 * i - 1) + tmpgrd(xlen, 2 * i + 1) +
-		//		2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen, 2 * i)) / 16.0;*/
-		//}
+			(*rgrid)(rxlen, i) = 0.5 * tmpgrd(xlen, 2 * i) + 0.25 * tmpgrd(xlen - 1, 2 * i) + 0.125*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1));
+				
+			/*(2.0*(tmpgrd(xlen - 1, 2 * i - 1) + tmpgrd(xlen - 1, 2 * i + 1) - 2.0 * hx) +
+				2.0*(tmpgrd(xlen, 2 * i - 1) + tmpgrd(xlen, 2 * i + 1) +
+				2.0 * (hx + tmpgrd(xlen - 1, 2 * i))) + 4.0 * tmpgrd(xlen, 2 * i)) / 16.0;*/
+		}
 	}
 
 	cout << "====After restriction === \n\n";
@@ -180,11 +180,11 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 				+ (*srcgrd)(i + 1, j + 1));
 		}
 
-		/*if (*ndflag == 0)
+		if (*ndflag == 0)
 		{
 			tmpgrd(2 * len, 2*j + 1) = 0.5*((*srcgrd)(len, j) + (*srcgrd)(len, j + 1));
 			tmpgrd(2 * len, 2*j) = (*srcgrd)(len, j);
-		}*/
+		}
 	}
 
 	cout << "====b4 Interpolate Add === \n\n";
@@ -245,26 +245,26 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			*norm += r*r;
 		}
 
-		/*if (*ndflag == 0)
+		if (*ndflag == 0)
 		{
-			r = hx*hy*(*fgrd)(0, j) + 2.0 * hx + 2.0 * alpha*((*xgrd)(1, j)) +  beta * ((*xgrd)(0, j + 1)
+			r = hx*hy*(*fgrd)(0, j) - 2.0 * hx + 2.0 * alpha*((*xgrd)(1, j)) +  beta * ((*xgrd)(0, j + 1)
 				+ (*xgrd)(0, j - 1)) 
 				- (*xgrd)(0, j) * center ;
 
 			*norm += r*r;
 
-			r = hx*hy*(*fgrd)(dimX, j) + 2.0 * hx + 2.0 * alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
+			r = hx*hy*(*fgrd)(dimX, j) - 2.0 * hx + 2.0 * alpha*((*xgrd)(dimX - 1, j)) + beta * ((*xgrd)(dimX, j + 1)
 				+ (*xgrd)(dimX, j - 1)) 
 				- (*xgrd)(dimX, j) * center;
 
 			*norm += r*r;
-		}*/
+		}
 
 	}
 
-	/*if (*ndflag == 0)
+	if (*ndflag == 0)
 		*norm = sqrt(*norm / (dimX + 1) / (dimY - 1));
-	else*/
+	else
 		*norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
 }
 
