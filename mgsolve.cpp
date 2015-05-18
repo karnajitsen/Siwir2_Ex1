@@ -339,7 +339,7 @@ inline void mgsolve(size_t level, size_t vcycle)
 		if (oldnorm != 0.0)
 			convrate = newnorm / oldnorm;
 
-		if (*ndflag == 0)
+		if (isNeumann)
 		{
 			std::cout << "Neumann:: Residual Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
 			std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
@@ -353,7 +353,7 @@ inline void mgsolve(size_t level, size_t vcycle)
 	}
 	//orthogonalize(xGrids[0]);
 	errorNorm(xGrids[0], sGrid, &newnorm);
-	if (*ndflag == 0)
+	if (isNeumann)
 	std::cout << "Neumann:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
 	else
 	std::cout << "Dirichlet:: Error Norm for h as 1/" << gdim - 1 << " = " << newnorm << "\n\n";
@@ -377,7 +377,7 @@ int main(int argc, char** argv)
 	
 	std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
 	gettimeofday(&start, 0);
-	*ndflag = 1;
+	isNeumann = false;
 	mgsolve(level, vcycle);
 	
 	gettimeofday(&end, 0);
@@ -408,7 +408,7 @@ int main(int argc, char** argv)
 	delete xGrids;
 	delete fGrids;
 	delete sGrid;
-	*ndflag = 0;
+	isNeumann = true;
 	gettimeofday(&start, 0);
 	mgsolve(level, vcycle);
 	gettimeofday(&end, 0);
