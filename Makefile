@@ -17,7 +17,10 @@ test:
 	git add data
 	git commit -m "new data file"
 
-allnorm:
+mg:
+	./mgsolve 8 5
+
+allgrid:
 	./mgsolve 3 5
 	./mgsolve 4 5
 	./mgsolve 5 5
