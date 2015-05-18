@@ -315,7 +315,7 @@ void mgsolve(size_t level, size_t vcycle)
 		}
 	}
 
-	for (int i = 0; i < (int)vcycle; i++)
+	for (int i = 1; i <= (int)vcycle; i++)
 	{
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
@@ -338,13 +338,13 @@ void mgsolve(size_t level, size_t vcycle)
 
 		if (isNeumann)
 		{
-			std::cout << "Neumann:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n";
-			std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
+			std::cout << "Neumann:: Residual L2 Norm after " << i  << " V-Cycle = " << newnorm << "\n";
+			std::cout << "Neumann:: Covergence rate after " << i  << " V-Cycle = " << convrate << "\n\n";
 		}
 		else
 		{
-			std::cout << "Dirichlet:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n";
-			std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
+			std::cout << "Dirichlet:: Residual L2 Norm after " << i  << " V-Cycle = " << newnorm << "\n";
+			std::cout << "Dirichlet:: Covergence rate after " << i  << " V-Cycle = " << convrate << "\n\n";
 		}
 
 	}
