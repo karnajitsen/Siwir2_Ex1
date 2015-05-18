@@ -13,7 +13,7 @@
 Grid ** xGrids = nullptr;
 Grid ** fGrids = nullptr;
 Grid *sGrid = nullptr;
-size_t *ndflag;
+size_t *ndflag = new size_t(1);
 
 void init(double hsize, const size_t level, bool dirflg)
 {
