@@ -33,11 +33,14 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			if (*ndflag == 0 && l == 1)
 			{
-				(*xgrd)(0, j) = (-2.0 * hx + hx*hy*(*fgrd)(0, j) + 2.0*alpha * ((*xgrd)(1, j))+ beta * ((*xgrd)(0, j + 1)
-					+ (*xgrd)(0, j - 1))) * center;
-				//+ beta*((*xgrd)(k , j+1) + (*xgrd)(k , j-1)));
-				(*xgrd)(dimX - 1, j) = (-2.0 * hx + hx*hy*(*fgrd)(dimX - 1, j) + 2.0*alpha * ((*xgrd)(dimX - 2, j)) + 
-					beta * ((*xgrd)(dimX - 1, j + 1) + (*xgrd)(dimX - 1, j - 1))) * center;
+				//(*xgrd)(0, j) = (-2.0 * hx + hx*hy*(*fgrd)(0, j) + 2.0*alpha * ((*xgrd)(1, j))+ beta * ((*xgrd)(0, j + 1)
+				//	+ (*xgrd)(0, j - 1))) * center;
+				////+ beta*((*xgrd)(k , j+1) + (*xgrd)(k , j-1)));
+				//(*xgrd)(dimX - 1, j) = (-2.0 * hx + hx*hy*(*fgrd)(dimX - 1, j) + 2.0*alpha * ((*xgrd)(dimX - 2, j)) + 
+				//	beta * ((*xgrd)(dimX - 1, j + 1) + (*xgrd)(dimX - 1, j - 1))) * center;
+
+				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
+				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
 					
 			}
 
@@ -56,11 +59,8 @@ inline void neumannsmooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			if (*ndflag == 0 && l == 1)
 			{
-				(*xgrd)(0, j) = (-2.0 * hx + hx*hy*(*fgrd)(0, j) + 2.0*alpha * ((*xgrd)(1, j)) + beta * ((*xgrd)(0, j + 1)
-					+ (*xgrd)(0, j - 1))) * center;
-				//+ beta*((*xgrd)(k , j+1) + (*xgrd)(k , j-1)));
-				(*xgrd)(dimX - 1, j) = (-2.0 * hx + hx*hy*(*fgrd)(dimX - 1, j) + 2.0*alpha * ((*xgrd)(dimX - 2, j)) +
-					beta * ((*xgrd)(dimX - 1, j + 1) + (*xgrd)(dimX - 1, j - 1))) * center;
+				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
+				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
 
 			}
 
@@ -138,11 +138,11 @@ inline void MGNeumann(size_t level, size_t vcycle)
 
 	for (size_t i = 0; i < vcycle; i++)
 	{
-		orthogonalize(xGrids[0]);
+		//orthogonalize(xGrids[0]);
 
 		for (size_t jl = 0; jl < level - 1; jl++)
 		{
-			orthogonalize(fGrids[jl]);
+			//orthogonalize(fGrids[jl]);
 			neumannsmooth(xGrids[jl], fGrids[jl], V1);
 			restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
 		}
