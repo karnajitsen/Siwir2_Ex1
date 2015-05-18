@@ -295,7 +295,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 	*norm = sqrt(*norm / dimX / dimY);
 }
 
-inline void mgsolve(size_t level, size_t vcycle)
+void mgsolve(size_t level, size_t vcycle)
 {
 	size_t gdim = pow(2, level) + 1;
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
