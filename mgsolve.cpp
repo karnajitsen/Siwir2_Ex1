@@ -315,7 +315,7 @@ void mgsolve(size_t level, size_t vcycle)
 		}
 	}
 
-	for (size_t i = 0; i < vcycle; i++)
+	for (int i = 0; i < vcycle; i++)
 	{
 		//orthogonalize(xGrids[0]);
 
@@ -341,12 +341,12 @@ void mgsolve(size_t level, size_t vcycle)
 
 		if (isNeumann)
 		{
-			std::cout << "Neumann:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Neumann:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n";
 			std::cout << "Neumann:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 		}
 		else
 		{
-			std::cout << "Dirichlet:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n\n";
+			std::cout << "Dirichlet:: Residual L2 Norm after " << i + 1 << " V-Cycle = " << newnorm << "\n";
 			std::cout << "Dirichlet:: Covergence rate after " << i + 1 << " V-Cycle = " << convrate << "\n\n";
 		}
 
