@@ -28,7 +28,7 @@ public:
 		hy = 0.0;
 	}
 
-	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN , bool dirflag)
+	explicit Grid(const size_t x, const size_t y, const double& _hx, const double& _hy , bool bndrYN , bool isNeumann)
 	{
 		sizeX = x;
 		sizeY = y;
@@ -38,7 +38,7 @@ public:
 		totLength = (x - 2)*(y - 2);
 		data = (double*) memalign(ALLIGNMENT, ld*y*sizeof(double));
 		//data = (double*) _aligned_malloc(ld*y*sizeof(double), ALLIGNMENT);
-		if (bndrYN && dirflag)
+		if (bndrYN && !isNeumann)
 		{
 			double l = (sizeX - 1.0)*hx;
 			for (int j = 0.0; (size_t)j < sizeX; j++)
@@ -51,7 +51,7 @@ public:
 			}
 		}
 
-		if (bndrYN && !dirflag)
+		if (bndrYN && isNeumann)
 		{
 			for (int j = 0.0; (size_t)j < sizeX; j++)
 			{

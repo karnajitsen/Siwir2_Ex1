@@ -13,9 +13,9 @@
 Grid ** xGrids = nullptr;
 Grid ** fGrids = nullptr;
 Grid *sGrid = nullptr;
-size_t *ndflag = new size_t(1);
+bool isNeumann = false;
 
-void init(double hsize, const size_t level, bool dirflg)
+void init(double hsize, const size_t level)
 {
 	size_t je = level;
 	size_t ydim = pow(2, je) + 1;
@@ -25,8 +25,8 @@ void init(double hsize, const size_t level, bool dirflg)
 	fGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
 	for (size_t i = 0; i < level; i++)
 	{
-		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, dirflg);
-		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, dirflg);
+		xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, isNeumann);
+		fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, isNeumann);
 		ydim = pow(2, --je) + 1;
 		xdim = ydim;
 		hsize *= 2.0;
@@ -68,7 +68,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			}
 
-			if (*ndflag == 0 && l == 1 && xgrd == xGrids[0])
+			if (isNeumann && l == 1 && xgrd == xGrids[0])
 			{
 				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
 				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
@@ -88,7 +88,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
 			}
 
-			if (*ndflag == 0 && l == 1 && xgrd == xGrids[0])
+			if (isNeumann && l == 1 && xgrd == xGrids[0])
 			{
 				(*xgrd)(0, j) = -hx + (*xgrd)(1, j);
 				(*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
@@ -301,14 +301,14 @@ inline void mgsolve(size_t level, size_t vcycle)
 	double oldnorm = 0.0, newnorm = 0.0, convrate = 0.0;
 	double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 
-	init(hsize, level, false);
-	sGrid = new Grid(gdim, gdim, hsize, hsize, true, false);
+	init(hsize, level);
+	sGrid = new Grid(gdim, gdim, hsize, hsize, true, isNeumann);
 
 	for (size_t i = 0; i < gdim; i++)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
-			if (*ndflag == 1)
+			if (isNeumann)
 			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize);
 			else
 			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
