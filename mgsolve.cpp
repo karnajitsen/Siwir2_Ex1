@@ -308,7 +308,10 @@ inline void mgsolve(size_t level, size_t vcycle)
 	{
 		for (size_t j = 0; j < gdim; j++)
 		{
+			if (*ndflag == 1)
 			(*sGrid)(j, i) = (*sGrid).gxy2(j*hsize);
+			else
+			(*sGrid)(j, i) = (*sGrid).gxy1(j*hsize, i*hsize);
 		}
 	}
 
