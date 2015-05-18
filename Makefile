@@ -17,7 +17,7 @@ test: clean
 	git add data
 	git commit -m "new data file"
 
-mg: deldata
+onegrid: deldata
 	./mgsolve 8 5
 
 allgrid: deldata
