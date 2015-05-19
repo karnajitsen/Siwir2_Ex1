@@ -18,15 +18,15 @@ test: clean
 	git commit -m "new data file"
 
 onegrid: deldata
-	./mgsolve 8 5
+	./mgsolve 8 10
 
 allgrid: deldata
-	./mgsolve 3 5
-	./mgsolve 4 5
-	./mgsolve 5 5
-	./mgsolve 6 5
-	./mgsolve 7 5
-	./mgsolve 8 5
+	./mgsolve 3 10
+	./mgsolve 4 10
+	./mgsolve 5 10
+	./mgsolve 6 10
+	./mgsolve 7 10
+	./mgsolve 8 10
 	
 deldata:
 	rm -f ./data/Neumann/*.txt
