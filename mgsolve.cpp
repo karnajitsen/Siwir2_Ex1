@@ -25,6 +25,8 @@ void init(double hsize, const size_t level)
     fGrids = (Grid**) memalign(ALLIGNMENT, level*sizeof(Grid*));
     for (size_t i = 0; i < level; i++)
     {
+		if (isNeumann)
+			xdim += 2;
         xGrids[i] = new Grid(xdim, ydim, hsize, hsize, flag, isNeumann);
         fGrids[i] = new Grid(xdim, ydim, hsize, hsize, false, isNeumann);
         ydim = pow(2, --je) + 1;
@@ -39,7 +41,7 @@ void init(double hsize, const size_t level)
     {
         //(*fGrids[0])(0, i) = 1.0;
         //(*fGrids[0])((*fGrids[0]).getXsize() - 1, i) = 1.0;
-        for (size_t j = 1; j < (*fGrids[0]).getXsize(); j++)
+        for (size_t j = 1; j < (*fGrids[0]).getXsize()-1; j++)
         {
             (*fGrids[0])(j, i) = 2.0;
         }
@@ -128,47 +130,84 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     size_t rylen = (*rgrid).getYsize() - 1;
 
 
+	if (!IsNeumann)
+	{
+		for (size_t i = 1; i < rylen; i++)
+		{
 
-    for (size_t i = 1; i < rylen; i++)
-    {
+			for (size_t j = 1; j < rxlen; j++)
+			{
+				(*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
+					tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
+					2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
+					tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
+			}
 
-        for (size_t j = 1; j < rxlen; j++)
-        {
-            (*rgrid)(j, i) = (tmpgrd(2 * j - 1, 2 * i - 1) + tmpgrd(2 * j - 1, 2 * i + 1) +
-                tmpgrd(2 * j + 1, 2 * i - 1) + tmpgrd(2 * j + 1, 2 * i + 1) +
-                2.0*(tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
-                tmpgrd(2 * j - 1, 2 * i) + tmpgrd(2 * j + 1, 2 * i)) + 4.0 * tmpgrd(2 * j, 2 * i)) / 16.0;
-        }
+		}
+	}
+	else
+	{
+		for (size_t i = 1; i < rylen; i++)
+		{
 
-    }
+			for (size_t j = 1; j < rxlen; j++)
+			{
+				(*rgrid)(j, i) = (tmpgrd(2 * j - 2, 2 * i - 1) + tmpgrd(2 * j - 2, 2 * i + 1) +
+					tmpgrd(2 * j, 2 * i - 1) + tmpgrd(2 * j, 2 * i + 1) +
+					2.0*(tmpgrd(2 * j-1, 2 * i - 1) + tmpgrd(2 * j-1, 2 * i + 1) +
+					tmpgrd(2 * j - 2, 2 * i) + tmpgrd(2 * j, 2 * i)) + 4.0 * tmpgrd(2 * j-1, 2 * i)) / 16.0;
+			}
 
+		}
+	}
    }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
-    size_t len = (*srcgrd).getXsize() - 1;
+    size_t xlen = (*srcgrd).getXsize() - 1;
+	size_t ylen = (*srcgrd).getYsize() - 1;
     size_t txlen = (*tgtgrd).getXsize();
+	size_t tylen = (*tgtgrd).getYsize();
     double hx = (*tgtgrd).getHx();
     Grid tmpgrd(txlen, txlen, hx, hx, false,true);
 
+	if (!isNeumann)
+	{
+		for (size_t j = 0; j < ylen; j++)
+		{
+			size_t k = 2 * j;
+			for (size_t i = 0; i < xlen; i++)
+			{
+				size_t l = 2 * i;
+				tmpgrd(l, k) = (*srcgrd)(i, j);
+				tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
+				tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
+				tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
+					+ (*srcgrd)(i + 1, j + 1));
+			}
 
-    for (size_t j = 0; j < len; j++)
-    {
-        size_t k = 2 * j;
-        for (size_t i = 0; i < len; i++)
-        {
-            size_t l = 2 * i;
-            tmpgrd(l, k) = (*srcgrd)(i, j);
-            tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
-            tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
-            tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
-                + (*srcgrd)(i + 1, j + 1));
-        }
+		}
+	}
+	else
+	{
+		for (size_t j = 0; j < ylen; j++)
+		{
+			size_t k = 2 * j;
+			for (size_t i = 1; i < xlen; i++)
+			{
+				size_t l = 2 * i - 1;
+				tmpgrd(l, k) = (*srcgrd)(i, j);
+				tmpgrd(l, k + 1) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i, j + 1));
+				tmpgrd(l + 1, k) = 0.5*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j));
+				tmpgrd(l + 1, k + 1) = 0.25*((*srcgrd)(i, j) + (*srcgrd)(i + 1, j) + (*srcgrd)(i, j + 1)
+					+ (*srcgrd)(i + 1, j + 1));
+			}
 
-    }
+		}
+	}
 
 
-    for (size_t i = 1; i < txlen - 1; i++)
+    for (size_t i = 1; i < tylen - 1; i++)
     {
         for (size_t j = 1; j < txlen - 1; j++)
         {
@@ -219,16 +258,31 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
     double r = 0.0;
     *norm = 0.0;
 
-    for (size_t j = 0; j < dimY; j++)
-    {
-        for (size_t k = 0; k < dimX; k++)
-        {
-            r = (*sgrd)(k , j) - (*xgrd)(k, j);
+	if (!isNeumann)
+	{
+		for (size_t j = 0; j < dimY; j++)
+		{
+			for (size_t k = 0; k < dimX; k++)
+			{
+				r = (*sgrd)(k, j) - (*xgrd)(k, j);
 
-            *norm += r*r;
-        }
+				*norm += r*r;
+			}
 
-    }
+		}
+	}
+	else{
+		for (size_t j = 0; j < dimY; j++)
+		{
+			for (size_t k = 1; k < dimX-1; k++)
+			{
+				r = (*sgrd)(k, j) - (*xgrd)(k, j);
+
+				*norm += r*r;
+			}
+
+		}
+	}
 
     *norm = sqrt(*norm / dimX / dimY);
 }
@@ -269,7 +323,7 @@ void mgsolve(size_t level, size_t vcycle)
             (*fGrids[j]).reset();
         }
 
-        oldnorm = newnorm;
+        oldnorm = newnorm; 
         resdualNorm(xGrids[0], fGrids[0], &newnorm);
         if (oldnorm != 0.0)
             convrate = newnorm / oldnorm;
