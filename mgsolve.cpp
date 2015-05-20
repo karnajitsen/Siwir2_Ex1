@@ -425,7 +425,7 @@ int main(int argc, char** argv)
     std::ofstream	fOut2(fname2);
     std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 3)) + std::string(".txt");
     std::ofstream	fOutsolt2(fnames2);
-    for (size_t y = 0.0; y < gdim; ++y) {
+    for (size_t y = 0.0; y < gdim-2; ++y) {
 		for (size_t x = 1; x < gdim - 2; ++x) {
 
 			fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
@@ -433,7 +433,7 @@ int main(int argc, char** argv)
 		fOut2 << std::endl;
     }
 
-	for (size_t y = 0.0; y < gdim; ++y) {
+	for (size_t y = 0.0; y < gdim - 2; ++y) {
 		for (size_t x = 0.0; x < gdim-2 ; ++x) {
 
 			fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
