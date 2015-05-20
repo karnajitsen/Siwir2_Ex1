@@ -75,7 +75,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
             }
 
-			if (isNeumann && l == 2 && xgrd == (*xGrids[0]))
+			if (isNeumann && l == 2 && xgrd == xGrids[0])
 			{
 				(*xgrd)(0, j) = -2 * hx + (*xgrd)(2, j);
 				(*xgrd)(dimX - 1, j) = -2 * hx + (*xgrd)(dimX - 3, j);
@@ -95,7 +95,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
             }
 
-			if (isNeumann && l == 2 && xgrd == (*xGrids[0]))
+			if (isNeumann && l == 2 && xgrd == xGrids[0])
             {
                 (*xgrd)(0, j) = -2*hx + (*xgrd)(2, j);
                 (*xgrd)(dimX - 1, j) = -2*hx + (*xgrd)(dimX - 3, j);
