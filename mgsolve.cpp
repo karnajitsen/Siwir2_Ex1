@@ -201,7 +201,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		for (size_t j = 0; j < ylen; j++)
 		{
 			size_t k = 2 * j;
-			for (size_t i = 1; i < xlen; i++)
+			for (size_t i = 0; i < xlen; i++)
 			{
 				size_t l = 2 * i - 1;
 				tmpgrd(l, k) = (*srcgrd)(i, j);
@@ -215,9 +215,9 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}
 
 	
-    for (size_t i = 1; i < tylen - 1; i++)
+    for (size_t i = 0; i < tylen ; i++)
     {
-        for (size_t j = 1; j < txlen - 1; j++)
+        for (size_t j = 0; j < txlen ; j++)
         {
             (*tgtgrd)(j, i) += tmpgrd(j, i);
 
