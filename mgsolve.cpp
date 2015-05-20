@@ -47,6 +47,8 @@ void init(double hsize, const size_t level)
         }
     }
     }
+
+	cout << "init\n";
 }
 
 
@@ -101,6 +103,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
         }
     }
+	cout << "smooth\n";
 }
 
 void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
@@ -160,6 +163,8 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 		}
 	}
+
+	cout << "restriction\n";
    }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
@@ -216,7 +221,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
         }
     }
 
-
+	cout << "interpolate\n";
 
 }
 
@@ -246,6 +251,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
     }
 
         *norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
+		cout << "residual\n";
 }
 
 
