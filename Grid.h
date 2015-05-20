@@ -53,11 +53,11 @@ public:
 
         if (bndrYN && isNeumann)
         {
-            for (int j = 0.0; (size_t)j < sizeX; j++)
+            for (int j = 1.0; (size_t)j < sizeX-1; j++)
             {
-                double k = j*hx;
+                double k = (j-1)*hx;
                 data[j] = gxy2(k);
-                data[j + ld * (sizeX - 1)] = gxy2(k);
+                data[j + ld * (sizeY - 1)] = gxy2(k);
             }
         }
         //data++;
