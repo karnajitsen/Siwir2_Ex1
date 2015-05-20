@@ -62,6 +62,17 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
     double	beta = 1.0;
     double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
 
+	cout << "====B4 smooth === \n\n";
+	for (size_t j = 0; j < dimY; j++)
+	{
+		for (size_t k = 0; k < dimX; k++)
+		{
+			cout << (*xgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
     for (size_t i = 0; i < iter; i++)
     {
         for (size_t j = 1; j < dimY - 1; j++)
@@ -103,7 +114,16 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
         }
     }
-	cout << "smooth\n";
+	cout << "====After smooth === \n\n";
+	for (size_t j = 0; j < dimY; j++)
+	{
+		for (size_t k = 0; k < dimX; k++)
+		{
+			cout << (*xgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
 }
 
 void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
@@ -117,6 +137,17 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     double	center = (2.0 * alpha) + (2.0 * beta);
 
 
+	cout << "====B4 residual === \n\n";
+	for (size_t j = 0; j < ylen; j++)
+	{
+		for (size_t k = 0; k < xlen; k++)
+		{
+			cout << (*xgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+
     Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false,true);
     for (size_t i = 1; i < ylen; i++)
     {
@@ -129,6 +160,17 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
     }
 
+
+	cout << "====After residual === \n\n";
+	for (size_t j = 0; j < ylen; j++)
+	{
+		for (size_t k = 0; k < xlen; k++)
+		{
+			cout << (tmpgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
     size_t rxlen = (*rgrid).getXsize() - 1;
     size_t rylen = (*rgrid).getYsize() - 1;
 
@@ -164,7 +206,16 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
-	cout << "restriction\n";
+	cout << "====After restriction === \n\n";
+	for (size_t j = 0; j < ylen; j++)
+	{
+		for (size_t k = 0; k < xlen; k++)
+		{
+			cout << (*rgrid)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
    }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
@@ -175,6 +226,18 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	size_t tylen = (*tgtgrd).getYsize();
     double hx = (*tgtgrd).getHx();
     Grid tmpgrd(txlen, txlen, hx, hx, false,true);
+
+	cout << "====B4 Interpolation === \n\n";
+	for (size_t j = 0; j < ylen; j++)
+	{
+		for (size_t k = 0; k < xlen; k++)
+		{
+			cout << (*srcgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
+}
 
 	if (!isNeumann)
 	{
@@ -211,6 +274,19 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 	}
 
+	
+}
+
+cout << "====B4 Interpolation Add === \n\n";
+for (size_t j = 0; j < tylen; j++)
+{
+	for (size_t k = 0; k < txlen; k++)
+	{
+		cout << (tmpgrd)(k, j) << " ";
+	}
+
+	cout << '\n';
+}
 
     for (size_t i = 1; i < tylen - 1; i++)
     {
@@ -221,7 +297,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
         }
     }
 
-	cout << "interpolate\n";
+	cout << "====After Interpolation Add === \n\n";
+	for (size_t j = 0; j < tylen; j++)
+	{
+		for (size_t k = 0; k < txlen; k++)
+		{
+			cout << (tmpgrd)(k, j) << " ";
+		}
+
+		cout << '\n';
+	}
 
 }
 
@@ -377,7 +462,7 @@ int main(int argc, char** argv)
 
     gettimeofday(&start, 0);
     isNeumann = false;
-    mgsolve(level, vcycle);
+    //mgsolve(level, vcycle);
 
     gettimeofday(&end, 0);
     double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
