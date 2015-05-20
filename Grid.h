@@ -91,15 +91,15 @@ public:
 
     inline double& operator()(const size_t x, const size_t y)
     {
-        //assert(x < sizeX);
-        //assert(y < sizeY);
+        assert(x < sizeX);
+        assert(y < sizeY);
         return data[y*ld + x];
     }
 
     inline double& operator()(const size_t x, const size_t y) const
     {
-        //assert(x < sizeX);
-        //assert(y < sizeY);
+        assert(x < sizeX);
+        assert(y < sizeY);
         return data[y*ld + x];
     }
 
