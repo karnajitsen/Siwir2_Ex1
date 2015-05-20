@@ -130,7 +130,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     size_t rylen = (*rgrid).getYsize() - 1;
 
 
-	if (!IsNeumann)
+	if (!isNeumann)
 	{
 		for (size_t i = 1; i < rylen; i++)
 		{
