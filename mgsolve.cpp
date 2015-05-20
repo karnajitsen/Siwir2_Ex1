@@ -301,7 +301,7 @@ for (size_t j = 0; j < tylen; j++)
 	{
 		for (size_t k = 0; k < txlen; k++)
 		{
-			cout << (tmpgrd)(k, j) << " ";
+			cout << (*tgtgrd)(k, j) << " ";
 		}
 
 		cout << '\n';
