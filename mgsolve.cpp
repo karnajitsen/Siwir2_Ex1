@@ -497,7 +497,7 @@ int main(int argc, char** argv)
 
     std::cout << "\n\n =============== Output for Dirichlet Boundary Value Problem 1 ===================\n\n";
 
-    /*gettimeofday(&start, 0);
+    gettimeofday(&start, 0);
     isNeumann = false;
     mgsolve(level, vcycle);
 
@@ -522,7 +522,7 @@ int main(int argc, char** argv)
     fOutsolt1 << std::endl;
     }
     fOut1.close();
-    fOutsolt1.close();*/
+    fOutsolt1.close();
     std::cout << "\n\n =============== Dirichlet Boundary Value Problem 1 ends here ===================\n\n";
 
     std::cout << "\n\n =============== Output for Neumann Boundary Value Problem 2 ===================\n\n";
@@ -534,15 +534,15 @@ int main(int argc, char** argv)
     mgsolve(level, vcycle);
     gettimeofday(&end, 0);
 
-    double elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+    elapsed = 0.000001 * ((double)((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
     std::cout << "Neumann:: Time spend for Multigrid Solver = " << elapsed << "\n";
 
-    double hsize = (*xGrids[0]).getHx();
-    double gdim = (*xGrids[0]).getXsize();
+    hsize = (*xGrids[0]).getHx();
+    gdim = (*xGrids[0]).getXsize();
 
-    std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+    std::string fname2 = std::string("data/Neumann/solution_h_") + std::string(to_string(gdim - 3)) + std::string(".txt");
     std::ofstream	fOut2(fname2);
-    std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
+    std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 3)) + std::string(".txt");
     std::ofstream	fOutsolt2(fnames2);
     for (size_t y = 0.0; y < gdim; ++y) {
     for (size_t x = 1; x < gdim-2; ++x) {
