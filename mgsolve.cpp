@@ -39,9 +39,9 @@ void init(double hsize, const size_t level)
     {
     for (size_t i = 1; i < (*fGrids[0]).getYsize()-1; i++)
     {
-        (*fGrids[0])(1, i) = 1.0;
-        (*fGrids[0])((*fGrids[0]).getXsize() - 2, i) = 1.0;
-        for (size_t j = 2; j < (*fGrids[0]).getXsize()-2; j++)
+        //(*fGrids[0])(1, i) = 1.0;
+        //(*fGrids[0])((*fGrids[0]).getXsize() - 2, i) = 1.0;
+        for (size_t j = 1; j < (*fGrids[0]).getXsize()-1; j++)
         {
             (*fGrids[0])(j, i) = 2.0;
         }
@@ -75,13 +75,12 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
             }
 
-			if (isNeumann && l == 1 )
-            {
-                (*xgrd)(0, j) = -hx + (*xgrd)(1, j);
-                (*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
+			if (isNeumann && l == 2)
+			{
+				(*xgrd)(0, j) = -2 * hx + (*xgrd)(2, j);
+				(*xgrd)(dimX - 1, j) = -2 * hx + (*xgrd)(dimX - 3, j);
 
-				//&& xgrd == xGrids[0]
-            }
+			}
 
         }
 
@@ -96,10 +95,10 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
             }
 
-			if (isNeumann && l == 1)
+			if (isNeumann && l == 2)
             {
-                (*xgrd)(0, j) = -hx + (*xgrd)(1, j);
-                (*xgrd)(dimX - 1, j) = -hx + (*xgrd)(dimX - 2, j);
+                (*xgrd)(0, j) = -2*hx + (*xgrd)(2, j);
+                (*xgrd)(dimX - 1, j) = -2*hx + (*xgrd)(dimX - 3, j);
 
             }
 
@@ -201,7 +200,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		for (size_t j = 0; j < ylen; j++)
 		{
 			size_t k = 2 * j;
-			for (size_t i = 0; i < xlen; i++)
+			for (size_t i = 1; i < xlen; i++)
 			{
 				size_t l = 2 * i - 1;
 				tmpgrd(l, k) = (*srcgrd)(i, j);
@@ -215,9 +214,9 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}
 
 	
-    for (size_t i = 0; i < tylen ; i++)
+    for (size_t i = 1; i < tylen -1; i++)
     {
-        for (size_t j = 0; j < txlen ; j++)
+        for (size_t j = 1; j < txlen -1; j++)
         {
             (*tgtgrd)(j, i) += tmpgrd(j, i);
 
