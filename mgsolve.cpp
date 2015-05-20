@@ -237,7 +237,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 
 		cout << '\n';
 	}
-}
+
 
 	if (!isNeumann)
 	{
