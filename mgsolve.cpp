@@ -402,7 +402,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 		{
 			for (size_t k = 1; k < dimX-1; k++)
 			{
-				r = (*sgrd)(k, j) - (*xgrd)(k, j);
+				r = (*sgrd)(k-1, j) - (*xgrd)(k, j);
 
 				*norm += r*r;
 			}
