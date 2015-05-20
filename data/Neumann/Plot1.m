@@ -1,4 +1,4 @@
-A = importdata('exactsolution_h_258.000000.txt');
+A = importdata('exactsolution_h_64.txt');
 X = A(:,1);
 Y =A(:,2);
 Z = A(:,3);
@@ -9,7 +9,7 @@ xlabel('X');
 ylabel('Y');
 title 'Exact Solution for Neumann Problem';
 
-A = importdata('solution_h_258.000000.txt');
+A = importdata('solution_h_64.txt');
 X = A(:,1);
 Y =A(:,2);
 Z = A(:,3);

@@ -302,7 +302,7 @@ void mgsolve(size_t level, size_t vcycle)
     double hsize = (XDOMHIGH - XDOMLOW) / (gdim - 1.0);
 
     init(hsize, level);
-    sGrid = new Grid(gdim, gdim, hsize, hsize, true, isNeumann);
+    sGrid = new Grid(gdim, gdim, hsize, hsize, false, isNeumann);
 
     for (size_t i = 0; i < gdim; i++)
     {
@@ -426,12 +426,20 @@ int main(int argc, char** argv)
     std::string fnames2 = std::string("data/Neumann/exactsolution_h_") + std::string(to_string(gdim - 3)) + std::string(".txt");
     std::ofstream	fOutsolt2(fnames2);
     for (size_t y = 0.0; y < gdim; ++y) {
-    for (size_t x = 1; x < gdim-2; ++x) {
+		for (size_t x = 1; x < gdim - 2; ++x) {
 
-    fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
-    fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+			fOut2 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
+		}
+		fOut2 << std::endl;
     }
-    fOut2 << std::endl;
+
+	for (size_t y = 0.0; y < gdim; ++y) {
+		for (size_t x = 0.0; x < gdim ; ++x) {
+
+			fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
+		}
+
+    
     fOutsolt2 << std::endl;
     }
     fOut2.close();
