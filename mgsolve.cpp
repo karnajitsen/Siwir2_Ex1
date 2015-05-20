@@ -270,6 +270,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 			}
 
 		}
+		*norm = sqrt(*norm / dimX / dimY);
 	}
 	else{
 		for (size_t j = 0; j < dimY; j++)
@@ -282,9 +283,10 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 			}
 
 		}
+		*norm = sqrt(*norm / dimX - 2 / dimY);
 	}
 
-    *norm = sqrt(*norm / dimX / dimY);
+    
 }
 
 void mgsolve(size_t level, size_t vcycle)
@@ -382,8 +384,8 @@ int main(int argc, char** argv)
     std::ofstream	fOut1(fname1);
     std::string fnames1 = std::string("data/Dirichlet/exactsolution_h_") + std::string(to_string(gdim - 1)) + std::string(".txt");
     std::ofstream	fOutsolt1(fnames1);
-    for (size_t y = 0; y < gdim; ++y) {
-    for (size_t x = 0; x < gdim; ++x) {
+    for (size_t y = 0; y < gdim-2; ++y) {
+    for (size_t x = 1; x < gdim-1; ++x) {
 
     fOut1 << x*hsize << "\t" << y*hsize << "\t" << (*xGrids[0])(x, y) << std::endl;
     fOutsolt1 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
