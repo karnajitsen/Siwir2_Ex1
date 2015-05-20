@@ -7,7 +7,7 @@ tri = delaunay(X,Y);
 trisurf(tri,X,Y,Z);
 xlabel('X');
 ylabel('Y');
-title 'Exact Solution for Dirichlet Problem';
+title 'Exact Solution for Neumann Problem';
 
 A = importdata('solution_h_256.000000.txt');
 X = A(:,1);
@@ -18,5 +18,5 @@ tri = delaunay(X,Y);
 trisurf(tri,X,Y,Z);
 xlabel('X');
 ylabel('Y');
-title 'Approximated Solution for Dirichlet Problem';
+title 'Approximated Solution for Neumann Problem';
 
