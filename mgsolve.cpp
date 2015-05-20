@@ -239,19 +239,36 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 
     *norm = 0.0;
 
-    for (size_t j = 1; j < dimY; j++)
-    {
-        for (size_t k = 1; k < dimX; k++)
-        {
-            r = hx*hy*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
-                + (*xgrd)(k, j - 1)) - (*xgrd)(k, j) * center;
+	if (!isNeumann)
+	{
+		for (size_t j = 1; j < dimY; j++)
+		{
+			for (size_t k = 1; k < dimX; k++)
+			{
+				r = hx*hy*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)) - (*xgrd)(k, j) * center;
 
-            *norm += r*r;
-        }
-    }
+				*norm += r*r;
+			}
+		}
 
-        *norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
-		//cout << "residual\n";
+		*norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
+	}//cout << "residual\n";
+	else
+	{
+		for (size_t j = 1; j < dimY; j++)
+		{
+			for (size_t k = 2; k < dimX-1; k++)
+			{
+				r = hx*hy*(*fgrd)(k, j) + alpha*((*xgrd)(k + 1, j) + (*xgrd)(k - 1, j)) + beta * ((*xgrd)(k, j + 1)
+					+ (*xgrd)(k, j - 1)) - (*xgrd)(k, j) * center;
+
+				*norm += r*r;
+			}
+		}
+
+		*norm = sqrt(*norm / (dimX - 3) / (dimY - 1));
+	}
 }
 
 
@@ -347,7 +364,7 @@ void mgsolve(size_t level, size_t vcycle)
             std::cout << "Dirichlet:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
         }
 
-		//orthogonalize(xGrids[0]);
+		orthogonalize(xGrids[0]);
 
     }
     //orthogonalize(xGrids[0]);
