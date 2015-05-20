@@ -338,6 +338,41 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 		cout << "residual\n";
 }
 
+inline void orthogonalize(Grid* grd)
+{
+	size_t dimX = (*grd).getXsize();
+	size_t dimY = (*grd).getYsize();
+	double sum = 0.0;
+
+	for (size_t y = 1; y < dimY - 1; y++)
+	{
+		for (size_t x = 0; x < dimX; x++)
+		{
+			sum += (*grd)(x, y);
+		}
+
+		/*if (sum != 0.0)
+		{
+		for (size_t x = 0; x < dimX; x++)
+		{
+		(*grd)(x, y) -= sum / dimX;
+		}
+		}
+		sum = 0.0;*/
+	}
+
+	if (sum != 0.0)
+	{
+		for (size_t y = 1; y < dimY - 1; y++)
+		{
+			for (size_t x = 0; x < dimX; x++)
+			{
+				(*grd)(x, y) -= sum / dimX / (dimY - 2.0);
+			}
+		}
+	}
+
+}
 
 
 inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
@@ -430,6 +465,8 @@ void mgsolve(size_t level, size_t vcycle)
             std::cout << "Dirichlet:: Residual L2 Norm after " << i << " V-Cycle = " << newnorm << "\n";
             std::cout << "Dirichlet:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
         }
+
+		orthogonalize(xGrids[0]);
 
     }
     //orthogonalize(xGrids[0]);
