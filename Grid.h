@@ -80,9 +80,9 @@ public:
 
     inline void reset()
     {
-        for (size_t i = 1; i < sizeX - 1; i++)
+        for (size_t i = 0; i < sizeY; i++)
         {
-            for (size_t j = 1; j < sizeX - 1; j++)
+            for (size_t j = 0; j < sizeX; j++)
             {
                 data[i*ld + j] = 0.0;
             }
