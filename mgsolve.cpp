@@ -434,7 +434,7 @@ int main(int argc, char** argv)
     }
 
 	for (size_t y = 0.0; y < gdim; ++y) {
-		for (size_t x = 0.0; x < gdim ; ++x) {
+		for (size_t x = 0.0; x < gdim-2 ; ++x) {
 
 			fOutsolt2 << x*hsize << "\t" << y*hsize << "\t" << (*sGrid)(x, y) << std::endl;
 		}
