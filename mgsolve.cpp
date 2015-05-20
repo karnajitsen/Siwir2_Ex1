@@ -138,9 +138,9 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 
 	cout << "====B4 residual === \n\n";
-	for (size_t j = 0; j < ylen; j++)
+	for (size_t j = 0; j < ylen + 1; j++)
 	{
-		for (size_t k = 0; k < xlen; k++)
+		for (size_t k = 0; k < xlen + 1; k++)
 		{
 			cout << (*xgrd)(k, j) << " ";
 		}
@@ -162,9 +162,9 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 
 
 	cout << "====After residual === \n\n";
-	for (size_t j = 0; j < ylen; j++)
+	for (size_t j = 0; j < ylen + 1; j++)
 	{
-		for (size_t k = 0; k < xlen; k++)
+		for (size_t k = 0; k < xlen + 1; k++)
 		{
 			cout << (tmpgrd)(k, j) << " ";
 		}
@@ -207,9 +207,9 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	}
 
 	cout << "====After restriction === \n\n";
-	for (size_t j = 0; j < ylen; j++)
+	for (size_t j = 0; j < rylen+1; j++)
 	{
-		for (size_t k = 0; k < xlen; k++)
+		for (size_t k = 0; k < rxlen+1; k++)
 		{
 			cout << (*rgrid)(k, j) << " ";
 		}
@@ -228,9 +228,9 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
     Grid tmpgrd(txlen, txlen, hx, hx, false,true);
 
 	cout << "====B4 Interpolation === \n\n";
-	for (size_t j = 0; j < ylen; j++)
+	for (size_t j = 0; j < ylen+1; j++)
 	{
-		for (size_t k = 0; k < xlen; k++)
+		for (size_t k = 0; k < xlen+1; k++)
 		{
 			cout << (*srcgrd)(k, j) << " ";
 		}
