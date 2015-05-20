@@ -438,7 +438,7 @@ void mgsolve(size_t level, size_t vcycle)
     {
         for (size_t jl = 0; jl < level - 1; jl++)
         {
-			orthogonalize(fGrids[jl]);
+			//orthogonalize(fGrids[jl]);
 			smooth(xGrids[jl], fGrids[jl], V1);
             restriction(xGrids[jl], fGrids[jl], fGrids[jl + 1]);
         }
@@ -467,7 +467,7 @@ void mgsolve(size_t level, size_t vcycle)
             std::cout << "Dirichlet:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
         }
 
-		orthogonalize(xGrids[0]);
+		//orthogonalize(xGrids[0]);
 
     }
     //orthogonalize(xGrids[0]);
