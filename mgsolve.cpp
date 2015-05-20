@@ -62,16 +62,16 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
     double	beta = 1.0;
     double	center = 1.0 / (2.0 * alpha + 2.0 * beta);
 
-	cout << "====B4 smooth === \n\n";
-	for (size_t j = 0; j < dimY; j++)
-	{
-		for (size_t k = 0; k < dimX; k++)
-		{
-			cout << (*xgrd)(k, j) << " ";
-		}
+	//cout << "====B4 smooth === \n\n";
+	//for (size_t j = 0; j < dimY; j++)
+	//{
+	//	for (size_t k = 0; k < dimX; k++)
+	//	{
+	//		cout << (*xgrd)(k, j) << " ";
+	//	}
 
-		cout << '\n';
-	}
+	//	cout << '\n';
+	//}
 
     for (size_t i = 0; i < iter; i++)
     {
@@ -115,7 +115,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 
         }
     }
-	cout << "====After smooth === \n\n";
+	/*cout << "====After smooth === \n\n";
 	for (size_t j = 0; j < dimY; j++)
 	{
 		for (size_t k = 0; k < dimX; k++)
@@ -124,7 +124,7 @@ inline void smooth(Grid* xgrd, const Grid* fgrd, const size_t iter)
 		}
 
 		cout << '\n';
-	}
+	}*/
 }
 
 void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
@@ -138,7 +138,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     double	center = (2.0 * alpha) + (2.0 * beta);
 
 
-	cout << "====B4 residual === \n\n";
+	/*cout << "====B4 residual === \n\n";
 	for (size_t j = 0; j < ylen + 1; j++)
 	{
 		for (size_t k = 0; k < xlen + 1; k++)
@@ -147,7 +147,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
     Grid tmpgrd(xlen + 1, ylen + 1, hx, hy, false,true);
     for (size_t i = 1; i < ylen; i++)
@@ -162,7 +162,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
     }
 
 
-	cout << "====After residual === \n\n";
+	/*cout << "====After residual === \n\n";
 	for (size_t j = 0; j < ylen + 1; j++)
 	{
 		for (size_t k = 0; k < xlen + 1; k++)
@@ -171,7 +171,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 
 		cout << '\n';
-	}
+	}*/
     size_t rxlen = (*rgrid).getXsize() - 1;
     size_t rylen = (*rgrid).getYsize() - 1;
 
@@ -207,7 +207,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 	}
 
-	cout << "====After restriction === \n\n";
+	/*cout << "====After restriction === \n\n";
 	for (size_t j = 0; j < rylen+1; j++)
 	{
 		for (size_t k = 0; k < rxlen+1; k++)
@@ -216,7 +216,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 		}
 
 		cout << '\n';
-	}
+	}*/
    }
 
 inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
@@ -228,7 +228,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
     double hx = (*tgtgrd).getHx();
     Grid tmpgrd(txlen, txlen, hx, hx, false,true);
 
-	cout << "====B4 Interpolation === \n\n";
+	/*cout << "====B4 Interpolation === \n\n";
 	for (size_t j = 0; j < ylen+1; j++)
 	{
 		for (size_t k = 0; k < xlen+1; k++)
@@ -237,7 +237,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 
 	if (!isNeumann)
@@ -276,16 +276,16 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}
 
 	
-cout << "====B4 Interpolation Add === \n\n";
-for (size_t j = 0; j < tylen; j++)
-{
-	for (size_t k = 0; k < txlen; k++)
-	{
-		cout << (tmpgrd)(k, j) << " ";
-	}
-
-	cout << '\n';
-}
+//cout << "====B4 Interpolation Add === \n\n";
+//for (size_t j = 0; j < tylen; j++)
+//{
+//	for (size_t k = 0; k < txlen; k++)
+//	{
+//		cout << (tmpgrd)(k, j) << " ";
+//	}
+//
+//	cout << '\n';
+//}
 
     for (size_t i = 1; i < tylen - 1; i++)
     {
@@ -296,7 +296,7 @@ for (size_t j = 0; j < tylen; j++)
         }
     }
 
-	cout << "====After Interpolation Add === \n\n";
+	/*cout << "====After Interpolation Add === \n\n";
 	for (size_t j = 0; j < tylen; j++)
 	{
 		for (size_t k = 0; k < txlen; k++)
@@ -305,7 +305,7 @@ for (size_t j = 0; j < tylen; j++)
 		}
 
 		cout << '\n';
-	}
+	}*/
 
 }
 
@@ -335,7 +335,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
     }
 
         *norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
-		cout << "residual\n";
+		//cout << "residual\n";
 }
 
 inline void orthogonalize(Grid* grd)
