@@ -275,8 +275,6 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
 	}
 
 	
-}
-
 cout << "====B4 Interpolation Add === \n\n";
 for (size_t j = 0; j < tylen; j++)
 {
