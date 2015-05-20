@@ -1,0 +1,884 @@
+rm -f ./data/Neumann/*.txt
+rm -f ./data/Dirichlet/*.txt
+./mgsolve 3 20
+Dirichlet:: Level = 3 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.990033
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.0658312
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.066494
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.00462694
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.070285
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 0.000335272
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0724608
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 2.48655e-05
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.0741651
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 1.87581e-06
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0754381
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 1.43282e-07
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0763841
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 1.1044e-08
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0770792
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 8.56837e-10
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.0775836
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 6.67865e-11
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0779455
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 5.22265e-12
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0781991
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 4.09234e-13
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.0783575
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 3.23374e-14
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.0790193
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 2.5965e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.080294
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 5.38551e-16
+Dirichlet:: Covergence rate after 15 V-Cycle = 0.207415
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 1.29628e-15
+Dirichlet:: Covergence rate after 16 V-Cycle = 2.40699
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 8.79069e-16
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.678145
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 1.58603e-17
+Dirichlet:: Covergence rate after 18 V-Cycle = 0.0180422
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 0
+Dirichlet:: Covergence rate after 19 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 0
+Dirichlet:: Covergence rate after 20 V-Cycle = 0
+
+Dirichlet:: Error L2 Norm for h as 1/8 = 0.0219129
+
+Dirichlet:: Time spend for Multigrid Solver = 0.00021
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.0495904
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.00489894
+Neumann:: Covergence rate after 2 V-Cycle = 0.098788
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.00239363
+Neumann:: Covergence rate after 3 V-Cycle = 0.488602
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.00135708
+Neumann:: Covergence rate after 4 V-Cycle = 0.566956
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.000753456
+Neumann:: Covergence rate after 5 V-Cycle = 0.555203
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.000416869
+Neumann:: Covergence rate after 6 V-Cycle = 0.553275
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.000230535
+Neumann:: Covergence rate after 7 V-Cycle = 0.553015
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.000127482
+Neumann:: Covergence rate after 8 V-Cycle = 0.552983
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 7.04949e-05
+Neumann:: Covergence rate after 9 V-Cycle = 0.55298
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 3.89823e-05
+Neumann:: Covergence rate after 10 V-Cycle = 0.55298
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 2.15565e-05
+Neumann:: Covergence rate after 11 V-Cycle = 0.552981
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 1.19203e-05
+Neumann:: Covergence rate after 12 V-Cycle = 0.552982
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 6.59173e-06
+Neumann:: Covergence rate after 13 V-Cycle = 0.552982
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 3.64511e-06
+Neumann:: Covergence rate after 14 V-Cycle = 0.552983
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 2.01568e-06
+Neumann:: Covergence rate after 15 V-Cycle = 0.552983
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 1.11464e-06
+Neumann:: Covergence rate after 16 V-Cycle = 0.552983
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 6.16378e-07
+Neumann:: Covergence rate after 17 V-Cycle = 0.552984
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 3.40847e-07
+Neumann:: Covergence rate after 18 V-Cycle = 0.552984
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 1.88483e-07
+Neumann:: Covergence rate after 19 V-Cycle = 0.552984
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 1.04228e-07
+Neumann:: Covergence rate after 20 V-Cycle = 0.552984
+
+Neumann:: Error L2 Norm for h as 1/8 = 0.0548588
+
+Neumann:: Time spend for Multigrid Solver = 0.000157
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
+./mgsolve 4 20
+Dirichlet:: Level = 4 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.784628
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.046788
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.0596308
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.00295821
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.0632258
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 0.000191872
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0648607
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 1.2919e-05
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.0673316
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 9.03023e-07
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0698987
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 6.53955e-08
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0724184
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 4.87991e-09
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0746215
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 3.72815e-10
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.0763979
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 2.89846e-11
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0777455
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 2.28182e-12
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0787252
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 1.8145e-13
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.07952
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 1.44038e-14
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.0793816
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 1.62098e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.112538
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 1.42042e-15
+Dirichlet:: Covergence rate after 15 V-Cycle = 0.876271
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 7.40068e-16
+Dirichlet:: Covergence rate after 16 V-Cycle = 0.521021
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 4.62119e-16
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.624428
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 2.06422e-16
+Dirichlet:: Covergence rate after 18 V-Cycle = 0.446686
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 1.45475e-16
+Dirichlet:: Covergence rate after 19 V-Cycle = 0.704745
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 1.12797e-16
+Dirichlet:: Covergence rate after 20 V-Cycle = 0.775369
+
+Dirichlet:: Error L2 Norm for h as 1/16 = 0.00586478
+
+Dirichlet:: Time spend for Multigrid Solver = 0.000435
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.184457
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.0785819
+Neumann:: Covergence rate after 2 V-Cycle = 0.426018
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.0200885
+Neumann:: Covergence rate after 3 V-Cycle = 0.255638
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.0148087
+Neumann:: Covergence rate after 4 V-Cycle = 0.737173
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.0103847
+Neumann:: Covergence rate after 5 V-Cycle = 0.701258
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.0072444
+Neumann:: Covergence rate after 6 V-Cycle = 0.697603
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.00504913
+Neumann:: Covergence rate after 7 V-Cycle = 0.696969
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.00351803
+Neumann:: Covergence rate after 8 V-Cycle = 0.696761
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 0.00245067
+Neumann:: Covergence rate after 9 V-Cycle = 0.696601
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 0.00170685
+Neumann:: Covergence rate after 10 V-Cycle = 0.696486
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 0.00118868
+Neumann:: Covergence rate after 11 V-Cycle = 0.696414
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 0.000827774
+Neumann:: Covergence rate after 12 V-Cycle = 0.696382
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 0.000576447
+Neumann:: Covergence rate after 13 V-Cycle = 0.696382
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 0.000401441
+Neumann:: Covergence rate after 14 V-Cycle = 0.696405
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 0.000279582
+Neumann:: Covergence rate after 15 V-Cycle = 0.696446
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 0.000194728
+Neumann:: Covergence rate after 16 V-Cycle = 0.696498
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 0.00013564
+Neumann:: Covergence rate after 17 V-Cycle = 0.696558
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 9.44894e-05
+Neumann:: Covergence rate after 18 V-Cycle = 0.696621
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 6.58294e-05
+Neumann:: Covergence rate after 19 V-Cycle = 0.696686
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 4.58667e-05
+Neumann:: Covergence rate after 20 V-Cycle = 0.69675
+
+Neumann:: Error L2 Norm for h as 1/16 = 0.0438451
+
+Neumann:: Time spend for Multigrid Solver = 0.000295
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
+./mgsolve 5 20
+Dirichlet:: Level = 5 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.571247
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.031795
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.0556589
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.00186758
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.0587383
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 0.000110241
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0590287
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 6.65347e-06
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.0603539
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 4.11875e-07
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0619038
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 2.64276e-08
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0641641
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 1.77072e-09
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0670029
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 1.24321e-10
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.0702092
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 9.11599e-12
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0733261
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 6.92394e-13
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0759538
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 5.40327e-14
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.0780376
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 4.48264e-15
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.0829615
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 1.36204e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.303847
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 1.29521e-15
+Dirichlet:: Covergence rate after 15 V-Cycle = 0.950934
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 1.16586e-15
+Dirichlet:: Covergence rate after 16 V-Cycle = 0.900137
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 4.32653e-16
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.3711
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 9.11143e-16
+Dirichlet:: Covergence rate after 18 V-Cycle = 2.10595
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 9.92911e-16
+Dirichlet:: Covergence rate after 19 V-Cycle = 1.08974
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 1.03748e-15
+Dirichlet:: Covergence rate after 20 V-Cycle = 1.04488
+
+Dirichlet:: Error L2 Norm for h as 1/32 = 0.00151459
+
+Dirichlet:: Time spend for Multigrid Solver = 0.00099
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.0346341
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.0110984
+Neumann:: Covergence rate after 2 V-Cycle = 0.320448
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.00178986
+Neumann:: Covergence rate after 3 V-Cycle = 0.161271
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.00117266
+Neumann:: Covergence rate after 4 V-Cycle = 0.65517
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.00104221
+Neumann:: Covergence rate after 5 V-Cycle = 0.88876
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.000982233
+Neumann:: Covergence rate after 6 V-Cycle = 0.942448
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.00094748
+Neumann:: Covergence rate after 7 V-Cycle = 0.964618
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.000930636
+Neumann:: Covergence rate after 8 V-Cycle = 0.982223
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 0.000924692
+Neumann:: Covergence rate after 9 V-Cycle = 0.993613
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 0.000925038
+Neumann:: Covergence rate after 10 V-Cycle = 1.00037
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 0.000928721
+Neumann:: Covergence rate after 11 V-Cycle = 1.00398
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 0.000933932
+Neumann:: Covergence rate after 12 V-Cycle = 1.00561
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 0.000939612
+Neumann:: Covergence rate after 13 V-Cycle = 1.00608
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 0.000945169
+Neumann:: Covergence rate after 14 V-Cycle = 1.00591
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 0.000950301
+Neumann:: Covergence rate after 15 V-Cycle = 1.00543
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 0.000954876
+Neumann:: Covergence rate after 16 V-Cycle = 1.00481
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 0.00095886
+Neumann:: Covergence rate after 17 V-Cycle = 1.00417
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 0.000962275
+Neumann:: Covergence rate after 18 V-Cycle = 1.00356
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 0.000965168
+Neumann:: Covergence rate after 19 V-Cycle = 1.00301
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 0.000967598
+Neumann:: Covergence rate after 20 V-Cycle = 1.00252
+
+Neumann:: Error L2 Norm for h as 1/32 = 0.282467
+
+Neumann:: Time spend for Multigrid Solver = 0.000753
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
+./mgsolve 6 20
+Dirichlet:: Level = 6 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.405184
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.0220521
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.0544248
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.0012646
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.0573463
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 7.22975e-05
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0571701
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 4.17963e-06
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.0578116
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 2.43349e-07
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0582226
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 1.43496e-08
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0589672
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 8.61653e-10
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0600471
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 5.32235e-11
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.0617691
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 3.42267e-12
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0643075
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 2.31679e-13
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0676895
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 1.66154e-14
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.0717174
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 1.81192e-15
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.109051
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 1.27096e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.701444
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 1.25193e-15
+Dirichlet:: Covergence rate after 15 V-Cycle = 0.985025
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 1.31433e-15
+Dirichlet:: Covergence rate after 16 V-Cycle = 1.04984
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 1.1776e-15
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.895969
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 1.12629e-15
+Dirichlet:: Covergence rate after 18 V-Cycle = 0.956431
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 1.09523e-15
+Dirichlet:: Covergence rate after 19 V-Cycle = 0.972425
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 1.07931e-15
+Dirichlet:: Covergence rate after 20 V-Cycle = 0.985462
+
+Dirichlet:: Error L2 Norm for h as 1/64 = 0.000384722
+
+Dirichlet:: Time spend for Multigrid Solver = 0.003868
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.179364
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.0732659
+Neumann:: Covergence rate after 2 V-Cycle = 0.408477
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.0132138
+Neumann:: Covergence rate after 3 V-Cycle = 0.180353
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.00759996
+Neumann:: Covergence rate after 4 V-Cycle = 0.575155
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.00471907
+Neumann:: Covergence rate after 5 V-Cycle = 0.620934
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.00434074
+Neumann:: Covergence rate after 6 V-Cycle = 0.919829
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.00370533
+Neumann:: Covergence rate after 7 V-Cycle = 0.853617
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.00325041
+Neumann:: Covergence rate after 8 V-Cycle = 0.877225
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 0.00284467
+Neumann:: Covergence rate after 9 V-Cycle = 0.875172
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 0.00249796
+Neumann:: Covergence rate after 10 V-Cycle = 0.878121
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 0.00219586
+Neumann:: Covergence rate after 11 V-Cycle = 0.879059
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 0.00193233
+Neumann:: Covergence rate after 12 V-Cycle = 0.879992
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 0.00170164
+Neumann:: Covergence rate after 13 V-Cycle = 0.880616
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 0.00149938
+Neumann:: Covergence rate after 14 V-Cycle = 0.881137
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 0.00132187
+Neumann:: Covergence rate after 15 V-Cycle = 0.881613
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 0.00116607
+Neumann:: Covergence rate after 16 V-Cycle = 0.882132
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 0.00102937
+Neumann:: Covergence rate after 17 V-Cycle = 0.882773
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 0.000909585
+Neumann:: Covergence rate after 18 V-Cycle = 0.883631
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 0.000804816
+Neumann:: Covergence rate after 19 V-Cycle = 0.884816
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 0.000713434
+Neumann:: Covergence rate after 20 V-Cycle = 0.886456
+
+Neumann:: Error L2 Norm for h as 1/64 = 0.466153
+
+Neumann:: Time spend for Multigrid Solver = 0.002536
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
+./mgsolve 7 20
+Dirichlet:: Level = 7 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.285787
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.015469
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.0541275
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.000882065
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.0570216
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 5.00657e-05
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0567597
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 2.86686e-06
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.057262
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 1.64547e-07
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0573963
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 9.48974e-09
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0576719
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 5.4996e-10
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0579531
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 3.21209e-11
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.058406
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 1.89904e-12
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0591215
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 1.14591e-13
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0603415
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 7.24735e-15
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.0632455
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 1.46566e-15
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.202233
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 1.35339e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.923404
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 1.38567e-15
+Dirichlet:: Covergence rate after 15 V-Cycle = 1.02385
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 1.26365e-15
+Dirichlet:: Covergence rate after 16 V-Cycle = 0.911946
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 1.23433e-15
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.976797
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 1.34811e-15
+Dirichlet:: Covergence rate after 18 V-Cycle = 1.09218
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 1.33908e-15
+Dirichlet:: Covergence rate after 19 V-Cycle = 0.993302
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 1.34012e-15
+Dirichlet:: Covergence rate after 20 V-Cycle = 1.00077
+
+Dirichlet:: Error L2 Norm for h as 1/128 = 9.69418e-05
+
+Dirichlet:: Time spend for Multigrid Solver = 0.013048
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.0114502
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.00561458
+Neumann:: Covergence rate after 2 V-Cycle = 0.490349
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.00279087
+Neumann:: Covergence rate after 3 V-Cycle = 0.497075
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.0015728
+Neumann:: Covergence rate after 4 V-Cycle = 0.563552
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.000620755
+Neumann:: Covergence rate after 5 V-Cycle = 0.394682
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.000472024
+Neumann:: Covergence rate after 6 V-Cycle = 0.760403
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.000143034
+Neumann:: Covergence rate after 7 V-Cycle = 0.303022
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.000204704
+Neumann:: Covergence rate after 8 V-Cycle = 1.43116
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 0.000106976
+Neumann:: Covergence rate after 9 V-Cycle = 0.522588
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 0.00013246
+Neumann:: Covergence rate after 10 V-Cycle = 1.23823
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 0.000102601
+Neumann:: Covergence rate after 11 V-Cycle = 0.77458
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 0.000103851
+Neumann:: Covergence rate after 12 V-Cycle = 1.01218
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 9.13407e-05
+Neumann:: Covergence rate after 13 V-Cycle = 0.879537
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 8.68792e-05
+Neumann:: Covergence rate after 14 V-Cycle = 0.951155
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 7.94305e-05
+Neumann:: Covergence rate after 15 V-Cycle = 0.914265
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 7.43068e-05
+Neumann:: Covergence rate after 16 V-Cycle = 0.935494
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 6.87789e-05
+Neumann:: Covergence rate after 17 V-Cycle = 0.925607
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 6.41075e-05
+Neumann:: Covergence rate after 18 V-Cycle = 0.932081
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 5.96007e-05
+Neumann:: Covergence rate after 19 V-Cycle = 0.929699
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 5.55394e-05
+Neumann:: Covergence rate after 20 V-Cycle = 0.931858
+
+Neumann:: Error L2 Norm for h as 1/128 = 0.0763318
+
+Neumann:: Time spend for Multigrid Solver = 0.010439
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
+./mgsolve 8 20
+Dirichlet:: Level = 8 V-Cycles=20
+
+
+
+ =============== Output for Dirichlet Boundary Value Problem 1 ===================
+
+init
+Dirichlet:: Residual L2 Norm after 1 V-Cycle = 0.201579
+Dirichlet:: Covergence rate after 1 V-Cycle = 0
+
+Dirichlet:: Residual L2 Norm after 2 V-Cycle = 0.0108974
+Dirichlet:: Covergence rate after 2 V-Cycle = 0.0540603
+
+Dirichlet:: Residual L2 Norm after 3 V-Cycle = 0.000620613
+Dirichlet:: Covergence rate after 3 V-Cycle = 0.0569504
+
+Dirichlet:: Residual L2 Norm after 4 V-Cycle = 3.5173e-05
+Dirichlet:: Covergence rate after 4 V-Cycle = 0.0566747
+
+Dirichlet:: Residual L2 Norm after 5 V-Cycle = 2.01033e-06
+Dirichlet:: Covergence rate after 5 V-Cycle = 0.0571553
+
+Dirichlet:: Residual L2 Norm after 6 V-Cycle = 1.15079e-07
+Dirichlet:: Covergence rate after 6 V-Cycle = 0.0572438
+
+Dirichlet:: Residual L2 Norm after 7 V-Cycle = 6.61015e-09
+Dirichlet:: Covergence rate after 7 V-Cycle = 0.0574403
+
+Dirichlet:: Residual L2 Norm after 8 V-Cycle = 3.80594e-10
+Dirichlet:: Covergence rate after 8 V-Cycle = 0.0575772
+
+Dirichlet:: Residual L2 Norm after 9 V-Cycle = 2.19864e-11
+Dirichlet:: Covergence rate after 9 V-Cycle = 0.0577686
+
+Dirichlet:: Residual L2 Norm after 10 V-Cycle = 1.27545e-12
+Dirichlet:: Covergence rate after 10 V-Cycle = 0.0580107
+
+Dirichlet:: Residual L2 Norm after 11 V-Cycle = 7.44701e-14
+Dirichlet:: Covergence rate after 11 V-Cycle = 0.0583875
+
+Dirichlet:: Residual L2 Norm after 12 V-Cycle = 4.61523e-15
+Dirichlet:: Covergence rate after 12 V-Cycle = 0.0619743
+
+Dirichlet:: Residual L2 Norm after 13 V-Cycle = 1.39321e-15
+Dirichlet:: Covergence rate after 13 V-Cycle = 0.301871
+
+Dirichlet:: Residual L2 Norm after 14 V-Cycle = 1.35969e-15
+Dirichlet:: Covergence rate after 14 V-Cycle = 0.975946
+
+Dirichlet:: Residual L2 Norm after 15 V-Cycle = 1.32811e-15
+Dirichlet:: Covergence rate after 15 V-Cycle = 0.976773
+
+Dirichlet:: Residual L2 Norm after 16 V-Cycle = 1.32106e-15
+Dirichlet:: Covergence rate after 16 V-Cycle = 0.994691
+
+Dirichlet:: Residual L2 Norm after 17 V-Cycle = 1.29201e-15
+Dirichlet:: Covergence rate after 17 V-Cycle = 0.978007
+
+Dirichlet:: Residual L2 Norm after 18 V-Cycle = 1.34347e-15
+Dirichlet:: Covergence rate after 18 V-Cycle = 1.03983
+
+Dirichlet:: Residual L2 Norm after 19 V-Cycle = 1.31269e-15
+Dirichlet:: Covergence rate after 19 V-Cycle = 0.977093
+
+Dirichlet:: Residual L2 Norm after 20 V-Cycle = 1.30159e-15
+Dirichlet:: Covergence rate after 20 V-Cycle = 0.991545
+
+Dirichlet:: Error L2 Norm for h as 1/256 = 2.43307e-05
+
+Dirichlet:: Time spend for Multigrid Solver = 0.050302
+
+
+ =============== Dirichlet Boundary Value Problem 1 ends here ===================
+
+
+
+ =============== Output for Neumann Boundary Value Problem 2 ===================
+
+init
+Neumann:: Residual L2 Norm after 1 V-Cycle = 0.00827848
+Neumann:: Covergence rate after 1 V-Cycle = 0
+
+Neumann:: Residual L2 Norm after 2 V-Cycle = 0.00618202
+Neumann:: Covergence rate after 2 V-Cycle = 0.746758
+
+Neumann:: Residual L2 Norm after 3 V-Cycle = 0.00536449
+Neumann:: Covergence rate after 3 V-Cycle = 0.867757
+
+Neumann:: Residual L2 Norm after 4 V-Cycle = 0.00459401
+Neumann:: Covergence rate after 4 V-Cycle = 0.856373
+
+Neumann:: Residual L2 Norm after 5 V-Cycle = 0.00368655
+Neumann:: Covergence rate after 5 V-Cycle = 0.80247
+
+Neumann:: Residual L2 Norm after 6 V-Cycle = 0.00310545
+Neumann:: Covergence rate after 6 V-Cycle = 0.842374
+
+Neumann:: Residual L2 Norm after 7 V-Cycle = 0.00244987
+Neumann:: Covergence rate after 7 V-Cycle = 0.788894
+
+Neumann:: Residual L2 Norm after 8 V-Cycle = 0.00207607
+Neumann:: Covergence rate after 8 V-Cycle = 0.84742
+
+Neumann:: Residual L2 Norm after 9 V-Cycle = 0.00161589
+Neumann:: Covergence rate after 9 V-Cycle = 0.778339
+
+Neumann:: Residual L2 Norm after 10 V-Cycle = 0.0013875
+Neumann:: Covergence rate after 10 V-Cycle = 0.858659
+
+Neumann:: Residual L2 Norm after 11 V-Cycle = 0.00106203
+Neumann:: Covergence rate after 11 V-Cycle = 0.765428
+
+Neumann:: Residual L2 Norm after 12 V-Cycle = 0.000929595
+Neumann:: Covergence rate after 12 V-Cycle = 0.8753
+
+Neumann:: Residual L2 Norm after 13 V-Cycle = 0.000695516
+Neumann:: Covergence rate after 13 V-Cycle = 0.748193
+
+Neumann:: Residual L2 Norm after 14 V-Cycle = 0.000625287
+Neumann:: Covergence rate after 14 V-Cycle = 0.899026
+
+Neumann:: Residual L2 Norm after 15 V-Cycle = 0.000453345
+Neumann:: Covergence rate after 15 V-Cycle = 0.725019
+
+Neumann:: Residual L2 Norm after 16 V-Cycle = 0.000422943
+Neumann:: Covergence rate after 16 V-Cycle = 0.932937
+
+Neumann:: Residual L2 Norm after 17 V-Cycle = 0.00029358
+Neumann:: Covergence rate after 17 V-Cycle = 0.694137
+
+Neumann:: Residual L2 Norm after 18 V-Cycle = 0.000288261
+Neumann:: Covergence rate after 18 V-Cycle = 0.981883
+
+Neumann:: Residual L2 Norm after 19 V-Cycle = 0.000188421
+Neumann:: Covergence rate after 19 V-Cycle = 0.653649
+
+Neumann:: Residual L2 Norm after 20 V-Cycle = 0.000198492
+Neumann:: Covergence rate after 20 V-Cycle = 1.05344
+
+Neumann:: Error L2 Norm for h as 1/256 = 0.0858798
+
+Neumann:: Time spend for Multigrid Solver = 0.043568
+
+
+ =============== Neumann Bounday Value Problem 2 ends here ===================
+
