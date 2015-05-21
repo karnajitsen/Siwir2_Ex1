@@ -267,7 +267,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			}
 		}
 
-		*norm = sqrt(*norm / (dimX - 3.0) / (dimY - 1));
+		*norm = sqrt(*norm / (dimX - 3.0) / (dimY - 1.0));
 	}
 }
 
