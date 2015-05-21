@@ -305,7 +305,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 			}
 
 		}
-		*norm = sqrt(*norm / dimX - 2 / dimY);
+		*norm = sqrt(*norm / (dimX - 2) / dimY);
 	}
 	   
 }
