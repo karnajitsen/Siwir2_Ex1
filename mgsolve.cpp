@@ -176,7 +176,7 @@ inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
     size_t txlen = (*tgtgrd).getXsize();
 	size_t tylen = (*tgtgrd).getYsize();
     double hx = (*tgtgrd).getHx();
-    Grid tmpgrd(txlen, txlen, hx, hx, false,true);
+    Grid tmpgrd(txlen, tylen, hx, hx, false,true);
 
 	if (!isNeumann)
 	{
@@ -307,9 +307,44 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 		}
 		*norm = sqrt(*norm / dimX - 2 / dimY);
 	}
-
-    
+	   
 }
+
+//inline void orthogonalize(Grid* grd)
+//{
+//	size_t dimX = (*grd).getXsize();
+//	size_t dimY = (*grd).getYsize();
+//	double sum = 0.0;
+//
+//	for (size_t y = 1; y < dimY - 1; y++)
+//	{
+//		for (size_t x = 1; x < dimX; x++)
+//		{
+//			sum += (*grd)(x, y);
+//		}
+//
+//		/*if (sum != 0.0)
+//		{
+//		for (size_t x = 0; x < dimX; x++)
+//		{
+//		(*grd)(x, y) -= sum / dimX;
+//		}
+//		}
+//		sum = 0.0;*/
+//	}
+//
+//	if (sum != 0.0)
+//	{
+//		for (size_t y = 1; y < dimY - 1; y++)
+//		{
+//			for (size_t x = 0; x < dimX; x++)
+//			{
+//				(*grd)(x, y) -= sum / dimX / (dimY - 2.0);
+//			}
+//		}
+//	}
+//
+//}
 
 void mgsolve(size_t level, size_t vcycle)
 {
@@ -364,7 +399,7 @@ void mgsolve(size_t level, size_t vcycle)
             std::cout << "Dirichlet:: Covergence rate after " << i << " V-Cycle = " << convrate << "\n\n";
         }
 
-		orthogonalize(xGrids[0]);
+		//orthogonalize(xGrids[0]);
 
     }
     //orthogonalize(xGrids[0]);
