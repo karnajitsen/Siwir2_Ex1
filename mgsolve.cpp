@@ -169,7 +169,7 @@ void restriction(const Grid * xgrd, const Grid * fgrd, Grid* rgrid)
 	
    }
 
-inline void interpolate(Grid * srcgrd, Grid * tgtgrd)
+ void interpolate(Grid * srcgrd, Grid * tgtgrd)
 {
     size_t xlen = (*srcgrd).getXsize() - 1;
 	size_t ylen = (*srcgrd).getYsize() - 1;
@@ -309,42 +309,6 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 	}
 	   
 }
-
-//inline void orthogonalize(Grid* grd)
-//{
-//	size_t dimX = (*grd).getXsize();
-//	size_t dimY = (*grd).getYsize();
-//	double sum = 0.0;
-//
-//	for (size_t y = 1; y < dimY - 1; y++)
-//	{
-//		for (size_t x = 1; x < dimX; x++)
-//		{
-//			sum += (*grd)(x, y);
-//		}
-//
-//		/*if (sum != 0.0)
-//		{
-//		for (size_t x = 0; x < dimX; x++)
-//		{
-//		(*grd)(x, y) -= sum / dimX;
-//		}
-//		}
-//		sum = 0.0;*/
-//	}
-//
-//	if (sum != 0.0)
-//	{
-//		for (size_t y = 1; y < dimY - 1; y++)
-//		{
-//			for (size_t x = 0; x < dimX; x++)
-//			{
-//				(*grd)(x, y) -= sum / dimX / (dimY - 2.0);
-//			}
-//		}
-//	}
-//
-//}
 
 void mgsolve(size_t level, size_t vcycle)
 {
