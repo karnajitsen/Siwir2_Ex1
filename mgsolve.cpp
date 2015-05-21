@@ -252,7 +252,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			}
 		}
 
-		*norm = sqrt(*norm / (dimX - 1) / (dimY - 1));
+		*norm = sqrt(*norm / (dimX - 1.0) / (dimY - 1.0));
 	}//cout << "residual\n";
 	else
 	{
@@ -267,7 +267,7 @@ inline void resdualNorm(const Grid* xgrd, const Grid * fgrd, double* norm)
 			}
 		}
 
-		*norm = sqrt(*norm / (dimX - 3) / (dimY - 1));
+		*norm = sqrt(*norm / (dimX - 3.0) / (dimY - 1));
 	}
 }
 
@@ -305,7 +305,7 @@ inline void errorNorm(const Grid* xgrd, const Grid * sgrd, double* norm)
 			}
 
 		}
-		*norm = sqrt(*norm / (dimX - 2) / dimY);
+		*norm = sqrt(*norm / (dimX - 2.0) / dimY);
 	}
 	   
 }
