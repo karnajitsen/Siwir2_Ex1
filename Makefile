@@ -12,29 +12,21 @@ all: clean mgsolve
 mgsolve:
 	$(CC) $(CFLAGS) $(SOURCES) -o mgsolve
 	
-test: clean
-	./mgsolve 8 5
+test:
+	./mgsolve 8 10
 	git add data
 	git commit -m "new data file"
 
-onegrid: deldata
-	./mgsolve 8 10
-
-allgrid: deldata
-	./mgsolve 3 20
-	./mgsolve 4 20
-	./mgsolve 5 20
-	./mgsolve 6 20
-	./mgsolve 7 20
-	./mgsolve 8 20
+allnorm:
+	./mgsolve 3 5
+	./mgsolve 4 5
+	./mgsolve 5 5
+	./mgsolve 6 5
+	./mgsolve 7 5
+	./mgsolve 8 5
 	
-deldata:
-	rm -f ./data/Neumann/*.txt
-	rm -f ./data/Dirichlet/*.txt
-
 clean:
 	rm -f *.o mgsolve
-	rm -f ./data/Neumann/*.txt
-	rm -f ./data/Dirichlet/*.txt
+	rm -f ./data/*.*
 	
 .PHONY : all clean
